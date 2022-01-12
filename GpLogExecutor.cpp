@@ -48,14 +48,14 @@ void    GpLogExecutor::WakeupOne (void) noexcept
 
 void    GpLogExecutor::AddElement
 (
-    std::string&&   aChainId,
+    const GpUUID&   aChainId,
     GpLogElement&&  aLogElement
 )
 {
-    iRunnable->AddElement(std::move(aChainId), std::move(aLogElement));
+    iRunnable->AddElement(aChainId, std::move(aLogElement));
 }
 
-void    GpLogExecutor::EndChain (std::string_view aChainId)
+void    GpLogExecutor::EndChain (const GpUUID& aChainId)
 {
     iRunnable->EndChain(aChainId);
 }

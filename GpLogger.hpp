@@ -29,10 +29,10 @@ public:
     void                    Log                 (GpLogElementMsg::CSP           aMessage,
                                                  const GpLogLevel::EnumT        aLevel,
                                                  std::string&&                  aCategory,
-                                                 std::string&&                  aChainId,
+                                                 const GpUUID&                  aChainId,
                                                  const GpLogConsumeMode::EnumT  aConsumeMode);
 
-    void                    EndChain            (std::string_view               aChainId);
+    void                    EndChain            (const GpUUID&  aChainId);
 
 private:
     GpLogExecutor::SP       iLogExecutor;

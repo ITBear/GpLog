@@ -42,8 +42,8 @@ void    GpLogRunnable::Run (GpThreadStopToken aStopToken) noexcept
 
 void    GpLogRunnable::AddElement
 (
-    std::string_view    aChainId,
-    GpLogElement&&      aLogElement
+    const GpUUID&   aChainId,
+    GpLogElement&&  aLogElement
 )
 {
     const GpLogConsumeMode::EnumT consumeMode = aLogElement.ConsumeMode();
@@ -52,12 +52,12 @@ void    GpLogRunnable::AddElement
     {
         GpLogChain::SP chain;
 
-        if (aChainId.length() > 0)
+        if (aChainId.IsNotZero())
         {
             chain = FindAndRemoveChain(aChainId);
         } else
         {
-            chain = MakeSP<GpLogChain>(std::string(aChainId));
+            chain = MakeSP<GpLogChain>(aChainId);
         }
 
         chain->AddElement(std::move(aLogElement));
@@ -72,9 +72,9 @@ void    GpLogRunnable::AddElement
     }
 }
 
-void    GpLogRunnable::EndChain (std::string_view aChainId)
+void    GpLogRunnable::EndChain (const GpUUID& aChainId)
 {
-    if (aChainId.length() == 0)
+    if (aChainId.IsZero())
     {
         return;
     }
@@ -83,7 +83,7 @@ void    GpLogRunnable::EndChain (std::string_view aChainId)
     PushToEnd(std::move(chain));
 }
 
-GpLogChain::SP  GpLogRunnable::FindAndRemoveChain (std::string_view aChainId)
+GpLogChain::SP  GpLogRunnable::FindAndRemoveChain (const GpUUID& aChainId)
 {
     auto chain = iChainsById.TryUnregister(aChainId);
 
@@ -92,18 +92,18 @@ GpLogChain::SP  GpLogRunnable::FindAndRemoveChain (std::string_view aChainId)
         return chain.value();
     } else
     {
-        return MakeSP<GpLogChain>(std::string(aChainId));
+        return MakeSP<GpLogChain>(aChainId);
     }
 }
 
-GpLogChain::SP  GpLogRunnable::FindOrRegisterChain (std::string_view aChainId)
+GpLogChain::SP  GpLogRunnable::FindOrRegisterChain (const GpUUID& aChainId)
 {
     return iChainsById.FindOrRegister
     (
         aChainId,
         [&]()
         {
-            return MakeSP<GpLogChain>(std::string(aChainId));
+            return MakeSP<GpLogChain>(aChainId);
         }
     );
 }

@@ -54,7 +54,8 @@ SOURCES += \
 	GpLogExecutor.cpp \
 	GpLogLevel.cpp \
 	GpLogRunnable.cpp \
-	GpLogger.cpp
+	GpLogger.cpp \
+	Utils/GpExceptionsSinkLog.cpp
 
 
 HEADERS += \
@@ -94,4 +95,6 @@ HEADERS += \
 	GpLogLevel.hpp \
 	GpLogRunnable.hpp \
 	GpLog_global.hpp \
-	GpLogger.hpp
+	GpLogger.hpp \
+	Utils/GpExceptionsSinkLog.hpp \
+	Utils/GpLogUtils.hpp

@@ -2,8 +2,8 @@
 
 namespace GPlatform {
 
-GpLogChain::GpLogChain (std::string&& aChainId) noexcept:
-iChainId(std::move(aChainId))
+GpLogChain::GpLogChain (const GpUUID& aChainId) noexcept:
+iChainId(aChainId)
 {
 }
 

@@ -49,7 +49,7 @@ void    GpLogger::Log
     GpLogElementMsg::CSP            aMessage,
     const GpLogLevel::EnumT         aLevel,
     std::string&&                   aCategory,
-    std::string&&                   aChainId,
+    const GpUUID&                   aChainId,
     const GpLogConsumeMode::EnumT   aConsumeMode
 )
 {
@@ -87,10 +87,10 @@ void    GpLogger::Log
         aConsumeMode
     );
 
-    iLogExecutor->AddElement(std::move(aChainId), std::move(logElement));
+    iLogExecutor->AddElement(aChainId, std::move(logElement));
 }
 
-void    GpLogger::EndChain (std::string_view aChainId)
+void    GpLogger::EndChain (const GpUUID& aChainId)
 {
     iLogExecutor->EndChain(aChainId);
 }

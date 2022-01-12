@@ -11,7 +11,7 @@ public:
     CLASS_REMOVE_CTRS_DEFAULT_MOVE_COPY(GpLogRunnable)
     CLASS_DECLARE_DEFAULTS(GpLogRunnable)
 
-    using ChainsByIdT   = GpElementsCatalog<std::string, GpLogChain::SP>;
+    using ChainsByIdT   = GpElementsCatalog<GpUUID, GpLogChain::SP>;
     using ChainsEndedT  = GpLogChain::C::Queue::SP;
 
 public:
@@ -21,13 +21,13 @@ public:
 
     virtual void                        Run                 (GpThreadStopToken aStopToken) noexcept override final;
 
-    void                                AddElement          (std::string_view   aChainId,
+    void                                AddElement          (const GpUUID&      aChainId,
                                                              GpLogElement&&     aLogElement);
-    void                                EndChain            (std::string_view   aChainId);
+    void                                EndChain            (const GpUUID&      aChainId);
 
 private:
-    GpLogChain::SP                      FindAndRemoveChain  (std::string_view aChainId);
-    GpLogChain::SP                      FindOrRegisterChain (std::string_view aChainId);
+    GpLogChain::SP                      FindAndRemoveChain  (const GpUUID& aChainId);
+    GpLogChain::SP                      FindOrRegisterChain (const GpUUID& aChainId);
 
     void                                PushToEnd           (GpLogChain::SP&& aChain);
     std::optional<GpLogChain::SP>       PopFromEnd          (void);

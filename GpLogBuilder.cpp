@@ -9,12 +9,12 @@ void    GpLogBuilder::Out (void)
         std::move(iMessage),
         iLevel,
         std::move(iCategory),
-        std::move(iChainId),
+        iChainId,
         iConsumeMode
     );
 }
 
-void    GpLogBuilder::SEndChain (std::string_view aChainId)
+void    GpLogBuilder::SEndChain (const GpUUID& aChainId)
 {
     GpLogger::S().EndChain(aChainId);
 }

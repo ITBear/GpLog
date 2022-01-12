@@ -38,14 +38,15 @@ void    GpLogFormatterText::Format
     const GpLogChain&                   logChain        = std::any_cast<std::reference_wrapper<const GpLogChain>>(aObject).get();
     const GpLogElement::C::Vec::Val&    chainElements   = logChain.Elements();
 
-    std::string_view    chainId         = logChain.ChainId();
-    const size_t        chainIdLength   = chainId.length();
+    const GpUUID        chainId         = logChain.ChainId();
+    const std::string   chainIdStr      = chainId.ToString();
+    const bool          chainNotEmpty   = chainId.IsNotZero();
 
-    if (chainIdLength > 0)
+    if (chainNotEmpty)
     {
         aWriter
             .Bytes("==vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv[ Chain begin: "_sv)
-            .Bytes(chainId)
+            .Bytes(chainIdStr)
             .Bytes(" ]vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv==\n"_sv);
     }
 
@@ -63,11 +64,11 @@ void    GpLogFormatterText::Format
             Bytes("\n"_sv);
     }
 
-    if (chainIdLength > 0)
+    if (chainNotEmpty)
     {
         aWriter
             .Bytes("==^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[ Chain end: "_sv)
-            .Bytes(chainId)
+            .Bytes(chainIdStr)
             .Bytes(" ]^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^==\n"_sv);
     }
 }

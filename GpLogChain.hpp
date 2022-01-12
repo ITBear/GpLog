@@ -13,17 +13,17 @@ public:
     using ElementsT = GpLogElement::C::Vec::Val;
 
 public:
-                                    GpLogChain      (std::string&& aChainId) noexcept;
-                                    ~GpLogChain     (void) noexcept;
+                        GpLogChain      (const GpUUID& aChainId) noexcept;
+                        ~GpLogChain     (void) noexcept;
 
-    std::string_view                ChainId         (void) const noexcept {return iChainId;}
-    void                            AddElement      (GpLogElement&& aElement);
-    const ElementsT&                Elements        (void) const {return iElements;}
+    const GpUUID&       ChainId         (void) const noexcept {return iChainId;}
+    void                AddElement      (GpLogElement&& aElement);
+    const ElementsT&    Elements        (void) const {return iElements;}
 
 private:
-    mutable GpSpinlock              iLock;
-    const std::string               iChainId;
-    ElementsT                       iElements;
+    mutable GpSpinlock  iLock;
+    const GpUUID        iChainId;
+    ElementsT           iElements;
 };
 
 }//namespace GPlatform
