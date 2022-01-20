@@ -61,7 +61,7 @@ void    GpLogConsumerFile::OnFlush (void) noexcept
 void    GpLogConsumerFile::WriteToFile (void)
 {
     if (   (!iOFStream.is_open())
-        || (iBytesWriteToStream >= iMaxBufferSize))
+        || (iBytesWriteToStream >= iFileMaxSize))
     {
         iOFStream = CreateFile(iOutFilePath, iOutFilePrefix);
     }
