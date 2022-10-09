@@ -7,14 +7,14 @@ GpLogConsumerGraylogFactory::~GpLogConsumerGraylogFactory (void) noexcept
 {
 }
 
-GpLogConsumer::SP	GpLogConsumerGraylogFactory::NewInstance (void) const
+GpLogConsumer::SP   GpLogConsumerGraylogFactory::NewInstance (void) const
 {
-	//const GpLogConsumerGraylogConfigDesc& configDesc = iConfigDesc.V();
+    //const GpLogConsumerGraylogConfigDesc& configDesc = iConfigDesc.V();
 
-	return MakeSP<GpLogConsumerGraylog>
-	(
-		Formatter()
-	);
+    return MakeSP<GpLogConsumerGraylog>
+    (
+        Formatter()
+    );
 }
 
 }//namespace GPlatform

@@ -5,13 +5,13 @@ namespace GPlatform {
 
 GpLogTaskFiberBase::~GpLogTaskFiberBase (void) noexcept
 {
-	try
-	{
-		GpLog::S().EndChain(Guid());
-	} catch (...)
-	{
-		//NOP
-	}
+    try
+    {
+        GpLog::S().EndChain(Guid());
+    } catch (...)
+    {
+        //NOP
+    }
 }
 
 }//namespace GPlatform

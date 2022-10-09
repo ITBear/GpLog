@@ -28,11 +28,11 @@ GpLogConfigDesc::~GpLogConfigDesc (void) noexcept
 {
 }
 
-void	GpLogConfigDesc::_SReflectCollectProps (GpReflectProp::C::Vec::Val& aPropsOut)
+void    GpLogConfigDesc::_SReflectCollectProps (GpReflectProp::C::Vec::Val& aPropsOut)
 {
-	PROP(min_level);
-	PROP(flush_period);
-	PROP(consumers);
+    PROP(min_level);
+    PROP(flush_period);
+    PROP(consumers);
 }
 
 }//namespace GPlatform

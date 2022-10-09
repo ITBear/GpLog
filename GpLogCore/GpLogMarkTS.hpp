@@ -9,29 +9,29 @@ namespace GPlatform {
 class GpLogMarkTS
 {
 public:
-	CLASS_DECLARE_DEFAULTS(GpLogMarkTS)
+    CLASS_DD(GpLogMarkTS)
 
 public:
-	using SourceLocationOptT = std::optional<SourceLocationT>;
+    using SourceLocationOptT = std::optional<SourceLocationT>;
 
 public:
-	inline						GpLogMarkTS		(void) noexcept;
-	inline						GpLogMarkTS		(const GpLogMarkTS& aTag);
-	inline						GpLogMarkTS		(GpLogMarkTS&& aTag) noexcept;
-	inline						GpLogMarkTS		(std::string			aComment,
-												 const SourceLocationT&	aSourceLocation) noexcept;
-								~GpLogMarkTS	(void) noexcept = default;
+    inline                      GpLogMarkTS     (void) noexcept;
+    inline                      GpLogMarkTS     (const GpLogMarkTS& aTag);
+    inline                      GpLogMarkTS     (GpLogMarkTS&& aTag) noexcept;
+    inline                      GpLogMarkTS     (std::string            aComment,
+                                                 const SourceLocationT& aSourceLocation) noexcept;
+                                ~GpLogMarkTS    (void) noexcept = default;
 
-	microseconds_t				HiResTS			(void) const noexcept {return iHiResTS;}
-	microseconds_t				SteadyTS		(void) const noexcept {return iSteadyTS;}
-	std::string_view			Comment			(void) const noexcept {return iComment;}
-	const SourceLocationOptT&	SourceLocation	(void) const noexcept {return iSourceLocation;}
+    microseconds_t              HiResTS         (void) const noexcept {return iHiResTS;}
+    microseconds_t              SteadyTS        (void) const noexcept {return iSteadyTS;}
+    std::string_view            Comment         (void) const noexcept {return iComment;}
+    const SourceLocationOptT&   SourceLocation  (void) const noexcept {return iSourceLocation;}
 
 private:
-	microseconds_t				iHiResTS;
-	microseconds_t				iSteadyTS;
-	std::string					iComment;
-	SourceLocationOptT			iSourceLocation;
+    microseconds_t              iHiResTS;
+    microseconds_t              iSteadyTS;
+    std::string                 iComment;
+    SourceLocationOptT          iSourceLocation;
 };
 
 GpLogMarkTS::GpLogMarkTS (void) noexcept
@@ -56,8 +56,8 @@ iSourceLocation(std::move(aTag.iSourceLocation))
 
 GpLogMarkTS::GpLogMarkTS
 (
-	std::string				aComment,
-	const SourceLocationT&	aSourceLocation
+    std::string             aComment,
+    const SourceLocationT&  aSourceLocation
 ) noexcept:
 iHiResTS(GpDateTimeOps::SHighResTS_us()),
 iSteadyTS(GpDateTimeOps::SSteadyTS_us() - GpDateTimeOps::SSteadyTS_us_AtAppStart()),

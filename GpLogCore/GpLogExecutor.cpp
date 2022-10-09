@@ -6,32 +6,32 @@ GpLogExecutor::~GpLogExecutor (void) noexcept
 {
 }
 
-void	GpLogExecutor::Start
+void    GpLogExecutor::Start
 (
-	const GpLogConsumerFactory::C::Vec::SP& aConsumerFactories,
-	const seconds_t							aFlushPeriod
+    const GpLogConsumerFactory::C::Vec::SP& aConsumerFactories,
+    const seconds_t                         aFlushPeriod
 ) noexcept
 {
-	//Create executor
-	GpLogRunnable::SP runnable = MakeSP<GpLogRunnable>
-	(
-		aConsumerFactories,
-		aFlushPeriod,
-		iLogQueue
-	);
+    //Create executor
+    GpLogRunnable::SP runnable = MakeSP<GpLogRunnable>
+    (
+        aConsumerFactories,
+        aFlushPeriod,
+        iLogQueue
+    );
 
-	//Run
-	iThread.Run(std::move(runnable));
+    //Run
+    iThread.Run(std::move(runnable));
 }
 
-void	GpLogExecutor::RequestStop (void) noexcept
+void    GpLogExecutor::RequestStop (void) noexcept
 {
-	iThread.RequestStop();
+    iThread.RequestStop();
 }
 
-void	GpLogExecutor::Join (void) noexcept
+void    GpLogExecutor::Join (void) noexcept
 {
-	iThread.Join();
+    iThread.Join();
 }
 
 }//namespace GPlatform

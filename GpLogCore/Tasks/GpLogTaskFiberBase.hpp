@@ -10,14 +10,14 @@ namespace GPlatform {
 class GP_LOG_CORE_API GpLogTaskFiberBase: public GpTaskFiberBase
 {
 public:
-	CLASS_REMOVE_CTRS_DEFAULT_MOVE_COPY(GpLogTaskFiberBase)
-	CLASS_DECLARE_DEFAULTS(GpLogTaskFiberBase)
+    CLASS_REMOVE_CTRS_DEFAULT_MOVE_COPY(GpLogTaskFiberBase)
+    CLASS_DD(GpLogTaskFiberBase)
 
 protected:
-	inline						GpLogTaskFiberBase		(std::string aName) noexcept;
+    inline                      GpLogTaskFiberBase      (std::string aName) noexcept;
 
 public:
-	virtual						~GpLogTaskFiberBase		(void) noexcept override;
+    virtual                     ~GpLogTaskFiberBase     (void) noexcept override;
 };
 
 GpLogTaskFiberBase::GpLogTaskFiberBase (std::string aName) noexcept:

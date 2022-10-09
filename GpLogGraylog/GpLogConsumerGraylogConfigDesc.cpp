@@ -22,9 +22,9 @@ GpLogConsumerGraylogConfigDesc::~GpLogConsumerGraylogConfigDesc (void) noexcept
 {
 }
 
-void	GpLogConsumerGraylogConfigDesc::_SReflectCollectProps (GpReflectProp::C::Vec::Val& /*aPropsOut*/)
+void    GpLogConsumerGraylogConfigDesc::_SReflectCollectProps (GpReflectProp::C::Vec::Val& /*aPropsOut*/)
 {
-	//PROP(formatter);
+    //PROP(formatter);
 }
 
 }//namespace GPlatform

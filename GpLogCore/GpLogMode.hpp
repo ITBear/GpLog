@@ -5,8 +5,8 @@
 namespace GPlatform {
 
 GP_ENUM(GP_LOG_CORE_API, GpLogMode,
-	ADD_TO_CHAIN,
-	CHAIN_END
+    ADD_TO_CHAIN,
+    CHAIN_END
 );
 
 }//namespace GPlatform

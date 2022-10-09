@@ -3,9 +3,9 @@
 
 namespace GPlatform {
 
-GpByteSerializer::SP	GpLogFormatterTextFactory::NewInstance (void) const
+GpByteSerializer::SP    GpLogFormatterTextFactory::NewInstance (void) const
 {
-	return MakeSP<GpLogFormatterText>();
+    return MakeSP<GpLogFormatterText>();
 }
 
 }//namespace GPlatform

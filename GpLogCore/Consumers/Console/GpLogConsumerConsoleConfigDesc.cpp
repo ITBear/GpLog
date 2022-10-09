@@ -22,7 +22,7 @@ GpLogConsumerConsoleConfigDesc::~GpLogConsumerConsoleConfigDesc (void) noexcept
 {
 }
 
-void	GpLogConsumerConsoleConfigDesc::_SReflectCollectProps (GpReflectProp::C::Vec::Val& /*aPropsOut*/)
+void    GpLogConsumerConsoleConfigDesc::_SReflectCollectProps (GpReflectProp::C::Vec::Val& /*aPropsOut*/)
 {
 }
 

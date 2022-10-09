@@ -13,32 +13,32 @@ GpLogConsumerGraylog::~GpLogConsumerGraylog (void) noexcept
 {
 }
 
-void	GpLogConsumerGraylog::Consume (GpLogChain::CSP aLogChain)
+void    GpLogConsumerGraylog::Consume (GpLogChain::CSP aLogChain)
 {
-	//TODO: implement
-	THROW_GP_NOT_IMPLEMENTED();
+    //TODO: implement
+    THROW_GP_NOT_IMPLEMENTED();
 /*
-	const GpLogChain& logChain = aLogChain.V();
+    const GpLogChain& logChain = aLogChain.V();
 
-	iTmpBuffer.resize(4096);
-	GpByteWriterStorageByteArray	dataStorage(iTmpBuffer);
-	GpByteWriter					dataWriter(dataStorage);
+    iTmpBuffer.resize(4096);
+    GpByteWriterStorageByteArray    dataStorage(iTmpBuffer);
+    GpByteWriter                    dataWriter(dataStorage);
 
-	Formatter().Serialize
-	(
-		std::make_any<std::reference_wrapper<const GpLogChain>>(logChain),
-		dataWriter
-	);
+    Formatter().Serialize
+    (
+        std::make_any<std::reference_wrapper<const GpLogChain>>(logChain),
+        dataWriter
+    );
 
-	dataWriter.ShrinkToFit();
+    dataWriter.ShrinkToFit();
 
-	std::cout << GpSpanPtrByteR(iTmpBuffer).AsStringView();
-	std::cout.flush();*/
+    std::cout << GpSpanPtrByteR(iTmpBuffer).AsStringView();
+    std::cout.flush();*/
 }
 
-void	GpLogConsumerGraylog::OnFlush (void) noexcept
+void    GpLogConsumerGraylog::OnFlush (void) noexcept
 {
-	std::cout.flush();
+    std::cout.flush();
 }
 
 }//namespace GPlatform

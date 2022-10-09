@@ -2,7 +2,7 @@
 
 namespace GPlatform {
 
-GpLogElementMsgStr::~GpLogElementMsgStr	(void) noexcept
+GpLogElementMsgStr::~GpLogElementMsgStr (void) noexcept
 {
 }
 

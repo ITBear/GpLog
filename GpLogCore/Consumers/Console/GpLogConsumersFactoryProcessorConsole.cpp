@@ -13,19 +13,19 @@ GpLogConsumersFactoryProcessorConsole::~GpLogConsumersFactoryProcessorConsole (v
 {
 }
 
-GpLogConsumerFactory::SP	GpLogConsumersFactoryProcessorConsole::Process
+GpLogConsumerFactory::SP    GpLogConsumersFactoryProcessorConsole::Process
 (
-	GpByteSerializer::SP			aFormatter,
-	const GpLogConsumerConfigDesc&	aCfgDesc
+    GpByteSerializer::SP            aFormatter,
+    const GpLogConsumerConfigDesc&  aCfgDesc
 ) const
 {
-	const GpLogConsumerConsoleConfigDesc& consoleCfgDesc = GpReflectManager::SCastRef<const GpLogConsumerConsoleConfigDesc>(aCfgDesc);
+    const GpLogConsumerConsoleConfigDesc& consoleCfgDesc = GpReflectManager::SCastRef<const GpLogConsumerConsoleConfigDesc>(aCfgDesc);
 
-	return MakeSP<GpLogConsumerConsoleFactory>
-	(
-		std::move(aFormatter),
-		consoleCfgDesc
-	);
+    return MakeSP<GpLogConsumerConsoleFactory>
+    (
+        std::move(aFormatter),
+        consoleCfgDesc
+    );
 }
 
 }//namespace GPlatform

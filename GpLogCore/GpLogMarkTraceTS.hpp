@@ -11,23 +11,23 @@ namespace GPlatform {
 class GpLogMarkTraceTS
 {
 public:
-	CLASS_DECLARE_DEFAULTS(GpLogMarkTraceTS)
+    CLASS_DD(GpLogMarkTraceTS)
 
 public:
-	inline							GpLogMarkTraceTS	(void) noexcept;
-	inline							GpLogMarkTraceTS	(const GpLogMarkTraceTS& aTrace);
-	inline							GpLogMarkTraceTS	(GpLogMarkTraceTS&& aTrace) noexcept;
-	inline							~GpLogMarkTraceTS	(void) noexcept;
+    inline                          GpLogMarkTraceTS    (void) noexcept;
+    inline                          GpLogMarkTraceTS    (const GpLogMarkTraceTS& aTrace);
+    inline                          GpLogMarkTraceTS    (GpLogMarkTraceTS&& aTrace) noexcept;
+    inline                          ~GpLogMarkTraceTS   (void) noexcept;
 
-	inline void						Mark				(std::string			aComment,
-														 const SourceLocationT&	aSourceLocation = SourceLocationT::current());
-	inline void						Mark				(std::string_view		aComment,
-														 const SourceLocationT&	aSourceLocation = SourceLocationT::current());
+    inline void                     Mark                (std::string            aComment,
+                                                         const SourceLocationT& aSourceLocation = SourceLocationT::current());
+    inline void                     Mark                (std::string_view       aComment,
+                                                         const SourceLocationT& aSourceLocation = SourceLocationT::current());
 
-	const GpLogMarkTS::C::Vec::Val&	Marks				(void) const noexcept {return iMarks;}
+    const GpLogMarkTS::C::Vec::Val& Marks               (void) const noexcept {return iMarks;}
 
 private:
-	GpLogMarkTS::C::Vec::Val		iMarks;
+    GpLogMarkTS::C::Vec::Val        iMarks;
 };
 
 GpLogMarkTraceTS::GpLogMarkTraceTS (void) noexcept
@@ -48,22 +48,22 @@ GpLogMarkTraceTS::~GpLogMarkTraceTS (void) noexcept
 {
 }
 
-void	GpLogMarkTraceTS::Mark
+void    GpLogMarkTraceTS::Mark
 (
-	std::string				aComment,
-	const SourceLocationT&	aSourceLocation
+    std::string             aComment,
+    const SourceLocationT&  aSourceLocation
 )
 {
-	iMarks.emplace_back(GpLogMarkTS{std::move(aComment), aSourceLocation});
+    iMarks.emplace_back(GpLogMarkTS{std::move(aComment), aSourceLocation});
 }
 
-void	GpLogMarkTraceTS::Mark
+void    GpLogMarkTraceTS::Mark
 (
-	std::string_view		aComment,
-	const SourceLocationT&	aSourceLocation
+    std::string_view        aComment,
+    const SourceLocationT&  aSourceLocation
 )
 {
-	iMarks.emplace_back(GpLogMarkTS{std::string(aComment), aSourceLocation});
+    iMarks.emplace_back(GpLogMarkTS{std::string(aComment), aSourceLocation});
 }
 
 }//namespace GPlatform

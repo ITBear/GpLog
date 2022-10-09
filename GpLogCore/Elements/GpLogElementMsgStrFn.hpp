@@ -7,19 +7,19 @@ namespace GPlatform {
 /*class GP_LOG_CORE_API GpLogElementMsgStrFn final: public GpLogElementMsg
 {
 public:
-	CLASS_REMOVE_CTRS_DEFAULT_MOVE_COPY(GpLogElementMsgStrFn)
-	CLASS_DECLARE_DEFAULTS(GpLogElementMsgStrFn)
+    CLASS_REMOVE_CTRS_DEFAULT_MOVE_COPY(GpLogElementMsgStrFn)
+    CLASS_DD(GpLogElementMsgStrFn)
 
-	using MsgGenT = std::function<std::string()>;
+    using MsgGenT = std::function<std::string()>;
 
 public:
-	inline						GpLogElementMsgStrFn	(MsgGenT aMessageFn);
-	virtual						~GpLogElementMsgStrFn	(void) noexcept override final;
+    inline                      GpLogElementMsgStrFn    (MsgGenT aMessageFn);
+    virtual                     ~GpLogElementMsgStrFn   (void) noexcept override final;
 
-	std::string					Message					(void) const {return iMessageFn();}
+    std::string                 Message                 (void) const {return iMessageFn();}
 
 private:
-	MsgGenT						iMessageFn;
+    MsgGenT                     iMessageFn;
 };
 
 GpLogElementMsgStrFn::GpLogElementMsgStrFn (MsgGenT aMessageFn):

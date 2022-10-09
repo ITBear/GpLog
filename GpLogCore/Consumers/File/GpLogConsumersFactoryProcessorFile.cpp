@@ -13,19 +13,19 @@ GpLogConsumersFactoryProcessorFile::~GpLogConsumersFactoryProcessorFile (void) n
 {
 }
 
-GpLogConsumerFactory::SP	GpLogConsumersFactoryProcessorFile::Process
+GpLogConsumerFactory::SP    GpLogConsumersFactoryProcessorFile::Process
 (
-	GpByteSerializer::SP			aFormatter,
-	const GpLogConsumerConfigDesc&	aCfgDesc
+    GpByteSerializer::SP            aFormatter,
+    const GpLogConsumerConfigDesc&  aCfgDesc
 ) const
 {
-	const GpLogConsumerFileConfigDesc& fileCfgDesc = GpReflectManager::SCastRef<const GpLogConsumerFileConfigDesc>(aCfgDesc);
+    const GpLogConsumerFileConfigDesc& fileCfgDesc = GpReflectManager::SCastRef<const GpLogConsumerFileConfigDesc>(aCfgDesc);
 
-	return MakeSP<GpLogConsumerFileFactory>
-	(
-		std::move(aFormatter),
-		fileCfgDesc
-	);
+    return MakeSP<GpLogConsumerFileFactory>
+    (
+        std::move(aFormatter),
+        fileCfgDesc
+    );
 }
 
 }//namespace GPlatform
