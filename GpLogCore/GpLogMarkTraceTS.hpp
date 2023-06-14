@@ -19,9 +19,9 @@ public:
     inline                          GpLogMarkTraceTS    (GpLogMarkTraceTS&& aTrace) noexcept;
     inline                          ~GpLogMarkTraceTS   (void) noexcept;
 
-    inline void                     Mark                (std::string            aComment,
+    inline void                     Mark                (std::u8string          aComment,
                                                          const SourceLocationT& aSourceLocation = SourceLocationT::current());
-    inline void                     Mark                (std::string_view       aComment,
+    inline void                     Mark                (std::u8string_view     aComment,
                                                          const SourceLocationT& aSourceLocation = SourceLocationT::current());
 
     const GpLogMarkTS::C::Vec::Val& Marks               (void) const noexcept {return iMarks;}
@@ -50,7 +50,7 @@ GpLogMarkTraceTS::~GpLogMarkTraceTS (void) noexcept
 
 void    GpLogMarkTraceTS::Mark
 (
-    std::string             aComment,
+    std::u8string           aComment,
     const SourceLocationT&  aSourceLocation
 )
 {
@@ -59,11 +59,11 @@ void    GpLogMarkTraceTS::Mark
 
 void    GpLogMarkTraceTS::Mark
 (
-    std::string_view        aComment,
+    std::u8string_view      aComment,
     const SourceLocationT&  aSourceLocation
 )
 {
-    iMarks.emplace_back(GpLogMarkTS{std::string(aComment), aSourceLocation});
+    iMarks.emplace_back(GpLogMarkTS{std::u8string(aComment), aSourceLocation});
 }
 
 }//namespace GPlatform

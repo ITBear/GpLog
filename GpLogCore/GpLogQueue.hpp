@@ -2,6 +2,7 @@
 
 #include "GpLogChain.hpp"
 #include "Consumers/GpLogConsumerFactory.hpp"
+#include "../../GpCore2/GpUtils/Types/Containers/GpDictionary.hpp"
 
 namespace GPlatform {
 
@@ -11,7 +12,7 @@ public:
     CLASS_REMOVE_CTRS_MOVE_COPY(GpLogQueue)
     CLASS_DD(GpLogQueue)
 
-    using ChainsByIdT   = GpElementsCatalog<GpUUID, GpLogChain::SP>;
+    using ChainsByIdT   = GpDictionary<GpUUID, GpLogChain::SP>;
     using ChainsEndedT  = GpLogChain::C::Queue::SP;
 
 public:
@@ -23,7 +24,7 @@ public:
                                                      GpLogElement&& aLogElement);
     void                        EndChain            (const GpUUID&  aChainId);
     GpLogChain::C::Opt::SP      PopFromEnd          (void);
-    ChainsByIdT                 RemoveNotEnded      (void) noexcept {return iChainsById.UnregisterAll();}
+    ChainsByIdT                 RemoveNotEnded      (void) noexcept {return iChainsById.EraseAll();}
 
 private:
     void                        PushToEnd           (GpLogChain::SP&& aChain);

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../../GpCore2/GpUtils/SyncPrimitives/GpSpinlock.hpp"
 #include "Elements/GpLogElements.hpp"
 #include <mutex>
 

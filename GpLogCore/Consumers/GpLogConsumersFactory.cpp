@@ -12,26 +12,26 @@ void    GpLogConsumersFactory::AddDefaultProcessors (void)
 
 void    GpLogConsumersFactory::AddProcessor (GpLogConsumersFactoryProcessor::SP aProcessor)
 {
-    iProcessors.Register
+    iProcessors.Set
     (
-        std::string(aProcessor.V().Name()),
+        std::u8string(aProcessor.V().Name()),
         std::move(aProcessor)
     );
 }
 
 GpLogConsumerFactory::SP    GpLogConsumersFactory::FactoryFromCfg
 (
-    std::string_view                aName,
+    std::u8string_view              aName,
     const GpLogConsumerConfigDesc&  aCfgDesc,
     GpByteSerializer::SP            aFormatter
 ) const
 {
-    auto processorOpt = iProcessors.FindOpt(aName);
+    auto processorOpt = iProcessors.GetOpt(aName);
 
     THROW_COND_GP
     (
         processorOpt.has_value(),
-        [&](){return "Processor not found by name '"_sv + aName + "'"_sv;}
+        [&](){return u8"Processor not found by name '"_sv + aName + u8"'"_sv;}
     );
 
     return processorOpt.value().get().V().Process

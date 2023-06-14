@@ -1,4 +1,5 @@
 #include "GpLogRunnable.hpp"
+#include "../../GpCore2/GpUtils/Types/Strings/GpStringUtils.hpp"
 
 #include <iostream>
 
@@ -19,10 +20,7 @@ void    GpLogRunnable::Run (GpThreadStopToken aStopToken) noexcept
         {
             Consume(consumers, flushOnceInPeriod);
 
-            if (WaitForWakeup(0.5_si_s) == false)
-            {
-                std::cerr << "WaitForWakeup return false"_sv << std::endl;
-            }
+            std::ignore = CVF().WaitForAndReset(0.5_si_s);
         }
 
         Consume(consumers, flushOnceInPeriod);
@@ -30,10 +28,10 @@ void    GpLogRunnable::Run (GpThreadStopToken aStopToken) noexcept
         Flush(consumers);
     } catch (const std::exception& e)
     {
-        std::cerr << "[GpLogRunnable::Run]: exception " << e.what() << std::endl;
+        GpStringUtils::SCerr("[GpLogRunnable::Run]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[GpLogRunnable::Run]: unknown exception " << std::endl;
+        GpStringUtils::SCerr("[GpLogRunnable::Run]: unknown exception\n"_sv);
     }
 }
 

@@ -1,11 +1,12 @@
 #include "GpLogConsumersFactoryProcessorConsole.hpp"
 #include "GpLogConsumerConsoleConfigDesc.hpp"
 #include "GpLogConsumerConsoleFactory.hpp"
+#include "../../../../GpCore2/GpReflection/GpReflectManager.hpp"
 
 namespace GPlatform {
 
 GpLogConsumersFactoryProcessorConsole::GpLogConsumersFactoryProcessorConsole (void):
-GpLogConsumersFactoryProcessor("console")
+GpLogConsumersFactoryProcessor(u8"console")
 {
 }
 

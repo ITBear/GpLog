@@ -11,16 +11,16 @@ public:
     CLASS_DD(GpLogElementMsgStr)
 
 public:
-    inline                      GpLogElementMsgStr  (std::string&& aMessage) noexcept;
+    inline                      GpLogElementMsgStr  (std::u8string&& aMessage) noexcept;
     virtual                     ~GpLogElementMsgStr (void) noexcept override final;
 
-    std::string_view            Message             (void) const noexcept {return iMessage;}
+    std::u8string_view          Message             (void) const noexcept {return iMessage;}
 
 private:
-    std::string                 iMessage;
+    std::u8string               iMessage;
 };
 
-GpLogElementMsgStr::GpLogElementMsgStr (std::string&& aMessage) noexcept:
+GpLogElementMsgStr::GpLogElementMsgStr (std::u8string&& aMessage) noexcept:
 GpLogElementMsg(TypeT::STR),
 iMessage(std::move(aMessage))
 {

@@ -1,5 +1,7 @@
 #include "GpLogConsumerConsoleConfigDesc.hpp"
 
+#include "../../../../GpCore2/GpReflection/GpReflectManager.hpp"
+
 namespace GPlatform {
 
 REFLECT_IMPLEMENT(GpLogConsumerConsoleConfigDesc, GP_MODULE_UUID)

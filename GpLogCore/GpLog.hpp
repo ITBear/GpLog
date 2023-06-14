@@ -24,7 +24,7 @@ protected:
 public:
     virtual                 ~GpLog          (void) noexcept;
 
-    static GpLog&           S               (void) {return sLog;}
+    static GpLog&           S               (void) {return sInstance;}
 
     void                    StartDefault    (void);
     void                    StartFromConfig (const GpLogConfigDesc&         aConfigDesc,
@@ -47,7 +47,7 @@ private:
     GpLogExecutor           iLogExecutor;
     GpLogLevel::EnumT       iMinLevel   = GpLogLevel::INFO;
 
-    static GpLog            sLog;
+    static GpLog            sInstance;
 };
 
 GpLog::GpLog (void) noexcept:
@@ -94,156 +94,156 @@ GP_LOG_CORE_API void    LOG_END_CHAIN
 
 GP_LOG_CORE_API void    LOG_DEBUG
 (
-    std::string             aMessage,
+    std::u8string               aMessage,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_DEBUG
 (
-    std::string             aMessage,
+    std::u8string               aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_DEBUG
 (
-    std::string_view        aMessage,
+    std::u8string_view      aMessage,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_DEBUG
 (
-    std::string_view        aMessage,
+    std::u8string_view      aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_INFO
 (
-    std::string             aMessage,
+    std::u8string               aMessage,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_INFO
 (
-    std::string             aMessage,
+    std::u8string               aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_INFO
 (
-    std::string_view        aMessage,
+    std::u8string_view      aMessage,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_INFO
 (
-    std::string_view        aMessage,
+    std::u8string_view      aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_WARNING
 (
-    std::string             aMessage,
+    std::u8string               aMessage,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_WARNING
 (
-    std::string             aMessage,
+    std::u8string               aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_WARNING
 (
-    std::string_view        aMessage,
+    std::u8string_view      aMessage,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_WARNING
 (
-    std::string_view        aMessage,
+    std::u8string_view      aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_ERROR
 (
-    std::string             aMessage,
+    std::u8string           aMessage,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_ERROR
 (
-    std::string             aMessage,
+    std::u8string           aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_ERROR
 (
-    std::string_view        aMessage,
+    std::u8string_view      aMessage,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_ERROR
 (
-    std::string_view        aMessage,
+    std::u8string_view      aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_CRITICAL_ERROR
 (
-    std::string             aMessage,
+    std::u8string               aMessage,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_CRITICAL_ERROR
 (
-    std::string             aMessage,
+    std::u8string           aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_CRITICAL_ERROR
 (
-    std::string_view        aMessage,
+    std::u8string_view      aMessage,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_CRITICAL_ERROR
 (
-    std::string_view        aMessage,
+    std::u8string_view      aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_PAYLOAD
 (
-    std::string             aMessage,
+    std::u8string           aMessage,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_PAYLOAD
 (
-    std::string             aMessage,
+    std::u8string           aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_PAYLOAD
 (
-    std::string_view        aMessage,
+    std::u8string_view      aMessage,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_PAYLOAD
 (
-    std::string_view        aMessage,
+    std::u8string_view      aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;

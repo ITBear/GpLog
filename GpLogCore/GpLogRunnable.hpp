@@ -1,6 +1,8 @@
 #pragma once
 
 #include "GpLogQueue.hpp"
+#include "../../GpCore2/GpUtils/Threads/GpRunnable.hpp"
+#include "../../GpCore2/GpUtils/Threads/Timers/GpDoOnceInPeriod.hpp"
 
 namespace GPlatform {
 
@@ -37,7 +39,6 @@ GpLogRunnable::GpLogRunnable
     const seconds_t                         aFlushPeriod,
     GpLogQueue&                             aLogQueue
 ):
-GpRunnable(MakeSP<GpConditionVar>()),
 iConsumerFactories(std::move(aConsumerFactories)),
 iFlushPeriod(aFlushPeriod),
 iLogQueue(aLogQueue)

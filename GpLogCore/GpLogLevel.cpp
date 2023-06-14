@@ -2,6 +2,6 @@
 
 namespace GPlatform {
 
-GP_ENUM_IMPL(GpLogLevel);
+GP_ENUM_IMPL(GpLogLevel)
 
 }//namespace GPlatform

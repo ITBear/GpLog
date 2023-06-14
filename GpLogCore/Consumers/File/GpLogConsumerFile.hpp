@@ -15,8 +15,8 @@ public:
     CLASS_DD(GpLogConsumerFile)
 
 public:
-                                GpLogConsumerFile   (std::string_view       aOutFilePath,
-                                                     std::string_view       aOutFilePrefix,
+                                GpLogConsumerFile   (std::u8string_view     aOutFilePath,
+                                                     std::u8string_view     aOutFilePrefix,
                                                      const size_byte_t      aFileMaxSize,
                                                      const milliseconds_t   aMaxFlushPeriod,
                                                      const size_byte_t      aMaxBufferSize,
@@ -28,15 +28,15 @@ public:
 
 private:
     void                        WriteToFile         (void);
-    std::ofstream               CreateFile          (std::string_view aFilePath,
-                                                     std::string_view aFilePrefix);
-    std::string                 GenFullFileName     (std::string_view   aFilePath,
-                                                     std::string_view   aFilePrefix,
+    std::ofstream               CreateFile          (std::u8string_view aFilePath,
+                                                     std::u8string_view aFilePrefix);
+    std::u8string               GenFullFileName     (std::u8string_view aFilePath,
+                                                     std::u8string_view aFilePrefix,
                                                      const size_t       aPostfix);
 
 private:
-    const std::string           iOutFilePath;
-    const std::string           iOutFilePrefix;
+    const std::u8string         iOutFilePath;
+    const std::u8string         iOutFilePrefix;
     const size_byte_t           iFileMaxSize;
     const milliseconds_t        iMaxFlushPeriod;
     const size_byte_t           iMaxBufferSize;
@@ -44,7 +44,7 @@ private:
     GpBytesArray                iBufferData;
     milliseconds_t              iSteadyLastFlushTS = 0.0_si_ms;
 
-    std::string                 iOFStreamFileName;
+    std::u8string               iOFStreamFileName;
     std::ofstream               iOFStream;
     size_byte_t                 iBytesWriteToStream;
     std::array<std::byte, 8192> iBufferStream;

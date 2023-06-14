@@ -1,6 +1,8 @@
 #pragma once
 
 #include "../../GpLogLevel.hpp"
+#include "../../../../GpCore2/GpUtils/Streams/GpByteSerializer.hpp"
+#include "../../../../GpCore2/GpUtils/Types/Units/SI/GpUnitsSI_Time.hpp"
 
 namespace GPlatform {
 
@@ -16,8 +18,8 @@ public:
                             GpLogFormatterText  (void) noexcept = default;
     virtual                 ~GpLogFormatterText (void) noexcept override final;
 
-    virtual void            Serialize           (const std::any&    aObject,
-                                                 GpByteWriter&      aWriter) const override final;
+    virtual void            Serialize           (const GpAny&   aObject,
+                                                 GpByteWriter&  aWriter) const override final;
 
 private:
     void                    WriteLevel          (const GpLogLevel::EnumT    aLevel,
@@ -26,10 +28,10 @@ private:
                                                  GpByteWriter&              aWriter) const;
     void                    WriteSteadyTS       (const microseconds_t       aSteadyTS,
                                                  GpByteWriter&              aWriter) const;
-    std::string             GenMessage          (const GpLogElementMsg&     aMessage) const;
+    std::u8string           GenMessage          (const GpLogElementMsg&     aMessage) const;
 
 private:
-    static const std::array<std::string, GpLogLevel::SCount()>  sLevels;
+    static const std::array<std::u8string, GpLogLevel::SCount()>    sLevels;
 };
 
 }//namespace GPlatform

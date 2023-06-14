@@ -8,7 +8,7 @@ class GP_LOG_CORE_API GpLogConsumerConsoleConfigDesc final: public GpLogConsumer
 {
 public:
     CLASS_DD(GpLogConsumerConsoleConfigDesc)
-    REFLECT_DECLARE("4684da56-0aeb-45f4-aa0b-27fe6711d97e"_uuid)
+    REFLECT_DECLARE(u8"4684da56-0aeb-45f4-aa0b-27fe6711d97e"_uuid)
 
 public:
                         GpLogConsumerConsoleConfigDesc  (void) noexcept;

@@ -5,6 +5,8 @@
 #if defined(GP_USE_MULTITHREADING)
 #if defined(GP_USE_MULTITHREADING_FIBERS)
 
+#include "../../../GpCore2/GpTasks/Fibers/GpTaskFiberBase.hpp"
+
 namespace GPlatform {
 
 class GP_LOG_CORE_API GpLogTaskFiberBase: public GpTaskFiberBase
@@ -14,13 +16,13 @@ public:
     CLASS_DD(GpLogTaskFiberBase)
 
 protected:
-    inline                      GpLogTaskFiberBase      (std::string aName) noexcept;
+    inline                      GpLogTaskFiberBase      (std::u8string aName) noexcept;
 
 public:
     virtual                     ~GpLogTaskFiberBase     (void) noexcept override;
 };
 
-GpLogTaskFiberBase::GpLogTaskFiberBase (std::string aName) noexcept:
+GpLogTaskFiberBase::GpLogTaskFiberBase (std::u8string aName) noexcept:
 GpTaskFiberBase(std::move(aName))
 {
 }

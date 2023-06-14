@@ -10,13 +10,13 @@ public:
     CLASS_REMOVE_CTRS_DEFAULT_MOVE_COPY(GpLogFormatterTextElementMsgStr)
 
 public:
-    inline static std::string   SGen (const GpLogElementMsg& aMessage);
+    inline static std::u8string SGen (const GpLogElementMsg& aMessage);
 };
 
-std::string GpLogFormatterTextElementMsgStr::SGen (const GpLogElementMsg& aMessage)
+std::u8string   GpLogFormatterTextElementMsgStr::SGen (const GpLogElementMsg& aMessage)
 {
     const GpLogElementMsgStr& e = static_cast<const GpLogElementMsgStr&>(aMessage);
-    return std::string(e.Message());
+    return std::u8string(e.Message());
 }
 
 }//namespace GPlatform

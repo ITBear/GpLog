@@ -24,7 +24,7 @@ void    GpLogQueue::AddElement
 
         if (aChainId.IsNotZero())
         {
-            auto chainOpt = iChainsById.UnregisterOpt(aChainId);
+            auto chainOpt = iChainsById.EraseOpt(aChainId);
 
             if (chainOpt.has_value())
             {
@@ -57,7 +57,7 @@ void    GpLogQueue::EndChain (const GpUUID& aChainId)
         return;
     }
 
-    auto chainOpt = iChainsById.UnregisterOpt(aChainId);
+    auto chainOpt = iChainsById.EraseOpt(aChainId);
 
     if (chainOpt.has_value())
     {
@@ -88,7 +88,7 @@ void    GpLogQueue::PushToEnd (GpLogChain::SP&& aChain)
 
 GpLogChain::SP  GpLogQueue::FindOrRegisterChain (const GpUUID& aChainId)
 {
-    return iChainsById.FindOrRegister
+    return iChainsById.GetOrSet
     (
         aChainId,
         [&]()

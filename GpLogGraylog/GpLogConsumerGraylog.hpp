@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GpLogGraylog_global.hpp"
+#include "../GpLogCore/Consumers/GpLogConsumer.hpp"
 
 namespace GPlatform {
 

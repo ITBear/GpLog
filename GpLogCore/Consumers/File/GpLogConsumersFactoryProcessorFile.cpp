@@ -1,11 +1,12 @@
 #include "GpLogConsumersFactoryProcessorFile.hpp"
 #include "GpLogConsumerFileConfigDesc.hpp"
 #include "GpLogConsumerFileFactory.hpp"
+#include "../../../../GpCore2/GpReflection/GpReflectManager.hpp"
 
 namespace GPlatform {
 
 GpLogConsumersFactoryProcessorFile::GpLogConsumersFactoryProcessorFile (void):
-GpLogConsumersFactoryProcessor("file")
+GpLogConsumersFactoryProcessor(u8"file")
 {
 }
 

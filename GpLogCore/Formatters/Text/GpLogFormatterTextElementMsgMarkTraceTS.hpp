@@ -10,12 +10,12 @@ public:
     CLASS_REMOVE_CTRS_DEFAULT_MOVE_COPY(GpLogFormatterTextElementMsgMarkTraceTS)
 
 public:
-    inline static std::string   SGen (const GpLogElementMsg& aMessage);
+    inline static std::u8string SGen (const GpLogElementMsg& aMessage);
 };
 
-std::string GpLogFormatterTextElementMsgMarkTraceTS::SGen (const GpLogElementMsg& aMessage)
+std::u8string   GpLogFormatterTextElementMsgMarkTraceTS::SGen (const GpLogElementMsg& aMessage)
 {
-    std::string resStr;
+    std::u8string resStr;
     resStr.reserve(1024);
 
     const GpLogElementMsgMarkTraceTS& e = static_cast<const GpLogElementMsgMarkTraceTS&>(aMessage);
@@ -31,26 +31,26 @@ std::string GpLogFormatterTextElementMsgMarkTraceTS::SGen (const GpLogElementMsg
 
     for (const GpLogMarkTS& mark: marks)
     {
-        std::string str;
+        std::u8string str;
 
         if (tsId > 0)
         {
-            resStr.append("\n"_sv);
+            resStr.append(u8"\n"_sv);
         }
 
         //id
         tsId++;
         str = StrOps::SFromUI64(u_int_64(tsId));
         resStr
-            .append("["_sv)
+            .append(u8"["_sv)
             .append(str)
-            .append("]: STS: "_sv);
+            .append(u8"]: STS: "_sv);
 
         //steady ts
         str = StrOps::SFromDouble(mark.SteadyTS().As<seconds_t>().Value());
         resStr
             .append(str)
-            .append("s, D: "_sv);
+            .append(u8"s, D: "_sv);
 
         //Delta
         nowHiResTs = mark.HiResTS();
@@ -71,7 +71,7 @@ std::string GpLogFormatterTextElementMsgMarkTraceTS::SGen (const GpLogElementMsg
         str = StrOps::SFromDouble(duration.As<seconds_t>().Value());
         resStr
             .append(str)
-            .append("s: "_sv);
+            .append(u8"s: "_sv);
 
         //Comment
         resStr
@@ -85,11 +85,11 @@ std::string GpLogFormatterTextElementMsgMarkTraceTS::SGen (const GpLogElementMsg
             const SourceLocationT& sl = sourceLocation.value();
 
             resStr
-                .append("    Function: '"_sv)
-                .append(std::string_view(sl.function_name()))
-                .append("', file '"_sv)
-                .append(std::string_view(sl.file_name()))
-                .append("', line "_sv)
+                .append(u8"    Function: '"_sv)
+                .append(GpUTF::S_STR_To_UTF8(sl.function_name()))
+                .append(u8"', file '"_sv)
+                .append(GpUTF::S_STR_To_UTF8(sl.file_name()))
+                .append(u8"', line "_sv)
                 .append(StrOps::SFromUI64(sl.line()));
         }
     }

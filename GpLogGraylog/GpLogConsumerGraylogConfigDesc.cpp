@@ -1,22 +1,9 @@
 #include "GpLogConsumerGraylogConfigDesc.hpp"
+#include "../../GpCore2/GpReflection/GpReflectManager.hpp"
 
 namespace GPlatform {
 
 REFLECT_IMPLEMENT(GpLogConsumerGraylogConfigDesc, GP_MODULE_UUID)
-
-GpLogConsumerGraylogConfigDesc::GpLogConsumerGraylogConfigDesc (void) noexcept
-{
-}
-
-GpLogConsumerGraylogConfigDesc::GpLogConsumerGraylogConfigDesc (const GpLogConsumerGraylogConfigDesc& aDesc):
-GpLogConsumerConfigDesc(aDesc)
-{
-}
-
-GpLogConsumerGraylogConfigDesc::GpLogConsumerGraylogConfigDesc (GpLogConsumerGraylogConfigDesc&& aDesc) noexcept:
-GpLogConsumerConfigDesc(std::move(aDesc))
-{
-}
 
 GpLogConsumerGraylogConfigDesc::~GpLogConsumerGraylogConfigDesc (void) noexcept
 {

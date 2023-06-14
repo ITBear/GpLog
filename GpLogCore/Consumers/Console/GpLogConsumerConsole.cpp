@@ -1,4 +1,5 @@
 #include "GpLogConsumerConsole.hpp"
+#include "../../../../GpCore2/GpUtils/Streams/GpByteWriterStorageByteArray.hpp"
 
 #include <iostream>
 
@@ -18,13 +19,15 @@ void    GpLogConsumerConsole::Consume (GpLogChain::CSP aLogChain)
 
     Formatter().Serialize
     (
-        std::make_any<std::reference_wrapper<const GpLogChain>>(logChain),
+        GpAny{std::reference_wrapper<const GpLogChain>(logChain)},
         dataWriter
     );
 
     dataWriter.ShrinkToFit();
 
-    std::cout << GpSpanPtrByteR(iTmpBuffer).AsStringView();
+    std::u8string_view sv = GpSpanPtrByteR(iTmpBuffer.data(), iTmpBuffer.size()).AsStringViewU8();
+
+    std::cout << GpUTF::S_UTF8_To_STR(sv);
     std::cout.flush();
 }
 

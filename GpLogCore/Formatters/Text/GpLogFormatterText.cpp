@@ -8,13 +8,13 @@
 
 namespace GPlatform {
 
-const std::array<std::string, GpLogLevel::SCount()> GpLogFormatterText::sLevels =
+const std::array<std::u8string, GpLogLevel::SCount()>   GpLogFormatterText::sLevels =
 {
-    std::string("[D]"_sv),
-    std::string("[I]"_sv),
-    std::string("[W]"_sv),
-    std::string("[E]"_sv),
-    std::string("[!]"_sv)
+    std::u8string(u8"[D]"_sv),
+    std::u8string(u8"[I]"_sv),
+    std::u8string(u8"[W]"_sv),
+    std::u8string(u8"[E]"_sv),
+    std::u8string(u8"[!]"_sv)
 };
 
 GpLogFormatterText::~GpLogFormatterText (void) noexcept
@@ -23,15 +23,15 @@ GpLogFormatterText::~GpLogFormatterText (void) noexcept
 
 void    GpLogFormatterText::Serialize
 (
-    const std::any& aObject,
+    const GpAny&    aObject,
     GpByteWriter&   aWriter
 ) const
 {
-    const GpLogChain&                   logChain        = std::any_cast<std::reference_wrapper<const GpLogChain>>(aObject).get();
+    const GpLogChain&                   logChain        = aObject.Value<const std::reference_wrapper<const GpLogChain>>().get();
     const GpLogElement::C::List::Val&   chainElements   = logChain.Elements();
 
     const GpUUID        chainId         = logChain.ChainId();
-    const std::string   chainIdStr      = chainId.ToString();
+    const std::u8string chainIdStr      = chainId.ToString();
     const bool          chainNotEmpty   = chainId.IsNotZero();
 
     if (chainNotEmpty)
@@ -49,8 +49,8 @@ void    GpLogFormatterText::Serialize
         WriteUnixTS(element.UnixTS(), aWriter);
         WriteSteadyTS(element.SteadyTS(), aWriter);
 
-        std::string msg = GenMessage(element.Message());
-        if (msg.find_first_of('\n') == std::string::npos)
+        std::u8string msg = GenMessage(element.Message());
+        if (msg.find_first_of('\n') == std::u8string::npos)
         {
             aWriter
                 .Bytes(": "_sv)
@@ -79,7 +79,7 @@ void    GpLogFormatterText::WriteLevel
 ) const
 {
     aWriter
-        .Bytes(GpLogFormatterText::sLevels.at(int(aLevel)));
+        .Bytes(GpLogFormatterText::sLevels.at(static_cast<size_t>(aLevel)));
 }
 
 void    GpLogFormatterText::WriteUnixTS
@@ -88,7 +88,7 @@ void    GpLogFormatterText::WriteUnixTS
     GpByteWriter&       aWriter
 ) const
 {
-    const std::string str = GpDateTimeOps::SUnixTsToStr(aUnixTS, GpDateTimeFormat::STD_DATE_TIME);
+    const std::u8string str = GpDateTimeOps::SUnixTsToStr(aUnixTS, GpDateTimeFormat::STD_DATE_TIME);
 
     aWriter
         .Bytes("(TS: "_sv)
@@ -101,7 +101,7 @@ void    GpLogFormatterText::WriteSteadyTS
     GpByteWriter&           aWriter
 ) const
 {
-    const std::string str = StrOps::SFromDouble(aSteadyTS.As<seconds_t>().Value());
+    const std::u8string str = StrOps::SFromDouble(aSteadyTS.As<seconds_t>().Value());
 
     aWriter
         .Bytes(", STS: "_sv)
@@ -109,7 +109,7 @@ void    GpLogFormatterText::WriteSteadyTS
         .Bytes("s)"_sv);
 }
 
-std::string GpLogFormatterText::GenMessage (const GpLogElementMsg& aMessage) const
+std::u8string   GpLogFormatterText::GenMessage (const GpLogElementMsg& aMessage) const
 {
     const auto t = aMessage.Type();
 
@@ -125,7 +125,7 @@ std::string GpLogFormatterText::GenMessage (const GpLogElementMsg& aMessage) con
         } break;
         default:
         {
-            THROW_GP("Unknown log element with type id "_sv + int(t));
+            THROW_GP(u8"Unknown log element with type id "_sv + int(t));
         }
     }
 }

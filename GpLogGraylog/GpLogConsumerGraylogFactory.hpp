@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GpLogConsumerGraylogConfigDesc.hpp"
+#include "../GpLogCore/Consumers/GpLogConsumersFactory.hpp"
 
 namespace GPlatform {
 

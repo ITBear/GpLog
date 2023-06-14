@@ -13,7 +13,7 @@ GpLogConsumerGraylog::~GpLogConsumerGraylog (void) noexcept
 {
 }
 
-void    GpLogConsumerGraylog::Consume (GpLogChain::CSP aLogChain)
+void    GpLogConsumerGraylog::Consume (GpLogChain::CSP /*aLogChain*/)
 {
     //TODO: implement
     THROW_GP_NOT_IMPLEMENTED();
@@ -32,7 +32,7 @@ void    GpLogConsumerGraylog::Consume (GpLogChain::CSP aLogChain)
 
     dataWriter.ShrinkToFit();
 
-    std::cout << GpSpanPtrByteR(iTmpBuffer).AsStringView();
+    std::cout << GpSpanPtrByteR(iTmpBuffer).AsStringViewU8();
     std::cout.flush();*/
 }
 

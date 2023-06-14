@@ -1,12 +1,14 @@
 #include "GpLog.hpp"
 #include "Consumers/Console/GpLogConsumerConsoleFactory.hpp"
 #include "Formatters/Text/GpLogFormatterText.hpp"
+#include "../../GpCore2/GpUtils/Types/Strings/GpStringUtils.hpp"
+#include "../../GpCore2/GpUtils/Exceptions/GpExceptionUtils.hpp"
 
 #include <iostream>
 
 namespace GPlatform{
 
-GpLog   GpLog::sLog;
+GpLog   GpLog::sInstance;
 
 GpLog::~GpLog (void) noexcept
 {
@@ -110,19 +112,19 @@ void    LOG_END_CHAIN
         GpLog::S().EndChain(aChainId);
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_END_CHAIN]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_END_CHAIN]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_END_CHAIN]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_END_CHAIN]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_END_CHAIN]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_END_CHAIN]: unknown\n"_sv);
     }
 }
 
 void    LOG_DEBUG
 (
-    std::string             aMessage,
+    std::u8string           aMessage,
     const SourceLocationT&  aSourceLocation
 ) noexcept
 {
@@ -138,19 +140,19 @@ void    LOG_DEBUG
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_DEBUG]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_DEBUG]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_DEBUG]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_DEBUG]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_DEBUG]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_DEBUG]: unknown\n"_sv);
     }
 }
 
 void    LOG_DEBUG
 (
-    std::string             aMessage,
+    std::u8string           aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation
 ) noexcept
@@ -167,19 +169,19 @@ void    LOG_DEBUG
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_DEBUG]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_DEBUG]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_DEBUG]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_DEBUG]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_DEBUG]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_DEBUG]: unknown\n"_sv);
     }
 }
 
 void    LOG_DEBUG
 (
-    std::string_view        aMessage,
+    std::u8string_view      aMessage,
     const SourceLocationT&  aSourceLocation
 ) noexcept
 {
@@ -187,7 +189,7 @@ void    LOG_DEBUG
     {
         GpLog::S().Logout
         (
-            MakeCSP<GpLogElementMsgStr>(std::string(aMessage)),
+            MakeCSP<GpLogElementMsgStr>(std::u8string(aMessage)),
             GpLogLevel::DEBUG,
             GpLogMode::CHAIN_END,
             GpUUID::CE_Zero(),
@@ -195,19 +197,19 @@ void    LOG_DEBUG
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_DEBUG]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_DEBUG]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_DEBUG]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_DEBUG]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_DEBUG]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_DEBUG]: unknown\n"_sv);
     }
 }
 
 void    LOG_DEBUG
 (
-    std::string_view        aMessage,
+    std::u8string_view      aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation
 ) noexcept
@@ -216,7 +218,7 @@ void    LOG_DEBUG
     {
         GpLog::S().Logout
         (
-            MakeCSP<GpLogElementMsgStr>(std::string(aMessage)),
+            MakeCSP<GpLogElementMsgStr>(std::u8string(aMessage)),
             GpLogLevel::DEBUG,
             GpLogMode::ADD_TO_CHAIN,
             aChainId,
@@ -224,19 +226,19 @@ void    LOG_DEBUG
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_DEBUG]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_DEBUG]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_DEBUG]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_DEBUG]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_DEBUG]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_DEBUG]: unknown\n"_sv);
     }
 }
 
 void    LOG_INFO
 (
-    std::string             aMessage,
+    std::u8string           aMessage,
     const SourceLocationT&  aSourceLocation
 ) noexcept
 {
@@ -252,19 +254,19 @@ void    LOG_INFO
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_INFO]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_INFO]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_INFO]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_INFO]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_INFO]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_INFO]: unknown\n"_sv);
     }
 }
 
 void    LOG_INFO
 (
-    std::string             aMessage,
+    std::u8string           aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation
 ) noexcept
@@ -281,19 +283,19 @@ void    LOG_INFO
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_INFO]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_INFO]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_INFO]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_INFO]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_INFO]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_INFO]: unknown\n"_sv);
     }
 }
 
 void    LOG_INFO
 (
-    std::string_view        aMessage,
+    std::u8string_view      aMessage,
     const SourceLocationT&  aSourceLocation
 ) noexcept
 {
@@ -301,7 +303,7 @@ void    LOG_INFO
     {
         GpLog::S().Logout
         (
-            MakeCSP<GpLogElementMsgStr>(std::string(aMessage)),
+            MakeCSP<GpLogElementMsgStr>(std::u8string(aMessage)),
             GpLogLevel::INFO,
             GpLogMode::CHAIN_END,
             GpUUID::CE_Zero(),
@@ -309,19 +311,19 @@ void    LOG_INFO
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_INFO]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_INFO]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_INFO]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_INFO]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_INFO]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_INFO]: unknown\n"_sv);
     }
 }
 
 void    LOG_INFO
 (
-    std::string_view        aMessage,
+    std::u8string_view      aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation
 ) noexcept
@@ -330,7 +332,7 @@ void    LOG_INFO
     {
         GpLog::S().Logout
         (
-            MakeCSP<GpLogElementMsgStr>(std::string(aMessage)),
+            MakeCSP<GpLogElementMsgStr>(std::u8string(aMessage)),
             GpLogLevel::INFO,
             GpLogMode::ADD_TO_CHAIN,
             aChainId,
@@ -338,19 +340,19 @@ void    LOG_INFO
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_INFO]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_INFO]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_INFO]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_INFO]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_INFO]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_INFO]: unknown\n"_sv);
     }
 }
 
 void    LOG_WARNING
 (
-    std::string             aMessage,
+    std::u8string           aMessage,
     const SourceLocationT&  aSourceLocation
 ) noexcept
 {
@@ -366,19 +368,19 @@ void    LOG_WARNING
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_WARNING]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_WARNING]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_WARNING]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_WARNING]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_WARNING]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_WARNING]: unknown\n"_sv);
     }
 }
 
 void    LOG_WARNING
 (
-    std::string             aMessage,
+    std::u8string               aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation
 ) noexcept
@@ -395,19 +397,19 @@ void    LOG_WARNING
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_WARNING]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_WARNING]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_WARNING]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_WARNING]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_WARNING]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_WARNING]: unknown\n"_sv);
     }
 }
 
 void    LOG_WARNING
 (
-    std::string_view        aMessage,
+    std::u8string_view      aMessage,
     const SourceLocationT&  aSourceLocation
 ) noexcept
 {
@@ -415,7 +417,7 @@ void    LOG_WARNING
     {
         GpLog::S().Logout
         (
-            MakeCSP<GpLogElementMsgStr>(std::string(aMessage)),
+            MakeCSP<GpLogElementMsgStr>(std::u8string(aMessage)),
             GpLogLevel::WARNING,
             GpLogMode::CHAIN_END,
             GpUUID::CE_Zero(),
@@ -423,19 +425,19 @@ void    LOG_WARNING
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_WARNING]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_WARNING]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_WARNING]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_WARNING]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_WARNING]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_WARNING]: unknown\n"_sv);
     }
 }
 
 void    LOG_WARNING
 (
-    std::string_view        aMessage,
+    std::u8string_view      aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation
 ) noexcept
@@ -444,7 +446,7 @@ void    LOG_WARNING
     {
         GpLog::S().Logout
         (
-            MakeCSP<GpLogElementMsgStr>(std::string(aMessage)),
+            MakeCSP<GpLogElementMsgStr>(std::u8string(aMessage)),
             GpLogLevel::WARNING,
             GpLogMode::ADD_TO_CHAIN,
             aChainId,
@@ -452,19 +454,19 @@ void    LOG_WARNING
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_WARNING]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_WARNING]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_WARNING]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_WARNING]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_WARNING]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_WARNING]: unknown\n"_sv);
     }
 }
 
 void    LOG_ERROR
 (
-    std::string             aMessage,
+    std::u8string           aMessage,
     const SourceLocationT&  aSourceLocation
 ) noexcept
 {
@@ -480,19 +482,19 @@ void    LOG_ERROR
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_ERROR]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_ERROR]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_ERROR]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_ERROR]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_ERROR]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_ERROR]: unknown\n"_sv);
     }
 }
 
 void    LOG_ERROR
 (
-    std::string             aMessage,
+    std::u8string           aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation
 ) noexcept
@@ -509,19 +511,19 @@ void    LOG_ERROR
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_ERROR]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_ERROR]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_ERROR]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_ERROR]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_ERROR]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_ERROR]: unknown\n"_sv);
     }
 }
 
 void    LOG_ERROR
 (
-    std::string_view        aMessage,
+    std::u8string_view      aMessage,
     const SourceLocationT&  aSourceLocation
 ) noexcept
 {
@@ -529,7 +531,7 @@ void    LOG_ERROR
     {
         GpLog::S().Logout
         (
-            MakeCSP<GpLogElementMsgStr>(std::string(aMessage)),
+            MakeCSP<GpLogElementMsgStr>(std::u8string(aMessage)),
             GpLogLevel::ERROR,
             GpLogMode::CHAIN_END,
             GpUUID::CE_Zero(),
@@ -537,19 +539,19 @@ void    LOG_ERROR
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_ERROR]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_ERROR]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_ERROR]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_ERROR]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_ERROR]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_ERROR]: unknown\n"_sv);
     }
 }
 
 void    LOG_ERROR
 (
-    std::string_view        aMessage,
+    std::u8string_view      aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation
 ) noexcept
@@ -558,7 +560,7 @@ void    LOG_ERROR
     {
         GpLog::S().Logout
         (
-            MakeCSP<GpLogElementMsgStr>(std::string(aMessage)),
+            MakeCSP<GpLogElementMsgStr>(std::u8string(aMessage)),
             GpLogLevel::ERROR,
             GpLogMode::ADD_TO_CHAIN,
             aChainId,
@@ -566,19 +568,19 @@ void    LOG_ERROR
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_ERROR]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_ERROR]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_ERROR]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_ERROR]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_ERROR]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_ERROR]: unknown\n"_sv);
     }
 }
 
 void    LOG_CRITICAL_ERROR
 (
-    std::string             aMessage,
+    std::u8string           aMessage,
     const SourceLocationT&  aSourceLocation
 ) noexcept
 {
@@ -594,19 +596,19 @@ void    LOG_CRITICAL_ERROR
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_CRITICAL_ERROR]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_CRITICAL_ERROR]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_CRITICAL_ERROR]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: unknown\n"_sv);
     }
 }
 
 void    LOG_CRITICAL_ERROR
 (
-    std::string             aMessage,
+    std::u8string           aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation
 ) noexcept
@@ -623,19 +625,19 @@ void    LOG_CRITICAL_ERROR
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_CRITICAL_ERROR]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_CRITICAL_ERROR]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_CRITICAL_ERROR]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: unknown\n"_sv);
     }
 }
 
 void    LOG_CRITICAL_ERROR
 (
-    std::string_view        aMessage,
+    std::u8string_view      aMessage,
     const SourceLocationT&  aSourceLocation
 ) noexcept
 {
@@ -643,7 +645,7 @@ void    LOG_CRITICAL_ERROR
     {
         GpLog::S().Logout
         (
-            MakeCSP<GpLogElementMsgStr>(std::string(aMessage)),
+            MakeCSP<GpLogElementMsgStr>(std::u8string(aMessage)),
             GpLogLevel::CRITICAL_ERROR,
             GpLogMode::CHAIN_END,
             GpUUID::CE_Zero(),
@@ -651,19 +653,19 @@ void    LOG_CRITICAL_ERROR
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_CRITICAL_ERROR]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_CRITICAL_ERROR]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_CRITICAL_ERROR]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: unknown\n"_sv);
     }
 }
 
 void    LOG_CRITICAL_ERROR
 (
-    std::string_view        aMessage,
+    std::u8string_view      aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation
 ) noexcept
@@ -672,7 +674,7 @@ void    LOG_CRITICAL_ERROR
     {
         GpLog::S().Logout
         (
-            MakeCSP<GpLogElementMsgStr>(std::string(aMessage)),
+            MakeCSP<GpLogElementMsgStr>(std::u8string(aMessage)),
             GpLogLevel::CRITICAL_ERROR,
             GpLogMode::ADD_TO_CHAIN,
             aChainId,
@@ -680,19 +682,19 @@ void    LOG_CRITICAL_ERROR
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_CRITICAL_ERROR]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_CRITICAL_ERROR]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_CRITICAL_ERROR]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: unknown\n"_sv);
     }
 }
 
 void    LOG_PAYLOAD
 (
-    std::string             aMessage,
+    std::u8string           aMessage,
     const SourceLocationT&  aSourceLocation
 ) noexcept
 {
@@ -708,19 +710,19 @@ void    LOG_PAYLOAD
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_PAYLOAD]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_PAYLOAD]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_PAYLOAD]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_PAYLOAD]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_PAYLOAD]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_PAYLOAD]: unknown\n"_sv);
     }
 }
 
 void    LOG_PAYLOAD
 (
-    std::string             aMessage,
+    std::u8string           aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation
 ) noexcept
@@ -737,19 +739,19 @@ void    LOG_PAYLOAD
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_PAYLOAD]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_PAYLOAD]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_PAYLOAD]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_PAYLOAD]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_PAYLOAD]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_PAYLOAD]: unknown\n"_sv);
     }
 }
 
 void    LOG_PAYLOAD
 (
-    std::string_view        aMessage,
+    std::u8string_view      aMessage,
     const SourceLocationT&  aSourceLocation
 ) noexcept
 {
@@ -757,7 +759,7 @@ void    LOG_PAYLOAD
     {
         GpLog::S().Logout
         (
-            MakeCSP<GpLogElementMsgStr>(std::string(aMessage)),
+            MakeCSP<GpLogElementMsgStr>(std::u8string(aMessage)),
             GpLogLevel::PAYLOAD,
             GpLogMode::CHAIN_END,
             GpUUID::CE_Zero(),
@@ -765,19 +767,19 @@ void    LOG_PAYLOAD
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_PAYLOAD]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_PAYLOAD]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_PAYLOAD]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_PAYLOAD]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_PAYLOAD]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_PAYLOAD]: unknown\n"_sv);
     }
 }
 
 void    LOG_PAYLOAD
 (
-    std::string_view        aMessage,
+    std::u8string_view      aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation
 ) noexcept
@@ -786,7 +788,7 @@ void    LOG_PAYLOAD
     {
         GpLog::S().Logout
         (
-            MakeCSP<GpLogElementMsgStr>(std::string(aMessage)),
+            MakeCSP<GpLogElementMsgStr>(std::u8string(aMessage)),
             GpLogLevel::PAYLOAD,
             GpLogMode::ADD_TO_CHAIN,
             aChainId,
@@ -794,13 +796,13 @@ void    LOG_PAYLOAD
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_PAYLOAD]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_PAYLOAD]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_PAYLOAD]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_PAYLOAD]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_PAYLOAD]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_PAYLOAD]: unknown\n"_sv);
     }
 }
 
@@ -822,13 +824,13 @@ void    LOG_EXCEPTION
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_EXCEPTION]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_EXCEPTION]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_EXCEPTION]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_EXCEPTION]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_EXCEPTION]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_EXCEPTION]: unknown\n"_sv);
     }
 }
 
@@ -851,13 +853,13 @@ void    LOG_EXCEPTION
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_EXCEPTION]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_EXCEPTION]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_EXCEPTION]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_EXCEPTION]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_EXCEPTION]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_EXCEPTION]: unknown\n"_sv);
     }
 }
 
@@ -879,13 +881,13 @@ void    LOG_EXCEPTION
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_EXCEPTION]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_EXCEPTION]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_EXCEPTION]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_EXCEPTION]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_EXCEPTION]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_EXCEPTION]: unknown\n"_sv);
     }
 }
 
@@ -899,7 +901,16 @@ void    LOG_EXCEPTION
     {
         GpLog::S().Logout
         (
-            MakeCSP<GpLogElementMsgStr>(GpExceptionUtils::SToString("Unknown exception"_sv, aSourceLocation, GpExceptionUtils::ExceptionType::STD).fullMessage),
+            MakeCSP<GpLogElementMsgStr>
+            (
+                GpExceptionUtils::SToString
+                (
+                    u8"Unknown exception"_sv,
+                    aSourceLocation,
+                    GpExceptionUtils::ExceptionType::STD,
+                    std::nullopt
+                ).fullMessage
+            ),
             GpLogLevel::ERROR,
             GpLogMode::CHAIN_END,
             aChainId,
@@ -907,13 +918,13 @@ void    LOG_EXCEPTION
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_EXCEPTION]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_EXCEPTION]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_EXCEPTION]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_EXCEPTION]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_EXCEPTION]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_EXCEPTION]: unknown\n"_sv);
     }
 }
 
@@ -926,7 +937,16 @@ void    LOG_EXCEPTION
     {
         GpLog::S().Logout
         (
-            MakeCSP<GpLogElementMsgStr>(GpExceptionUtils::SToString("Unknown exception"_sv, aSourceLocation, GpExceptionUtils::ExceptionType::STD).fullMessage),
+            MakeCSP<GpLogElementMsgStr>
+            (
+                GpExceptionUtils::SToString
+                (
+                    u8"Unknown exception"_sv,
+                    aSourceLocation,
+                    GpExceptionUtils::ExceptionType::STD,
+                    std::nullopt
+                ).fullMessage
+            ),
             GpLogLevel::ERROR,
             GpLogMode::CHAIN_END,
             GpUUID::CE_Zero(),
@@ -934,13 +954,13 @@ void    LOG_EXCEPTION
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_EXCEPTION]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_EXCEPTION]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_EXCEPTION]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_EXCEPTION]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_EXCEPTION]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_EXCEPTION]: unknown\n"_sv);
     }
 }
 
@@ -963,13 +983,13 @@ void    LOG_EXCEPTION
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_EXCEPTION]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_EXCEPTION]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_EXCEPTION]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_EXCEPTION]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_EXCEPTION]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_EXCEPTION]: unknown\n"_sv);
     }
 }
 
@@ -992,13 +1012,13 @@ void    LOG_DEBUG
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_DEBUG]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_DEBUG]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_DEBUG]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_DEBUG]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_DEBUG]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_DEBUG]: unknown\n"_sv);
     }
 }
 
@@ -1021,13 +1041,13 @@ void    LOG_DEBUG
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_DEBUG]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_DEBUG]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_DEBUG]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_DEBUG]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_DEBUG]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_DEBUG]: unknown\n"_sv);
     }
 }
 
@@ -1049,13 +1069,13 @@ void    LOG_INFO
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_INFO]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_INFO]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_INFO]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_INFO]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_INFO]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_INFO]: unknown\n"_sv);
     }
 }
 
@@ -1078,13 +1098,13 @@ void    LOG_INFO
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_INFO]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_INFO]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_INFO]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_INFO]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_INFO]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_INFO]: unknown\n"_sv);
     }
 }
 
@@ -1106,13 +1126,13 @@ void    LOG_WARNING
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_WARNING]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_WARNING]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_WARNING]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_WARNING]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_WARNING]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_WARNING]: unknown\n"_sv);
     }
 }
 
@@ -1135,13 +1155,13 @@ void    LOG_WARNING
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_WARNING]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_WARNING]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_WARNING]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_WARNING]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_WARNING]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_WARNING]: unknown\n"_sv);
     }
 }
 
@@ -1163,13 +1183,13 @@ void    LOG_ERROR
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_ERROR]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_ERROR]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_ERROR]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_ERROR]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_ERROR]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_ERROR]: unknown\n"_sv);
     }
 }
 
@@ -1192,13 +1212,13 @@ void    LOG_ERROR
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_ERROR]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_ERROR]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_ERROR]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_ERROR]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_ERROR]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_ERROR]: unknown\n"_sv);
     }
 }
 
@@ -1220,13 +1240,13 @@ void    LOG_CRITICAL_ERROR
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_CRITICAL_ERROR]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_CRITICAL_ERROR]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_CRITICAL_ERROR]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: unknown\n"_sv);
     }
 }
 
@@ -1249,13 +1269,13 @@ void    LOG_CRITICAL_ERROR
         );
     } catch (const GpException& e)
     {
-        std::cerr << "[LOG_CRITICAL_ERROR]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: "_sv + e.what() + "\n"_sv);
     } catch (const std::exception& e)
     {
-        std::cerr << "[LOG_CRITICAL_ERROR]: " << e.what() << std::endl;
+        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: "_sv + e.what() + "\n"_sv);
     } catch (...)
     {
-        std::cerr << "[LOG_CRITICAL_ERROR]: unknown" << std::endl;
+        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: unknown\n"_sv);
     }
 }
 
