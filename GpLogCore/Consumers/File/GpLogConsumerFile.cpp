@@ -108,7 +108,7 @@ std::ofstream   GpLogConsumerFile::CreateFile
     }
 
     std::ofstream oftream;
-    oftream.open(iOFStreamFileName, std::ios::out | std::ios::binary);
+    oftream.open(std::filesystem::path(iOFStreamFileName), std::ios::out | std::ios::binary);
 
     if (oftream.fail())
     {

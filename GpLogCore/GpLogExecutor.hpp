@@ -16,8 +16,8 @@ public:
 
     void                Start           (const GpLogConsumerFactory::C::Vec::SP&    aConsumerFactories,
                                          const seconds_t                            aFlushPeriod) noexcept;
-    void                RequestStop     (void) noexcept;
-    void                Join            (void) noexcept;
+    inline void         RequestStop     (void) noexcept;
+    inline void         Join            (void) noexcept;
 
 private:
     GpThread            iThread;
@@ -25,8 +25,19 @@ private:
 };
 
 GpLogExecutor::GpLogExecutor (GpLogQueue& aLogQueue) noexcept:
+iThread  (u8"Log executor"),
 iLogQueue(aLogQueue)
 {
+}
+
+void    GpLogExecutor::RequestStop (void) noexcept
+{
+    iThread.RequestStop();
+}
+
+void    GpLogExecutor::Join (void) noexcept
+{
+    iThread.Join();
 }
 
 }//namespace GPlatform

@@ -6,8 +6,8 @@ bool    GpLogQueue::IsEmpty (void) const noexcept
 {
     std::scoped_lock lock(iChainsEndedLock);
 
-    return     (iChainsEnded.size() == 0)
-            && (iChainsById.Size() == 0);
+    return     (iChainsEnded.empty())
+            && (iChainsById.Empty());
 }
 
 void    GpLogQueue::AddElement

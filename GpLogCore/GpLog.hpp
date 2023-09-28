@@ -18,13 +18,13 @@ public:
     CLASS_REMOVE_CTRS_MOVE_COPY(GpLog)
     CLASS_DD(GpLog)
 
-protected:
-    inline                  GpLog           (void) noexcept;
-
 public:
+    inline                  GpLog           (void) noexcept;
     virtual                 ~GpLog          (void) noexcept;
 
-    static GpLog&           S               (void) {return sInstance;}
+    static void             SInit           (void);
+    static void             SClear          (void);
+    static GpLog&           S               (void) {return sInstance.Vn();}
 
     void                    StartDefault    (void);
     void                    StartFromConfig (const GpLogConfigDesc&         aConfigDesc,
@@ -47,7 +47,7 @@ private:
     GpLogExecutor           iLogExecutor;
     GpLogLevel::EnumT       iMinLevel   = GpLogLevel::INFO;
 
-    static GpLog            sInstance;
+    static GpLog::SP        sInstance;
 };
 
 GpLog::GpLog (void) noexcept:

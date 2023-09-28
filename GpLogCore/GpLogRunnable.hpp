@@ -18,7 +18,7 @@ public:
                                                              GpLogQueue&                            aLogQueue);
     virtual                             ~GpLogRunnable      (void) noexcept override final;
 
-    virtual void                        Run                 (GpThreadStopToken aStopToken) noexcept override final;
+    virtual void                        Run                 (std::atomic_flag& aStopRequest) noexcept override final;
 
 private:
     void                                Consume             (GpLogConsumer::C::Vec::SP& aConsumers,

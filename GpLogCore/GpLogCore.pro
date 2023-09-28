@@ -41,8 +41,7 @@ SOURCES += \
     GpLogLevel.cpp \
     GpLogMode.cpp \
     GpLogQueue.cpp \
-    GpLogRunnable.cpp \
-    Tasks/GpLogTaskFiberBase.cpp
+    GpLogRunnable.cpp
 
 HEADERS += \
     Config/GpLogConfigDesc.hpp \
@@ -82,5 +81,4 @@ HEADERS += \
     GpLogMarkTraceTS.hpp \
     GpLogMode.hpp \
     GpLogQueue.hpp \
-    GpLogRunnable.hpp \
-    Tasks/GpLogTaskFiberBase.hpp
+    GpLogRunnable.hpp

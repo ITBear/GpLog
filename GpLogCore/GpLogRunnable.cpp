@@ -9,18 +9,18 @@ GpLogRunnable::~GpLogRunnable (void) noexcept
 {
 }
 
-void    GpLogRunnable::Run (GpThreadStopToken aStopToken) noexcept
+void    GpLogRunnable::Run (std::atomic_flag& aStopRequest) noexcept
 {
     try
     {
         GpLogConsumer::C::Vec::SP consumers = CreateConsumers();
-        GpDoOnceInPeriod flushOnceInPeriod(iFlushPeriod);
+        GpDoOnceInPeriod flushOnceInPeriod(iFlushPeriod, GpDoOnceInPeriod::Mode::AT_FIRST_CALL);
 
-        while (!aStopToken.stop_requested())
+        while (!aStopRequest.test())
         {
             Consume(consumers, flushOnceInPeriod);
 
-            std::ignore = CVF().WaitForAndReset(0.5_si_s);
+            CVF().WaitForAndReset(0.5_si_s);
         }
 
         Consume(consumers, flushOnceInPeriod);
@@ -28,10 +28,10 @@ void    GpLogRunnable::Run (GpThreadStopToken aStopToken) noexcept
         Flush(consumers);
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[GpLogRunnable::Run]: "_sv + e.what() + "\n"_sv);
+        GpStringUtils::SCerr("[GpLogRunnable::Run]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[GpLogRunnable::Run]: unknown exception\n"_sv);
+        GpStringUtils::SCerr("[GpLogRunnable::Run]: unknown exception"_sv);
     }
 }
 

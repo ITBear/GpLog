@@ -24,14 +24,4 @@ void    GpLogExecutor::Start
     iThread.Run(std::move(runnable));
 }
 
-void    GpLogExecutor::RequestStop (void) noexcept
-{
-    iThread.RequestStop();
-}
-
-void    GpLogExecutor::Join (void) noexcept
-{
-    iThread.Join();
-}
-
 }//namespace GPlatform
