@@ -16,15 +16,16 @@ public:
     using ProcessorsT = GpDictionary<std::u8string, GpLogConsumersFactoryProcessor::SP>;
 
 public:
-                                GpLogConsumersFactory   (void) noexcept = default;
-    virtual                     ~GpLogConsumersFactory  (void) noexcept = default;
+                                GpLogConsumersFactory       (void) noexcept = default;
+    virtual                     ~GpLogConsumersFactory      (void) noexcept = default;
 
-    void                        AddDefaultProcessors    (void);
-    void                        AddProcessor            (GpLogConsumersFactoryProcessor::SP aProcessor);
+    void                        AddDefaultProcessorConsole  (void);
+    void                        AddDefaultProcessorFile     (void);
+    void                        AddProcessor                (GpLogConsumersFactoryProcessor::SP aProcessor);
 
-    GpLogConsumerFactory::SP    FactoryFromCfg          (std::u8string_view             aName,
-                                                         const GpLogConsumerConfigDesc& aCfgDesc,
-                                                         GpByteSerializer::SP           aFormatter) const;
+    GpLogConsumerFactory::SP    FactoryFromCfg              (std::u8string_view             aName,
+                                                             const GpLogConsumerConfigDesc& aCfgDesc,
+                                                             GpByteSerializer::SP           aFormatter) const;
 protected:
     ProcessorsT                 iProcessors;
 };

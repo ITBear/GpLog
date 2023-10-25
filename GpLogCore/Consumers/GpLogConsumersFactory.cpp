@@ -4,9 +4,13 @@
 
 namespace GPlatform {
 
-void    GpLogConsumersFactory::AddDefaultProcessors (void)
+void    GpLogConsumersFactory::AddDefaultProcessorConsole (void)
 {
     AddProcessor(MakeSP<GpLogConsumersFactoryProcessorConsole>());
+}
+
+void    GpLogConsumersFactory::AddDefaultProcessorFile (void)
+{
     AddProcessor(MakeSP<GpLogConsumersFactoryProcessorFile>());
 }
 
