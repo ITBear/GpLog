@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../GpCore2/GpUtils/SyncPrimitives/GpSpinlock.hpp"
+#include "../../GpCore2/GpUtils/SyncPrimitives/GpSpinLock.hpp"
 #include "Elements/GpLogElements.hpp"
 #include <mutex>
 
@@ -23,7 +23,7 @@ public:
     const ElementsT&    Elements        (void) const {return iElements;}
 
 private:
-    mutable GpSpinlock  iLock;
+    mutable GpSpinLock  iLock;
     const GpUUID        iChainId;
     ElementsT           iElements;
 };

@@ -19,8 +19,7 @@ void    GpLogRunnable::Run (std::atomic_flag& aStopRequest) noexcept
         while (!aStopRequest.test())
         {
             Consume(consumers, flushOnceInPeriod);
-
-            CVF().WaitForAndReset(0.5_si_s);
+            WaitForAndReset(0.25_si_s);
         }
 
         Consume(consumers, flushOnceInPeriod);
