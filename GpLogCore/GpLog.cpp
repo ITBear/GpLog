@@ -3,10 +3,15 @@
 #include "Formatters/Text/GpLogFormatterText.hpp"
 #include "../../GpCore2/GpUtils/Types/Strings/GpStringUtils.hpp"
 #include "../../GpCore2/GpUtils/Exceptions/GpExceptionUtils.hpp"
+#include "../../GpCore2/GpUtils/Other/GpSystemInfo.hpp"
+#include "../../GpCore2/GpUtils/Other/GpLinkedLibsInfo.hpp"
 
+#include <fmt/include/fmt/core.h>
 #include <iostream>
 
 namespace GPlatform{
+
+GP_IMPLEMENT_LIB(GpLogCoreLib)
 
 GpLog::SP   GpLog::sInstance;
 
@@ -114,7 +119,57 @@ void    GpLog::Stop (void)
     iLogExecutor.Join();
 }
 
-void    LOG_END_CHAIN
+void LOG_SYS_INFO
+(
+    std::u8string           aMessage,
+    const SourceLocationT&  aSourceLocation
+) noexcept
+{
+    std::u8string message
+    (
+        GpUTF::S_STR_To_UTF8
+        (
+            fmt::format
+            (
+                "{}:" \
+                "\n{:>10}: {}. {}" \
+                "\n{:>10}: {}" \
+                "\n{:>10}: {}",
+                GpUTF::S_UTF8_To_STR(aMessage),
+                "OS",        GpUTF::S_UTF8_To_STR(GpSystemInfo::SOsName()),  GpUTF::S_UTF8_To_STR(GpSystemInfo::SOsInfo()),
+                "Arch",      GpUTF::S_UTF8_To_STR(GpSystemInfo::SArcName()),
+                "CPU cores", GpSystemInfo::SHardwareConcurrency()
+            )
+        )
+    );
+
+    // Linked libraries
+    {
+        message.append(u8"\n\nLinked libraries:"_sv);
+        const GpLinkedLibsInfo::InfoAsTextT linkedLibraries = GpLinkedLibsInfo::S().InfoAsText();
+        size_t id = 1;
+        for (const auto&[name, version]: linkedLibraries)
+        {
+            message.append
+            (
+                GpUTF::S_STR_To_UTF8
+                (
+                    fmt::format
+                    (
+                        "\n[{:03}]: {:>22}, v{}",
+                        id++,
+                        GpUTF::S_UTF8_To_STR(name),
+                        GpUTF::S_UTF8_To_STR(version)
+                    )
+                )
+            );
+        }
+    }
+
+    LOG_INFO(message, aSourceLocation);
+}
+
+void LOG_END_CHAIN
 (
     const GpUUID& aChainId
 ) noexcept
@@ -134,7 +189,7 @@ void    LOG_END_CHAIN
     }
 }
 
-void    LOG_DEBUG
+void LOG_DEBUG
 (
     std::u8string           aMessage,
     const SourceLocationT&  aSourceLocation
@@ -162,7 +217,7 @@ void    LOG_DEBUG
     }
 }
 
-void    LOG_DEBUG
+void LOG_DEBUG
 (
     std::u8string           aMessage,
     const GpUUID&           aChainId,
@@ -191,7 +246,7 @@ void    LOG_DEBUG
     }
 }
 
-void    LOG_DEBUG
+void LOG_DEBUG
 (
     std::u8string_view      aMessage,
     const SourceLocationT&  aSourceLocation
@@ -219,7 +274,7 @@ void    LOG_DEBUG
     }
 }
 
-void    LOG_DEBUG
+void LOG_DEBUG
 (
     std::u8string_view      aMessage,
     const GpUUID&           aChainId,
@@ -248,7 +303,7 @@ void    LOG_DEBUG
     }
 }
 
-void    LOG_INFO
+void LOG_INFO
 (
     std::u8string           aMessage,
     const SourceLocationT&  aSourceLocation
@@ -276,7 +331,7 @@ void    LOG_INFO
     }
 }
 
-void    LOG_INFO
+void LOG_INFO
 (
     std::u8string           aMessage,
     const GpUUID&           aChainId,
@@ -305,7 +360,7 @@ void    LOG_INFO
     }
 }
 
-void    LOG_INFO
+void LOG_INFO
 (
     std::u8string_view      aMessage,
     const SourceLocationT&  aSourceLocation
@@ -333,7 +388,7 @@ void    LOG_INFO
     }
 }
 
-void    LOG_INFO
+void LOG_INFO
 (
     std::u8string_view      aMessage,
     const GpUUID&           aChainId,
@@ -362,7 +417,7 @@ void    LOG_INFO
     }
 }
 
-void    LOG_WARNING
+void LOG_WARNING
 (
     std::u8string           aMessage,
     const SourceLocationT&  aSourceLocation
@@ -390,7 +445,7 @@ void    LOG_WARNING
     }
 }
 
-void    LOG_WARNING
+void LOG_WARNING
 (
     std::u8string               aMessage,
     const GpUUID&           aChainId,
@@ -419,7 +474,7 @@ void    LOG_WARNING
     }
 }
 
-void    LOG_WARNING
+void LOG_WARNING
 (
     std::u8string_view      aMessage,
     const SourceLocationT&  aSourceLocation
@@ -447,7 +502,7 @@ void    LOG_WARNING
     }
 }
 
-void    LOG_WARNING
+void LOG_WARNING
 (
     std::u8string_view      aMessage,
     const GpUUID&           aChainId,
@@ -476,7 +531,7 @@ void    LOG_WARNING
     }
 }
 
-void    LOG_ERROR
+void LOG_ERROR
 (
     std::u8string           aMessage,
     const SourceLocationT&  aSourceLocation
@@ -504,7 +559,7 @@ void    LOG_ERROR
     }
 }
 
-void    LOG_ERROR
+void LOG_ERROR
 (
     std::u8string           aMessage,
     const GpUUID&           aChainId,
@@ -533,7 +588,7 @@ void    LOG_ERROR
     }
 }
 
-void    LOG_ERROR
+void LOG_ERROR
 (
     std::u8string_view      aMessage,
     const SourceLocationT&  aSourceLocation
@@ -561,7 +616,7 @@ void    LOG_ERROR
     }
 }
 
-void    LOG_ERROR
+void LOG_ERROR
 (
     std::u8string_view      aMessage,
     const GpUUID&           aChainId,
@@ -590,7 +645,7 @@ void    LOG_ERROR
     }
 }
 
-void    LOG_CRITICAL_ERROR
+void LOG_CRITICAL_ERROR
 (
     std::u8string           aMessage,
     const SourceLocationT&  aSourceLocation
@@ -618,7 +673,7 @@ void    LOG_CRITICAL_ERROR
     }
 }
 
-void    LOG_CRITICAL_ERROR
+void LOG_CRITICAL_ERROR
 (
     std::u8string           aMessage,
     const GpUUID&           aChainId,
@@ -647,7 +702,7 @@ void    LOG_CRITICAL_ERROR
     }
 }
 
-void    LOG_CRITICAL_ERROR
+void LOG_CRITICAL_ERROR
 (
     std::u8string_view      aMessage,
     const SourceLocationT&  aSourceLocation
@@ -675,7 +730,7 @@ void    LOG_CRITICAL_ERROR
     }
 }
 
-void    LOG_CRITICAL_ERROR
+void LOG_CRITICAL_ERROR
 (
     std::u8string_view      aMessage,
     const GpUUID&           aChainId,
@@ -704,7 +759,7 @@ void    LOG_CRITICAL_ERROR
     }
 }
 
-void    LOG_PAYLOAD
+void LOG_PAYLOAD
 (
     std::u8string           aMessage,
     const SourceLocationT&  aSourceLocation
@@ -732,7 +787,7 @@ void    LOG_PAYLOAD
     }
 }
 
-void    LOG_PAYLOAD
+void LOG_PAYLOAD
 (
     std::u8string           aMessage,
     const GpUUID&           aChainId,
@@ -761,7 +816,7 @@ void    LOG_PAYLOAD
     }
 }
 
-void    LOG_PAYLOAD
+void LOG_PAYLOAD
 (
     std::u8string_view      aMessage,
     const SourceLocationT&  aSourceLocation
@@ -789,7 +844,7 @@ void    LOG_PAYLOAD
     }
 }
 
-void    LOG_PAYLOAD
+void LOG_PAYLOAD
 (
     std::u8string_view      aMessage,
     const GpUUID&           aChainId,
@@ -818,7 +873,7 @@ void    LOG_PAYLOAD
     }
 }
 
-void    LOG_EXCEPTION
+void LOG_EXCEPTION
 (
     const std::exception&   aException,
     const SourceLocationT&  aSourceLocation
@@ -846,7 +901,7 @@ void    LOG_EXCEPTION
     }
 }
 
-void    LOG_EXCEPTION
+void LOG_EXCEPTION
 (
     const std::exception&   aException,
     const GpUUID&           aChainId,
@@ -875,7 +930,7 @@ void    LOG_EXCEPTION
     }
 }
 
-void    LOG_EXCEPTION
+void LOG_EXCEPTION
 (
     const GpException&      aException,
     const SourceLocationT&  aSourceLocation
@@ -903,7 +958,7 @@ void    LOG_EXCEPTION
     }
 }
 
-void    LOG_EXCEPTION
+void LOG_EXCEPTION
 (
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation
@@ -940,7 +995,7 @@ void    LOG_EXCEPTION
     }
 }
 
-void    LOG_EXCEPTION
+void LOG_EXCEPTION
 (
     const SourceLocationT&  aSourceLocation
 ) noexcept
@@ -976,7 +1031,7 @@ void    LOG_EXCEPTION
     }
 }
 
-void    LOG_EXCEPTION
+void LOG_EXCEPTION
 (
     const GpException&      aException,
     const GpUUID&           aChainId,
@@ -1006,7 +1061,7 @@ void    LOG_EXCEPTION
 }
 
 //------------------------------------- GpMarkTraceTS -------------------------------------
-void    LOG_DEBUG
+void LOG_DEBUG
 (
     GpLogMarkTraceTS&&      aMarkTraceTS,
     const SourceLocationT&  aSourceLocation
@@ -1034,7 +1089,7 @@ void    LOG_DEBUG
     }
 }
 
-void    LOG_DEBUG
+void LOG_DEBUG
 (
     GpLogMarkTraceTS&&      aMarkTraceTS,
     const GpUUID&           aChainId,
@@ -1063,7 +1118,7 @@ void    LOG_DEBUG
     }
 }
 
-void    LOG_INFO
+void LOG_INFO
 (
     GpLogMarkTraceTS&&      aMarkTraceTS,
     const SourceLocationT&  aSourceLocation
@@ -1091,7 +1146,7 @@ void    LOG_INFO
     }
 }
 
-void    LOG_INFO
+void LOG_INFO
 (
     GpLogMarkTraceTS&&      aMarkTraceTS,
     const GpUUID&           aChainId,
@@ -1120,7 +1175,7 @@ void    LOG_INFO
     }
 }
 
-void    LOG_WARNING
+void LOG_WARNING
 (
     GpLogMarkTraceTS&&      aMarkTraceTS,
     const SourceLocationT&  aSourceLocation
@@ -1148,7 +1203,7 @@ void    LOG_WARNING
     }
 }
 
-void    LOG_WARNING
+void LOG_WARNING
 (
     GpLogMarkTraceTS&&      aMarkTraceTS,
     const GpUUID&           aChainId,
@@ -1177,7 +1232,7 @@ void    LOG_WARNING
     }
 }
 
-void    LOG_ERROR
+void LOG_ERROR
 (
     GpLogMarkTraceTS&&      aMarkTraceTS,
     const SourceLocationT&  aSourceLocation
@@ -1205,7 +1260,7 @@ void    LOG_ERROR
     }
 }
 
-void    LOG_ERROR
+void LOG_ERROR
 (
     GpLogMarkTraceTS&&      aMarkTraceTS,
     const GpUUID&           aChainId,
@@ -1234,7 +1289,7 @@ void    LOG_ERROR
     }
 }
 
-void    LOG_CRITICAL_ERROR
+void LOG_CRITICAL_ERROR
 (
     GpLogMarkTraceTS&&      aMarkTraceTS,
     const SourceLocationT&  aSourceLocation
@@ -1262,7 +1317,7 @@ void    LOG_CRITICAL_ERROR
     }
 }
 
-void    LOG_CRITICAL_ERROR
+void LOG_CRITICAL_ERROR
 (
     GpLogMarkTraceTS&&      aMarkTraceTS,
     const GpUUID&           aChainId,

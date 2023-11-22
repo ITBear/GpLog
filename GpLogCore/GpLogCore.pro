@@ -1,13 +1,18 @@
 TEMPLATE        = lib
 #CONFIG         += staticlib
-VER_MAJ		    = 0
+VER_MAJ		    = 2
 VER_MIN		    = 1
-VER_PAT		    = 0
+VER_PAT		    = 4
 QMAKE_CXXFLAGS += -DGP_MODULE_UUID=2b0b8014-10cc-4d14-9adf-b9a43193003b
 QMAKE_CXXFLAGS += -DGP_REFLECTION_STATIC_ADD_TO_MANAGER
-DEFINES		   += GP_LOG_CORE_LIBRARY
 PACKET_NAME     = GpLogCore
 DIR_LEVEL       = ./../..
+
+DEFINES		   += GP_LOG_CORE_LIBRARY
+DEFINES        += "GP_CURRENT_LIB_VER_MAJ=\\\"$$VER_MAJ\\\""
+DEFINES        += "GP_CURRENT_LIB_VER_MIN=\\\"$$VER_MIN\\\""
+DEFINES        += "GP_CURRENT_LIB_VER_PAT=\\\"$$VER_PAT\\\""
+DEFINES        += "GP_CURRENT_LIB_PACKET_NAME=\\\"$$PACKET_NAME\\\""
 
 include(../../../QtGlobalPro.pri)
 

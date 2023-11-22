@@ -9,8 +9,11 @@
 #include "Elements/GpLogElementMsgMarkTraceTS.hpp"
 #include "Consumers/GpLogConsumers.hpp"
 #include "Config/GpLogConfigDesc.hpp"
+#include "../../GpCore2/GpUtils/Other/GpLinkedLibsInfo.hpp"
 
 namespace GPlatform{
+
+GP_DECLARE_LIB(GP_LOG_CORE_API, GpLogCoreLib)
 
 class GP_LOG_CORE_API GpLog
 {
@@ -86,6 +89,13 @@ void    GpLog::EndChain (const GpUUID& aChainId)
     iLogQueue.EndChain(aChainId);
 }
 
+//------------------------------------- Sys info -------------------------------------
+GP_LOG_CORE_API void    LOG_SYS_INFO
+(
+    std::u8string           aMessage,
+    const SourceLocationT&  aSourceLocation = SourceLocationT::current()
+) noexcept;
+
 //------------------------------------- Text -------------------------------------
 GP_LOG_CORE_API void    LOG_END_CHAIN
 (
@@ -94,13 +104,13 @@ GP_LOG_CORE_API void    LOG_END_CHAIN
 
 GP_LOG_CORE_API void    LOG_DEBUG
 (
-    std::u8string               aMessage,
+    std::u8string           aMessage,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_DEBUG
 (
-    std::u8string               aMessage,
+    std::u8string           aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
@@ -120,13 +130,13 @@ GP_LOG_CORE_API void    LOG_DEBUG
 
 GP_LOG_CORE_API void    LOG_INFO
 (
-    std::u8string               aMessage,
+    std::u8string           aMessage,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_INFO
 (
-    std::u8string               aMessage,
+    std::u8string           aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
@@ -146,13 +156,13 @@ GP_LOG_CORE_API void    LOG_INFO
 
 GP_LOG_CORE_API void    LOG_WARNING
 (
-    std::u8string               aMessage,
+    std::u8string           aMessage,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_WARNING
 (
-    std::u8string               aMessage,
+    std::u8string           aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
@@ -198,7 +208,7 @@ GP_LOG_CORE_API void    LOG_ERROR
 
 GP_LOG_CORE_API void    LOG_CRITICAL_ERROR
 (
-    std::u8string               aMessage,
+    std::u8string           aMessage,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
