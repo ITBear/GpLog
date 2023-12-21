@@ -1,8 +1,9 @@
 #pragma once
 
 #include "../../GpLogLevel.hpp"
-#include "../../../../GpCore2/GpUtils/Streams/GpByteSerializer.hpp"
-#include "../../../../GpCore2/GpUtils/Types/Units/SI/GpUnitsSI_Time.hpp"
+
+#include <GpCore2/GpUtils/Streams/GpByteSerializer.hpp>
+#include <GpCore2/GpUtils/Types/Units/SI/GpUnitsSI_Time.hpp>
 
 namespace GPlatform {
 

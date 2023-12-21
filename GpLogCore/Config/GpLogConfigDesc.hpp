@@ -2,7 +2,8 @@
 
 #include "../GpLogLevel.hpp"
 #include "../Consumers/GpLogConsumerConfigDesc.hpp"
-#include "../../../GpCore2/GpUtils/Types/Units/SI/GpUnitsSI_Time.hpp"
+
+#include <GpCore2/GpUtils/Types/Units/SI/GpUnitsSI_Time.hpp>
 
 namespace GPlatform {
 

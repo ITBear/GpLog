@@ -1,6 +1,6 @@
 #include "GpLogConsumerConsole.hpp"
-#include "../../../../GpCore2/GpUtils/Streams/GpByteWriterStorageByteArray.hpp"
 
+#include <GpCore2/GpUtils/Streams/GpByteWriterStorageByteArray.hpp>
 #include <iostream>
 
 namespace GPlatform {
@@ -23,7 +23,7 @@ void    GpLogConsumerConsole::Consume (GpLogChain::CSP aLogChain)
         dataWriter
     );
 
-    dataWriter.ShrinkToFit();
+    dataWriter.OnEnd();
 
     std::u8string_view sv = GpSpanPtrByteR(iTmpBuffer.data(), iTmpBuffer.size()).AsStringViewU8();
 

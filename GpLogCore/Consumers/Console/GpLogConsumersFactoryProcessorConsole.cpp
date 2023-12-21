@@ -1,7 +1,8 @@
 #include "GpLogConsumersFactoryProcessorConsole.hpp"
 #include "GpLogConsumerConsoleConfigDesc.hpp"
 #include "GpLogConsumerConsoleFactory.hpp"
-#include "../../../../GpCore2/GpReflection/GpReflectManager.hpp"
+
+#include <GpCore2/GpReflection/GpReflectManager.hpp>
 
 namespace GPlatform {
 

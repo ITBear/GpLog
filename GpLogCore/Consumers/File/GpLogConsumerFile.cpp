@@ -1,6 +1,6 @@
 #include "GpLogConsumerFile.hpp"
-#include "../../../../GpCore2/GpUtils/Streams/GpByteWriterStorageByteArray.hpp"
 
+#include <GpCore2/GpUtils/Streams/GpByteWriterStorageByteArray.hpp>
 #include <filesystem>
 
 namespace GPlatform {
@@ -38,6 +38,8 @@ void    GpLogConsumerFile::Consume (GpLogChain::CSP aLogChain)
     GpByteWriter                    dataWriter(dataStorage);
 
     Formatter().Serialize(GpAny{std::reference_wrapper<const GpLogChain>(logChain)}, dataWriter);
+
+    dataWriter.OnEnd();
 
     const milliseconds_t nowSteadyTS = GpDateTimeOps::SSteadyTS_ms();
 

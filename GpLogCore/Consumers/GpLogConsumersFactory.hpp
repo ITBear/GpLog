@@ -3,7 +3,8 @@
 #include "GpLogConsumerFactory.hpp"
 #include "GpLogConsumerConfigDesc.hpp"
 #include "GpLogConsumersFactoryProcessor.hpp"
-#include "../../../GpCore2/GpUtils/Types/Containers/GpDictionary.hpp"
+
+#include <GpCore2/GpUtils/Types/Containers/GpDictionary.hpp>
 
 namespace GPlatform {
 

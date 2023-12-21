@@ -1,7 +1,8 @@
 #pragma once
 
-#include "../../GpCore2/GpUtils/SyncPrimitives/GpSpinLock.hpp"
 #include "Elements/GpLogElements.hpp"
+
+#include <GpCore2/GpUtils/SyncPrimitives/GpSpinLock.hpp>
 #include <mutex>
 
 namespace GPlatform {

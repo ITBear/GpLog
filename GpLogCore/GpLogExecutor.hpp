@@ -1,7 +1,7 @@
 #pragma once
 
 #include "GpLogRunnable.hpp"
-#include "../../GpCore2/GpUtils/Threads/GpThread.hpp"
+#include <GpCore2/GpUtils/Threads/GpThread.hpp>
 
 namespace GPlatform {
 

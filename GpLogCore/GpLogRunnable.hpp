@@ -1,8 +1,9 @@
 #pragma once
 
 #include "GpLogQueue.hpp"
-#include "../../GpCore2/GpUtils/Threads/GpRunnable.hpp"
-#include "../../GpCore2/GpUtils/Threads/Timers/GpDoOnceInPeriod.hpp"
+
+#include <GpCore2/GpUtils/Threads/GpRunnable.hpp>
+#include <GpCore2/GpUtils/Threads/Timers/GpDoOnceInPeriod.hpp>
 
 namespace GPlatform {
 

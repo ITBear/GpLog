@@ -1,7 +1,8 @@
 #pragma once
 
 #include "../GpLogChain.hpp"
-#include "../../../GpCore2/GpUtils/Streams/GpByteSerializer.hpp"
+
+#include <GpCore2/GpUtils/Streams/GpByteSerializer.hpp>
 
 namespace GPlatform {
 

@@ -1,6 +1,6 @@
 #include "GpLogRunnable.hpp"
-#include "../../GpCore2/GpUtils/Types/Strings/GpStringUtils.hpp"
 
+#include <GpCore2/GpUtils/Types/Strings/GpStringUtils.hpp>
 #include <iostream>
 
 namespace GPlatform {

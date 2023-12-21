@@ -58,7 +58,7 @@ void    GpLogFormatterText::Serialize
         } else
         {
             aWriter
-                .Bytes(":\n"_sv)
+                .Bytes(": ===========================================================================\n"_sv)
                 .Bytes(msg);
         }
     }

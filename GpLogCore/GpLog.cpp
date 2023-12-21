@@ -1,10 +1,11 @@
 #include "GpLog.hpp"
 #include "Consumers/Console/GpLogConsumerConsoleFactory.hpp"
 #include "Formatters/Text/GpLogFormatterText.hpp"
-#include "../../GpCore2/GpUtils/Types/Strings/GpStringUtils.hpp"
-#include "../../GpCore2/GpUtils/Exceptions/GpExceptionUtils.hpp"
-#include "../../GpCore2/GpUtils/Other/GpSystemInfo.hpp"
-#include "../../GpCore2/GpUtils/Other/GpLinkedLibsInfo.hpp"
+
+#include <GpCore2/GpUtils/Types/Strings/GpStringUtils.hpp>
+#include <GpCore2/GpUtils/Exceptions/GpExceptionUtils.hpp>
+#include <GpCore2/GpUtils/Other/GpSystemInfo.hpp>
+#include <GpCore2/GpUtils/Other/GpLinkedLibsInfo.hpp>
 
 #include <fmt/include/fmt/core.h>
 #include <iostream>
@@ -169,6 +170,15 @@ void LOG_SYS_INFO
     LOG_INFO(message, aSourceLocation);
 }
 
+void LOG_SYS_INFO
+(
+    std::string_view        aMessage,
+    const SourceLocationT&  aSourceLocation
+) noexcept
+{
+    LOG_SYS_INFO(std::u8string(GpUTF::S_STR_To_UTF8(aMessage)), aSourceLocation);
+}
+
 void LOG_END_CHAIN
 (
     const GpUUID& aChainId
@@ -215,6 +225,15 @@ void LOG_DEBUG
     {
         GpStringUtils::SCerr("[LOG_DEBUG]: unknown"_sv);
     }
+}
+
+void LOG_DEBUG
+(
+    std::string_view        aMessage,
+    const SourceLocationT&  aSourceLocation
+) noexcept
+{
+    LOG_DEBUG(std::u8string(GpUTF::S_STR_To_UTF8(aMessage)), aSourceLocation);
 }
 
 void LOG_DEBUG
@@ -329,6 +348,15 @@ void LOG_INFO
     {
         GpStringUtils::SCerr("[LOG_INFO]: unknown"_sv);
     }
+}
+
+void LOG_INFO
+(
+    std::string_view        aMessage,
+    const SourceLocationT&  aSourceLocation
+) noexcept
+{
+    LOG_INFO(std::u8string(GpUTF::S_STR_To_UTF8(aMessage)), aSourceLocation);
 }
 
 void LOG_INFO
@@ -443,6 +471,15 @@ void LOG_WARNING
     {
         GpStringUtils::SCerr("[LOG_WARNING]: unknown"_sv);
     }
+}
+
+void LOG_WARNING
+(
+    std::string_view        aMessage,
+    const SourceLocationT&  aSourceLocation
+) noexcept
+{
+    LOG_WARNING(std::u8string(GpUTF::S_STR_To_UTF8(aMessage)), aSourceLocation);
 }
 
 void LOG_WARNING
@@ -561,6 +598,15 @@ void LOG_ERROR
 
 void LOG_ERROR
 (
+    std::string_view        aMessage,
+    const SourceLocationT&  aSourceLocation
+) noexcept
+{
+    LOG_ERROR(std::u8string(GpUTF::S_STR_To_UTF8(aMessage)), aSourceLocation);
+}
+
+void LOG_ERROR
+(
     std::u8string           aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation
@@ -675,6 +721,15 @@ void LOG_CRITICAL_ERROR
 
 void LOG_CRITICAL_ERROR
 (
+    std::string_view        aMessage,
+    const SourceLocationT&  aSourceLocation
+) noexcept
+{
+    LOG_CRITICAL_ERROR(std::u8string(GpUTF::S_STR_To_UTF8(aMessage)), aSourceLocation);
+}
+
+void LOG_CRITICAL_ERROR
+(
     std::u8string           aMessage,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation
@@ -756,120 +811,6 @@ void LOG_CRITICAL_ERROR
     } catch (...)
     {
         GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: unknown"_sv);
-    }
-}
-
-void LOG_PAYLOAD
-(
-    std::u8string           aMessage,
-    const SourceLocationT&  aSourceLocation
-) noexcept
-{
-    try
-    {
-        GpLog::S().Logout
-        (
-            MakeCSP<GpLogElementMsgStr>(std::move(aMessage)),
-            GpLogLevel::PAYLOAD,
-            GpLogMode::CHAIN_END,
-            GpUUID::CE_Zero(),
-            aSourceLocation
-        );
-    } catch (const GpException& e)
-    {
-        GpStringUtils::SCerr("[LOG_PAYLOAD]: "_sv + e.what());
-    } catch (const std::exception& e)
-    {
-        GpStringUtils::SCerr("[LOG_PAYLOAD]: "_sv + e.what());
-    } catch (...)
-    {
-        GpStringUtils::SCerr("[LOG_PAYLOAD]: unknown"_sv);
-    }
-}
-
-void LOG_PAYLOAD
-(
-    std::u8string           aMessage,
-    const GpUUID&           aChainId,
-    const SourceLocationT&  aSourceLocation
-) noexcept
-{
-    try
-    {
-        GpLog::S().Logout
-        (
-            MakeCSP<GpLogElementMsgStr>(std::move(aMessage)),
-            GpLogLevel::PAYLOAD,
-            GpLogMode::ADD_TO_CHAIN,
-            aChainId,
-            aSourceLocation
-        );
-    } catch (const GpException& e)
-    {
-        GpStringUtils::SCerr("[LOG_PAYLOAD]: "_sv + e.what());
-    } catch (const std::exception& e)
-    {
-        GpStringUtils::SCerr("[LOG_PAYLOAD]: "_sv + e.what());
-    } catch (...)
-    {
-        GpStringUtils::SCerr("[LOG_PAYLOAD]: unknown"_sv);
-    }
-}
-
-void LOG_PAYLOAD
-(
-    std::u8string_view      aMessage,
-    const SourceLocationT&  aSourceLocation
-) noexcept
-{
-    try
-    {
-        GpLog::S().Logout
-        (
-            MakeCSP<GpLogElementMsgStr>(std::u8string(aMessage)),
-            GpLogLevel::PAYLOAD,
-            GpLogMode::CHAIN_END,
-            GpUUID::CE_Zero(),
-            aSourceLocation
-        );
-    } catch (const GpException& e)
-    {
-        GpStringUtils::SCerr("[LOG_PAYLOAD]: "_sv + e.what());
-    } catch (const std::exception& e)
-    {
-        GpStringUtils::SCerr("[LOG_PAYLOAD]: "_sv + e.what());
-    } catch (...)
-    {
-        GpStringUtils::SCerr("[LOG_PAYLOAD]: unknown"_sv);
-    }
-}
-
-void LOG_PAYLOAD
-(
-    std::u8string_view      aMessage,
-    const GpUUID&           aChainId,
-    const SourceLocationT&  aSourceLocation
-) noexcept
-{
-    try
-    {
-        GpLog::S().Logout
-        (
-            MakeCSP<GpLogElementMsgStr>(std::u8string(aMessage)),
-            GpLogLevel::PAYLOAD,
-            GpLogMode::ADD_TO_CHAIN,
-            aChainId,
-            aSourceLocation
-        );
-    } catch (const GpException& e)
-    {
-        GpStringUtils::SCerr("[LOG_PAYLOAD]: "_sv + e.what());
-    } catch (const std::exception& e)
-    {
-        GpStringUtils::SCerr("[LOG_PAYLOAD]: "_sv + e.what());
-    } catch (...)
-    {
-        GpStringUtils::SCerr("[LOG_PAYLOAD]: unknown"_sv);
     }
 }
 

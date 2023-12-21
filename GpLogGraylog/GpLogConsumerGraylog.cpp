@@ -30,7 +30,7 @@ void    GpLogConsumerGraylog::Consume (GpLogChain::CSP /*aLogChain*/)
         dataWriter
     );
 
-    dataWriter.ShrinkToFit();
+    dataWriter.OnEnd();
 
     std::cout << GpSpanPtrByteR(iTmpBuffer).AsStringViewU8();
     std::cout.flush();*/

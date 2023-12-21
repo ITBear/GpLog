@@ -1,7 +1,8 @@
 #pragma once
 
 #include "GpLogCore_global.hpp"
-#include "../../GpCore2/GpUtils/DateTime/GpDateTimeOps.hpp"
+
+#include <GpCore2/GpUtils/DateTime/GpDateTimeOps.hpp>
 
 #if defined(GP_USE_TIMERS)
 
