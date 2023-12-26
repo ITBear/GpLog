@@ -86,9 +86,9 @@ std::u8string   GpLogFormatterTextElementMsgMarkTraceTS::SGen (const GpLogElemen
 
             resStr
                 .append(u8"    Function: '"_sv)
-                .append(GpUTF::S_STR_To_UTF8(sl.function_name()))
+                .append(GpUTF::S_As_UTF8(sl.function_name()))
                 .append(u8"', file '"_sv)
-                .append(GpUTF::S_STR_To_UTF8(sl.file_name()))
+                .append(GpUTF::S_As_UTF8(sl.file_name()))
                 .append(u8"', line "_sv)
                 .append(StrOps::SFromUI64(sl.line()));
         }

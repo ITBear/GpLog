@@ -27,7 +27,7 @@ void    GpLogConsumerConsole::Consume (GpLogChain::CSP aLogChain)
 
     std::u8string_view sv = GpSpanPtrByteR(iTmpBuffer.data(), iTmpBuffer.size()).AsStringViewU8();
 
-    std::cout << GpUTF::S_UTF8_To_STR(sv);
+    std::cout << GpUTF::S_As_STR(sv);
     std::cout.flush();
 }
 

@@ -7,7 +7,7 @@
 #include <GpCore2/GpUtils/Other/GpSystemInfo.hpp>
 #include <GpCore2/GpUtils/Other/GpLinkedLibsInfo.hpp>
 
-#include <fmt/include/fmt/core.h>
+#include <fmt/core.h>
 #include <iostream>
 
 namespace GPlatform{
@@ -128,7 +128,7 @@ void LOG_SYS_INFO
 {
     std::u8string message
     (
-        GpUTF::S_STR_To_UTF8
+        GpUTF::S_As_UTF8
         (
             fmt::format
             (
@@ -136,9 +136,9 @@ void LOG_SYS_INFO
                 "\n{:>10}: {}. {}" \
                 "\n{:>10}: {}" \
                 "\n{:>10}: {}",
-                GpUTF::S_UTF8_To_STR(aMessage),
-                "OS",        GpUTF::S_UTF8_To_STR(GpSystemInfo::SOsName()),  GpUTF::S_UTF8_To_STR(GpSystemInfo::SOsInfo()),
-                "Arch",      GpUTF::S_UTF8_To_STR(GpSystemInfo::SArcName()),
+                GpUTF::S_As_STR(aMessage),
+                "OS",        GpUTF::S_As_STR(GpSystemInfo::SOsName()),  GpUTF::S_As_STR(GpSystemInfo::SOsInfo()),
+                "Arch",      GpUTF::S_As_STR(GpSystemInfo::SArcName()),
                 "CPU cores", GpSystemInfo::SHardwareConcurrency()
             )
         )
@@ -153,14 +153,14 @@ void LOG_SYS_INFO
         {
             message.append
             (
-                GpUTF::S_STR_To_UTF8
+                GpUTF::S_As_UTF8
                 (
                     fmt::format
                     (
                         "\n[{:03}]: {:>22}, v{}",
                         id++,
-                        GpUTF::S_UTF8_To_STR(name),
-                        GpUTF::S_UTF8_To_STR(version)
+                        GpUTF::S_As_STR(name),
+                        GpUTF::S_As_STR(version)
                     )
                 )
             );
@@ -176,7 +176,7 @@ void LOG_SYS_INFO
     const SourceLocationT&  aSourceLocation
 ) noexcept
 {
-    LOG_SYS_INFO(std::u8string(GpUTF::S_STR_To_UTF8(aMessage)), aSourceLocation);
+    LOG_SYS_INFO(std::u8string(GpUTF::S_As_UTF8(aMessage)), aSourceLocation);
 }
 
 void LOG_END_CHAIN
@@ -233,7 +233,7 @@ void LOG_DEBUG
     const SourceLocationT&  aSourceLocation
 ) noexcept
 {
-    LOG_DEBUG(std::u8string(GpUTF::S_STR_To_UTF8(aMessage)), aSourceLocation);
+    LOG_DEBUG(std::u8string(GpUTF::S_As_UTF8(aMessage)), aSourceLocation);
 }
 
 void LOG_DEBUG
@@ -356,7 +356,7 @@ void LOG_INFO
     const SourceLocationT&  aSourceLocation
 ) noexcept
 {
-    LOG_INFO(std::u8string(GpUTF::S_STR_To_UTF8(aMessage)), aSourceLocation);
+    LOG_INFO(std::u8string(GpUTF::S_As_UTF8(aMessage)), aSourceLocation);
 }
 
 void LOG_INFO
@@ -479,7 +479,7 @@ void LOG_WARNING
     const SourceLocationT&  aSourceLocation
 ) noexcept
 {
-    LOG_WARNING(std::u8string(GpUTF::S_STR_To_UTF8(aMessage)), aSourceLocation);
+    LOG_WARNING(std::u8string(GpUTF::S_As_UTF8(aMessage)), aSourceLocation);
 }
 
 void LOG_WARNING
@@ -602,7 +602,7 @@ void LOG_ERROR
     const SourceLocationT&  aSourceLocation
 ) noexcept
 {
-    LOG_ERROR(std::u8string(GpUTF::S_STR_To_UTF8(aMessage)), aSourceLocation);
+    LOG_ERROR(std::u8string(GpUTF::S_As_UTF8(aMessage)), aSourceLocation);
 }
 
 void LOG_ERROR
@@ -725,7 +725,7 @@ void LOG_CRITICAL_ERROR
     const SourceLocationT&  aSourceLocation
 ) noexcept
 {
-    LOG_CRITICAL_ERROR(std::u8string(GpUTF::S_STR_To_UTF8(aMessage)), aSourceLocation);
+    LOG_CRITICAL_ERROR(std::u8string(GpUTF::S_As_UTF8(aMessage)), aSourceLocation);
 }
 
 void LOG_CRITICAL_ERROR
