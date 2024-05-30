@@ -14,20 +14,20 @@ public:
     CLASS_DD(GpLogMarkTraceTS)
 
 public:
-    inline                          GpLogMarkTraceTS    (void) noexcept;
-    inline                          GpLogMarkTraceTS    (const GpLogMarkTraceTS& aTrace);
-    inline                          GpLogMarkTraceTS    (GpLogMarkTraceTS&& aTrace) noexcept;
-    inline                          ~GpLogMarkTraceTS   (void) noexcept;
+    inline                                  GpLogMarkTraceTS    (void) noexcept;
+    inline                                  GpLogMarkTraceTS    (const GpLogMarkTraceTS& aTrace);
+    inline                                  GpLogMarkTraceTS    (GpLogMarkTraceTS&& aTrace) noexcept;
+    inline                                  ~GpLogMarkTraceTS   (void) noexcept;
 
-    inline void                     Mark                (std::u8string          aComment,
-                                                         const SourceLocationT& aSourceLocation = SourceLocationT::current());
-    inline void                     Mark                (std::u8string_view     aComment,
-                                                         const SourceLocationT& aSourceLocation = SourceLocationT::current());
+    inline void                             Mark                (std::string            aComment,
+                                                                 const SourceLocationT& aSourceLocation = SourceLocationT::current());
+    inline void                             Mark                (std::string_view       aComment,
+                                                                 const SourceLocationT& aSourceLocation = SourceLocationT::current());
 
-    const GpLogMarkTS::C::Vec::Val& Marks               (void) const noexcept {return iMarks;}
+    inline const GpLogMarkTS::C::Vec::Val&  Marks               (void) const noexcept;
 
 private:
-    GpLogMarkTS::C::Vec::Val        iMarks;
+    GpLogMarkTS::C::Vec::Val                iMarks;
 };
 
 GpLogMarkTraceTS::GpLogMarkTraceTS (void) noexcept
@@ -50,7 +50,7 @@ GpLogMarkTraceTS::~GpLogMarkTraceTS (void) noexcept
 
 void    GpLogMarkTraceTS::Mark
 (
-    std::u8string           aComment,
+    std::string             aComment,
     const SourceLocationT&  aSourceLocation
 )
 {
@@ -59,13 +59,18 @@ void    GpLogMarkTraceTS::Mark
 
 void    GpLogMarkTraceTS::Mark
 (
-    std::u8string_view      aComment,
+    std::string_view        aComment,
     const SourceLocationT&  aSourceLocation
 )
 {
-    iMarks.emplace_back(GpLogMarkTS{std::u8string(aComment), aSourceLocation});
+    Mark(std::string(aComment), aSourceLocation);
 }
 
-}//namespace GPlatform
+const GpLogMarkTS::C::Vec::Val& GpLogMarkTraceTS::Marks (void) const noexcept
+{
+    return iMarks;
+}
 
-#endif//#if defined(GP_USE_TIMERS)
+}// namespace GPlatform
+
+#endif// #if defined(GP_USE_TIMERS)

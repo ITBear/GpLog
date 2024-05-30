@@ -2,19 +2,18 @@
 #include "../../GpLogChain.hpp"
 #include "../../Elements/GpLogElementMsg.hpp"
 #include "GpLogFormatterTextElementMsgStr.hpp"
-#include "GpLogFormatterTextElementMsgStrFn.hpp"
 #include "GpLogFormatterTextElementMsgMarkTraceTS.hpp"
 #include <sstream>
 
 namespace GPlatform {
 
-const std::array<std::u8string, GpLogLevel::SCount()>   GpLogFormatterText::sLevels =
+const std::array<std::string, GpLogLevel::SCount()> GpLogFormatterText::sLevels =
 {
-    std::u8string(u8"[D]"_sv),
-    std::u8string(u8"[I]"_sv),
-    std::u8string(u8"[W]"_sv),
-    std::u8string(u8"[E]"_sv),
-    std::u8string(u8"[!]"_sv)
+    std::string("\033[1m[D]\033[0m"_sv),
+    std::string("\033[1m[I]\033[0m"_sv),
+    std::string("\033[1m[W]\033[0m"_sv),
+    std::string("\033[1m[E]\033[0m"_sv),
+    std::string("\033[1m[!]\033[0m"_sv)
 };
 
 GpLogFormatterText::~GpLogFormatterText (void) noexcept
@@ -31,7 +30,7 @@ void    GpLogFormatterText::Serialize
     const GpLogElement::C::List::Val&   chainElements   = logChain.Elements();
 
     const GpUUID        chainId         = logChain.ChainId();
-    const std::u8string chainIdStr      = chainId.ToString();
+    const std::string   chainIdStr      = chainId.ToString();
     const bool          chainNotEmpty   = chainId.IsNotZero();
 
     if (chainNotEmpty)
@@ -49,8 +48,8 @@ void    GpLogFormatterText::Serialize
         WriteUnixTS(element.UnixTS(), aWriter);
         WriteSteadyTS(element.SteadyTS(), aWriter);
 
-        std::u8string msg = GenMessage(element.Message());
-        if (msg.find_first_of('\n') == std::u8string::npos)
+        std::string msg = GenMessage(element.Message());
+        if (msg.find_first_of('\n') == std::string::npos)
         {
             aWriter
                 .Bytes(": "_sv)
@@ -88,7 +87,8 @@ void    GpLogFormatterText::WriteUnixTS
     GpByteWriter&       aWriter
 ) const
 {
-    const std::u8string str = GpDateTimeOps::SUnixTsToStr(aUnixTS, GpDateTimeFormat::STD_DATE_TIME);
+//  ?
+    const std::string str = GpDateTimeOps::SUnixTsToStr(aUnixTS, GpDateTimeFormat::STD_DATE_TIME);
 
     aWriter
         .Bytes("(TS: "_sv)
@@ -101,7 +101,7 @@ void    GpLogFormatterText::WriteSteadyTS
     GpByteWriter&           aWriter
 ) const
 {
-    const std::u8string str = StrOps::SFromDouble(aSteadyTS.As<seconds_t>().Value());
+    const std::string str = StrOps::SFromDouble(aSteadyTS.As<seconds_t>().Value());
 
     aWriter
         .Bytes(", STS: "_sv)
@@ -109,7 +109,7 @@ void    GpLogFormatterText::WriteSteadyTS
         .Bytes("s)"_sv);
 }
 
-std::u8string   GpLogFormatterText::GenMessage (const GpLogElementMsg& aMessage) const
+std::string GpLogFormatterText::GenMessage (const GpLogElementMsg& aMessage) const
 {
     const auto t = aMessage.Type();
 
@@ -125,9 +125,9 @@ std::u8string   GpLogFormatterText::GenMessage (const GpLogElementMsg& aMessage)
         } break;
         default:
         {
-            THROW_GP(u8"Unknown log element with type id "_sv + int(t));
+            THROW_GP("Unknown log element with type id "_sv + int(t));
         }
     }
 }
 
-}//namespace GPlatform
+}// namespace GPlatform

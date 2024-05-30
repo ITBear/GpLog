@@ -19,4 +19,4 @@ public:
                                                                              const GpLogConsumerConfigDesc& aCfgDesc) const override final;
 };
 
-}//namespace GPlatform
+}// namespace GPlatform

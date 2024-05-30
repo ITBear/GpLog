@@ -1,8 +1,8 @@
 #pragma once
 
-#include "GpLogConsumerFactory.hpp"
-#include "GpLogConsumerConfigDesc.hpp"
-#include "GpLogConsumersFactoryProcessor.hpp"
+#include <GpLog/GpLogCore/Consumers/GpLogConsumerFactory.hpp>
+#include <GpLog/GpLogCore/Consumers/GpLogConsumerConfigDesc.hpp>
+#include <GpLog/GpLogCore/Consumers/GpLogConsumersFactoryProcessor.hpp>
 
 #include <GpCore2/GpUtils/Types/Containers/GpDictionary.hpp>
 
@@ -14,21 +14,21 @@ public:
     CLASS_REMOVE_CTRS_MOVE_COPY(GpLogConsumersFactory)
     CLASS_DD(GpLogConsumersFactory)
 
-    using ProcessorsT = GpDictionary<std::u8string, GpLogConsumersFactoryProcessor::SP>;
+    using ProcessorsT = GpDictionary<boost::container::small_flat_map<std::string, GpLogConsumersFactoryProcessor::SP, 8, std::less<>>>;
 
 public:
-                                GpLogConsumersFactory       (void) noexcept = default;
-    virtual                     ~GpLogConsumersFactory      (void) noexcept = default;
+                                GpLogConsumersFactory       (void) noexcept;
+    virtual                     ~GpLogConsumersFactory      (void) noexcept;
 
     void                        AddDefaultProcessorConsole  (void);
     void                        AddDefaultProcessorFile     (void);
     void                        AddProcessor                (GpLogConsumersFactoryProcessor::SP aProcessor);
 
-    GpLogConsumerFactory::SP    FactoryFromCfg              (std::u8string_view             aName,
+    GpLogConsumerFactory::SP    FactoryFromCfg              (std::string_view               aName,
                                                              const GpLogConsumerConfigDesc& aCfgDesc,
                                                              GpByteSerializer::SP           aFormatter) const;
 protected:
     ProcessorsT                 iProcessors;
 };
 
-}//namespace GPlatform
+}// namespace GPlatform

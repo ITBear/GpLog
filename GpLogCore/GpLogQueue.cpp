@@ -1,10 +1,11 @@
-#include "GpLogQueue.hpp"
+#include <GpLog/GpLogCore/GpLogQueue.hpp>
+#include <GpCore2/GpUtils/SyncPrimitives/GpMutex.hpp>
 
 namespace GPlatform {
 
-bool    GpLogQueue::IsEmpty (void) const noexcept
+bool    GpLogQueue::Empty (void) const noexcept
 {
-    std::scoped_lock lock(iChainsEndedLock);
+    GpUniqueLock<GpSpinLock> uniuqeLock(iChainsEndedSpinLock);
 
     return     (iChainsEnded.empty())
             && (iChainsById.Empty());
@@ -67,7 +68,7 @@ void    GpLogQueue::EndChain (const GpUUID& aChainId)
 
 std::optional<GpLogChain::SP>   GpLogQueue::PopFromEnd (void)
 {
-    std::scoped_lock lock(iChainsEndedLock);
+    GpUniqueLock<GpSpinLock> uniuqeLock(iChainsEndedSpinLock);
 
     if (iChainsEnded.empty())
     {
@@ -82,20 +83,21 @@ std::optional<GpLogChain::SP>   GpLogQueue::PopFromEnd (void)
 
 void    GpLogQueue::PushToEnd (GpLogChain::SP&& aChain)
 {
-    std::scoped_lock lock(iChainsEndedLock);
+    GpUniqueLock<GpSpinLock> uniuqeLock(iChainsEndedSpinLock);
+
     iChainsEnded.push(std::move(aChain));
 }
 
 GpLogChain::SP  GpLogQueue::FindOrRegisterChain (const GpUUID& aChainId)
 {
-    return iChainsById.GetOrSet
+    return iChainsById.GetOrGenerateNew
     (
         aChainId,
-        [&]()
+        [aChainId]()
         {
             return MakeSP<GpLogChain>(aChainId);
         }
     );
 }
 
-}//namespace GPlatform
+}// namespace GPlatform

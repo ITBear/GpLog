@@ -23,4 +23,4 @@ GpLogConsumer::SP   GpLogConsumerFileFactory::NewInstance (void) const
     );
 }
 
-}//namespace GPlatform
+}// namespace GPlatform

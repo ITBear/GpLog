@@ -12,23 +12,23 @@ public:
     CLASS_DD(GpLogConsumersFactoryProcessor)
 
 protected:
-    inline                              GpLogConsumersFactoryProcessor  (std::u8string aName) noexcept;
+    inline                              GpLogConsumersFactoryProcessor  (std::string aName) noexcept;
 
 public:
     virtual                             ~GpLogConsumersFactoryProcessor (void) noexcept = default;
 
-    std::u8string_view                  Name                            (void) const noexcept {return iName;}
+    std::string_view                    Name                            (void) const noexcept {return iName;}
 
     virtual GpLogConsumerFactory::SP    Process                         (GpByteSerializer::SP           aFormatter,
                                                                          const GpLogConsumerConfigDesc& aCfgDesc) const = 0;
 
 private:
-    const std::u8string                 iName;
+    const std::string                   iName;
 };
 
-GpLogConsumersFactoryProcessor::GpLogConsumersFactoryProcessor (std::u8string aName) noexcept:
-iName(std::move(aName))
+GpLogConsumersFactoryProcessor::GpLogConsumersFactoryProcessor (std::string aName) noexcept:
+iName{std::move(aName)}
 {
 }
 
-}//namespace GPlatform
+}// namespace GPlatform

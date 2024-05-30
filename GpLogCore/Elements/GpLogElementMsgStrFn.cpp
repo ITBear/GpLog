@@ -6,4 +6,4 @@ namespace GPlatform {
 {
 }*/
 
-}//namespace GPlatform
+}// namespace GPlatform

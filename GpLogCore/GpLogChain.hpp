@@ -3,6 +3,7 @@
 #include "Elements/GpLogElements.hpp"
 
 #include <GpCore2/GpUtils/SyncPrimitives/GpSpinLock.hpp>
+#include <GpCore2/GpUtils/Types/UIDs/GpUUID.hpp>
 #include <mutex>
 
 namespace GPlatform {
@@ -40,4 +41,4 @@ void    GpLogChain::AddElement (GpLogElement&& aElement)
     iElements.push_back(std::move(aElement));
 }
 
-}//namespace GPlatform
+}// namespace GPlatform

@@ -6,4 +6,4 @@ GpLogElementMsgMarkTraceTS::~GpLogElementMsgMarkTraceTS (void) noexcept
 {
 }
 
-}//namespace GPlatform
+}// namespace GPlatform

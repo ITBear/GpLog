@@ -8,4 +8,4 @@ GpByteSerializer::SP    GpLogFormatterTextFactory::NewInstance (void) const
     return MakeSP<GpLogFormatterText>();
 }
 
-}//namespace GPlatform
+}// namespace GPlatform

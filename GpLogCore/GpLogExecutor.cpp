@@ -4,6 +4,15 @@ namespace GPlatform {
 
 GpLogExecutor::~GpLogExecutor (void) noexcept
 {
+    iRunnable.Clear();
+}
+
+void    GpLogExecutor::Flush (void)
+{
+    if (iRunnable.IsNotNULL())
+    {
+        iRunnable.Vn().FlushExternal();
+    }
 }
 
 void    GpLogExecutor::Start
@@ -13,7 +22,7 @@ void    GpLogExecutor::Start
 ) noexcept
 {
     //Create executor
-    GpLogRunnable::SP runnable = MakeSP<GpLogRunnable>
+    iRunnable = MakeSP<GpLogRunnable>
     (
         aConsumerFactories,
         aFlushPeriod,
@@ -21,7 +30,7 @@ void    GpLogExecutor::Start
     );
 
     //Run
-    iThread.Run(std::move(runnable));
+    iThread.Run(iRunnable);
 }
 
-}//namespace GPlatform
+}// namespace GPlatform

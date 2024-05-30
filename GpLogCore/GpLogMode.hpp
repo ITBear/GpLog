@@ -12,4 +12,4 @@ GP_ENUM(GP_LOG_CORE_API, GpLogMode,
     CHAIN_END
 );
 
-}//namespace GPlatform
+}// namespace GPlatform

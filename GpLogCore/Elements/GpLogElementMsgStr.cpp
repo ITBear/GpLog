@@ -6,4 +6,4 @@ GpLogElementMsgStr::~GpLogElementMsgStr (void) noexcept
 {
 }
 
-}//namespace GPlatform
+}// namespace GPlatform

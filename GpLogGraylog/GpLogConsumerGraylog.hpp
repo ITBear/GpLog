@@ -22,4 +22,4 @@ private:
     GpBytesArray            iTmpBuffer;
 };
 
-}//namespace GPlatform
+}// namespace GPlatform

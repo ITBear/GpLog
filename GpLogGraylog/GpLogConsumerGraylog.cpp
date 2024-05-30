@@ -32,7 +32,7 @@ void    GpLogConsumerGraylog::Consume (GpLogChain::CSP /*aLogChain*/)
 
     dataWriter.OnEnd();
 
-    std::cout << GpSpanPtrByteR(iTmpBuffer).AsStringViewU8();
+    std::cout << GpSpanByteR(iTmpBuffer).AsStringView();
     std::cout.flush();*/
 }
 
@@ -41,4 +41,4 @@ void    GpLogConsumerGraylog::OnFlush (void) noexcept
     std::cout.flush();
 }
 
-}//namespace GPlatform
+}// namespace GPlatform

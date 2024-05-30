@@ -1,4 +1,4 @@
-#include "GpLogGraylog.hpp"
+#include "GpLogGraylogLib.hpp"
 
 namespace GPlatform {
 

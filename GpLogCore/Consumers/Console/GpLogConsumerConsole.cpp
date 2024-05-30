@@ -25,9 +25,9 @@ void    GpLogConsumerConsole::Consume (GpLogChain::CSP aLogChain)
 
     dataWriter.OnEnd();
 
-    std::u8string_view sv = GpSpanPtrByteR(iTmpBuffer.data(), iTmpBuffer.size()).AsStringViewU8();
+    std::string_view sv = GpSpanByteR(std::data(iTmpBuffer), std::size(iTmpBuffer)).AsStringView();
 
-    std::cout << GpUTF::S_As_STR(sv);
+    std::cout << sv;
     std::cout.flush();
 }
 
@@ -36,4 +36,4 @@ void    GpLogConsumerConsole::OnFlush (void) noexcept
     std::cout.flush();
 }
 
-}//namespace GPlatform
+}// namespace GPlatform

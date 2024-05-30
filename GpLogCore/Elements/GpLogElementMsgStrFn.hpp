@@ -10,13 +10,13 @@ public:
     CLASS_REMOVE_CTRS_DEFAULT_MOVE_COPY(GpLogElementMsgStrFn)
     CLASS_DD(GpLogElementMsgStrFn)
 
-    using MsgGenT = std::function<std::u8string()>;
+    using MsgGenT = std::function<std::string()>;
 
 public:
     inline                      GpLogElementMsgStrFn    (MsgGenT aMessageFn);
     virtual                     ~GpLogElementMsgStrFn   (void) noexcept override final;
 
-    std::u8string                   Message                 (void) const {return iMessageFn();}
+    std::string                 Message                 (void) const {return iMessageFn();}
 
 private:
     MsgGenT                     iMessageFn;
@@ -28,4 +28,4 @@ iMessageFn(std::move(aMessageFn))
 {
 }*/
 
-}//namespace GPlatform
+}// namespace GPlatform

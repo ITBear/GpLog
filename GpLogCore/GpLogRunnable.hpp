@@ -1,9 +1,11 @@
 #pragma once
 
-#include "GpLogQueue.hpp"
-
+#include <GpLog/GpLogCore/GpLogQueue.hpp>
+#include <GpLog/GpLogCore/Consumers/GpLogConsumersFactory.hpp>
 #include <GpCore2/GpUtils/Threads/GpRunnable.hpp>
 #include <GpCore2/GpUtils/Threads/Timers/GpDoOnceInPeriod.hpp>
+
+#include <atomic>
 
 namespace GPlatform {
 
@@ -14,15 +16,17 @@ public:
     CLASS_DD(GpLogRunnable)
 
 public:
-    inline                              GpLogRunnable       (const GpLogConsumerFactory::C::Vec::SP aConsumerFactories,
+                                        GpLogRunnable       (const GpLogConsumerFactory::C::Vec::SP aConsumerFactories,
                                                              const seconds_t                        aFlushPeriod,
                                                              GpLogQueue&                            aLogQueue);
     virtual                             ~GpLogRunnable      (void) noexcept override final;
 
+    void                                FlushExternal       (void);
+
     virtual void                        Run                 (std::atomic_flag& aStopRequest) noexcept override final;
 
 private:
-    void                                Consume             (GpLogConsumer::C::Vec::SP& aConsumers,
+    void                                ConsumeAll          (GpLogConsumer::C::Vec::SP& aConsumers,
                                                              GpDoOnceInPeriod&          aFlushOnceInPeriod);
     void                                ConsumeNotEnded     (GpLogConsumer::C::Vec::SP& aConsumers);
     void                                Flush               (GpLogConsumer::C::Vec::SP& aConsumers);
@@ -32,18 +36,7 @@ private:
     GpLogConsumerFactory::C::Vec::SP    iConsumerFactories;
     const seconds_t                     iFlushPeriod;
     GpLogQueue&                         iLogQueue;
+    std::atomic_bool                    iIsFlushExternal;
 };
 
-GpLogRunnable::GpLogRunnable
-(
-    const GpLogConsumerFactory::C::Vec::SP  aConsumerFactories,
-    const seconds_t                         aFlushPeriod,
-    GpLogQueue&                             aLogQueue
-):
-iConsumerFactories(std::move(aConsumerFactories)),
-iFlushPeriod(aFlushPeriod),
-iLogQueue(aLogQueue)
-{
-}
-
-}//namespace GPlatform
+}// namespace GPlatform

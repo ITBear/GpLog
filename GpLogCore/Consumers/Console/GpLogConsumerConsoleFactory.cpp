@@ -8,4 +8,4 @@ GpLogConsumer::SP   GpLogConsumerConsoleFactory::NewInstance (void) const
     return MakeSP<GpLogConsumerConsole>(Formatter());
 }
 
-}//namespace GPlatform
+}// namespace GPlatform

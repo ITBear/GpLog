@@ -1,29 +1,27 @@
+# ----------- Config -----------
 TEMPLATE        = lib
-#CONFIG         += staticlib
-VER_MAJ		    = 2
-VER_MIN		    = 1
-VER_PAT		    = 4
-QMAKE_CXXFLAGS += -DGP_MODULE_UUID=2b0b8014-10cc-4d14-9adf-b9a43193003b
+#CONFIG        += staticlib
 QMAKE_CXXFLAGS += -DGP_REFLECTION_STATIC_ADD_TO_MANAGER
+QMAKE_CXXFLAGS += -DGP_MODULE_UUID=2b0b8014-10cc-4d14-9adf-b9a43193003b
 PACKET_NAME     = GpLogCore
+DEFINES        += GP_LOG_CORE_LIBRARY
+_VER_MAJ        = 2
+_VER_MIN        = 1
+_VER_PAT        = 5
 DIR_LEVEL       = ./../..
 
-DEFINES		   += GP_LOG_CORE_LIBRARY
-DEFINES        += "GP_CURRENT_LIB_VER_MAJ=\\\"$$VER_MAJ\\\""
-DEFINES        += "GP_CURRENT_LIB_VER_MIN=\\\"$$VER_MIN\\\""
-DEFINES        += "GP_CURRENT_LIB_VER_PAT=\\\"$$VER_PAT\\\""
-DEFINES        += "GP_CURRENT_LIB_PACKET_NAME=\\\"$$PACKET_NAME\\\""
+include($$DIR_LEVEL/../QtGlobalPro.pri)
 
-include(../../../QtGlobalPro.pri)
-
-#------------------------------ LIBS BEGIN ---------------------------------
+# ----------- Libraries -----------
 os_windows{
+	LIBS += -lGpReflection$$TARGET_POSTFIX
+	LIBS += -lGpUtils$$TARGET_POSTFIX
 }
 
 os_linux{
 }
-#------------------------------- LIBS END ----------------------------------
 
+# ----------- Sources and headers -----------
 SOURCES += \
     Config/GpLogConfigDesc.cpp \
     Consumers/Console/GpLogConsumerConsole.cpp \
@@ -42,6 +40,7 @@ SOURCES += \
     Formatters/Text/GpLogFormatterText.cpp \
     Formatters/Text/GpLogFormatterTextFactory.cpp \
     GpLog.cpp \
+    GpLogCoreLib.cpp \
     GpLogExecutor.cpp \
     GpLogLevel.cpp \
     GpLogMode.cpp \
@@ -79,6 +78,7 @@ HEADERS += \
     GpLog.hpp \
     GpLogChain.hpp \
     GpLogCore.hpp \
+    GpLogCoreLib.hpp \
     GpLogCore_global.hpp \
     GpLogExecutor.hpp \
     GpLogLevel.hpp \

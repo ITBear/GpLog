@@ -4,6 +4,7 @@
 #include "../GpLogMode.hpp"
 
 #include <GpCore2/GpUtils/Types/Units/SI/GpUnitsSI_Time.hpp>
+#include <GpCore2/GpUtils/Types/Units/Other/unix_ts_t.hpp>
 
 namespace GPlatform {
 
@@ -14,11 +15,11 @@ public:
     CLASS_DD(GpLogElement)
 
 public:
-    inline                      GpLogElement    (const unix_ts_ms_t         aUnixTS,
-                                                 const microseconds_t       aSteadyTS,
-                                                 const GpLogLevel::EnumT    aLevel,
-                                                 const GpLogMode::EnumT     aMode,
-                                                 GpLogElementMsg::CSP       aMessage) noexcept;
+    inline                      GpLogElement    (unix_ts_ms_t           aUnixTS,
+                                                 microseconds_t         aSteadyTS,
+                                                 GpLogLevel::EnumT      aLevel,
+                                                 GpLogMode::EnumT       aMode,
+                                                 GpLogElementMsg::CSP   aMessage) noexcept;
     inline                      GpLogElement    (GpLogElement&& aElement) noexcept;
                                 ~GpLogElement   (void) noexcept = default;
 
@@ -45,23 +46,22 @@ GpLogElement::GpLogElement
     const GpLogLevel::EnumT     aLevel,
     const GpLogMode::EnumT      aMode,
     GpLogElementMsg::CSP        aMessage
-
 ) noexcept:
-iUnixTS(aUnixTS),
+iUnixTS  (aUnixTS),
 iSteadyTS(aSteadyTS),
-iLevel(aLevel),
-iMode(aMode),
-iMessage(std::move(aMessage))
+iLevel   (aLevel),
+iMode    (aMode),
+iMessage (std::move(aMessage))
 {
 }
 
 GpLogElement::GpLogElement (GpLogElement&& aElement) noexcept:
-iUnixTS(std::move(aElement.iUnixTS)),
+iUnixTS  (std::move(aElement.iUnixTS)),
 iSteadyTS(std::move(aElement.iSteadyTS)),
-iLevel(std::move(aElement.iLevel)),
-iMode(std::move(aElement.iMode)),
-iMessage(std::move(aElement.iMessage))
+iLevel   (std::move(aElement.iLevel)),
+iMode    (std::move(aElement.iMode)),
+iMessage (std::move(aElement.iMessage))
 {
 }
 
-}//namespace GPlatform
+}// namespace GPlatform

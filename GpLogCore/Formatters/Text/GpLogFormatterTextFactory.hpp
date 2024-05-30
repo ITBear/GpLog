@@ -19,4 +19,4 @@ public:
     virtual GpByteSerializer::SP        NewInstance                 (void) const override final;
 };
 
-}//namespace GPlatform
+}// namespace GPlatform

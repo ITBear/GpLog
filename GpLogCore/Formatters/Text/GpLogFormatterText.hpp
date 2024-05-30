@@ -4,6 +4,7 @@
 
 #include <GpCore2/GpUtils/Streams/GpByteSerializer.hpp>
 #include <GpCore2/GpUtils/Types/Units/SI/GpUnitsSI_Time.hpp>
+#include <GpCore2/GpUtils/Types/Units/Other/unix_ts_t.hpp>
 
 namespace GPlatform {
 
@@ -29,10 +30,10 @@ private:
                                                  GpByteWriter&              aWriter) const;
     void                    WriteSteadyTS       (const microseconds_t       aSteadyTS,
                                                  GpByteWriter&              aWriter) const;
-    std::u8string           GenMessage          (const GpLogElementMsg&     aMessage) const;
+    std::string             GenMessage          (const GpLogElementMsg&     aMessage) const;
 
 private:
-    static const std::array<std::u8string, GpLogLevel::SCount()>    sLevels;
+    static const std::array<std::string, GpLogLevel::SCount()>  sLevels;
 };
 
-}//namespace GPlatform
+}// namespace GPlatform

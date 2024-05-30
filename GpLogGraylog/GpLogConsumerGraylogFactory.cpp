@@ -17,4 +17,4 @@ GpLogConsumer::SP   GpLogConsumerGraylogFactory::NewInstance (void) const
     );
 }
 
-}//namespace GPlatform
+}// namespace GPlatform

@@ -7,11 +7,11 @@
 namespace GPlatform {
 
 GP_ENUM(GP_LOG_CORE_API, GpLogLevel,
-    DEBUG,
-    INFO,
-    WARNING,
-    ERROR,
-    CRITICAL_ERROR
+    L_DEBUG,
+    L_INFO,
+    L_WARNING,
+    L_ERROR,
+    L_CRITICAL_ERROR
 );
 
-}//namespace GPlatform
+}// namespace GPlatform

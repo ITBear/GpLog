@@ -4,6 +4,14 @@
 
 namespace GPlatform {
 
+GpLogConsumersFactory::GpLogConsumersFactory (void) noexcept
+{
+}
+
+GpLogConsumersFactory::~GpLogConsumersFactory (void) noexcept
+{
+}
+
 void    GpLogConsumersFactory::AddDefaultProcessorConsole (void)
 {
     AddProcessor(MakeSP<GpLogConsumersFactoryProcessorConsole>());
@@ -16,16 +24,16 @@ void    GpLogConsumersFactory::AddDefaultProcessorFile (void)
 
 void    GpLogConsumersFactory::AddProcessor (GpLogConsumersFactoryProcessor::SP aProcessor)
 {
-    iProcessors.Set
+    iProcessors.SetOrUpdate
     (
-        std::u8string(aProcessor.V().Name()),
+        std::string(aProcessor.V().Name()),
         std::move(aProcessor)
     );
 }
 
 GpLogConsumerFactory::SP    GpLogConsumersFactory::FactoryFromCfg
 (
-    std::u8string_view              aName,
+    std::string_view                aName,
     const GpLogConsumerConfigDesc&  aCfgDesc,
     GpByteSerializer::SP            aFormatter
 ) const
@@ -35,14 +43,21 @@ GpLogConsumerFactory::SP    GpLogConsumersFactory::FactoryFromCfg
     THROW_COND_GP
     (
         processorOpt.has_value(),
-        [&](){return u8"Processor not found by name '"_sv + aName + u8"'"_sv;}
+        [aName]()
+        {
+            return fmt::format
+            (
+                "Processor not found by name '{}'",
+                aName
+            );
+        }
     );
 
-    return processorOpt.value().get().V().Process
+    return processorOpt.value().V().Process
     (
         aFormatter,
         aCfgDesc
     );
 }
 
-}//namespace GPlatform
+}// namespace GPlatform

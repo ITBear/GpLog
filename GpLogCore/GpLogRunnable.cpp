@@ -1,12 +1,33 @@
-#include "GpLogRunnable.hpp"
-
+#include <GpLog/GpLogCore/GpLogRunnable.hpp>
 #include <GpCore2/GpUtils/Types/Strings/GpStringUtils.hpp>
-#include <iostream>
 
 namespace GPlatform {
 
+GpLogRunnable::GpLogRunnable
+(
+    const GpLogConsumerFactory::C::Vec::SP  aConsumerFactories,
+    const seconds_t                         aFlushPeriod,
+    GpLogQueue&                             aLogQueue
+):
+GpRunnable(),
+iConsumerFactories{std::move(aConsumerFactories)},
+iFlushPeriod      {aFlushPeriod},
+iLogQueue         {aLogQueue}
+{
+}
+
 GpLogRunnable::~GpLogRunnable (void) noexcept
 {
+}
+
+void    GpLogRunnable::FlushExternal (void)
+{
+    iIsFlushExternal.store(true, std::memory_order_release);
+
+    while (iIsFlushExternal.load(std::memory_order_acquire) == true)
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(30));
+    }
 }
 
 void    GpLogRunnable::Run (std::atomic_flag& aStopRequest) noexcept
@@ -18,11 +39,18 @@ void    GpLogRunnable::Run (std::atomic_flag& aStopRequest) noexcept
 
         while (!aStopRequest.test())
         {
-            Consume(consumers, flushOnceInPeriod);
-            WaitForAndReset(0.25_si_s);
+            ConsumeAll(consumers, flushOnceInPeriod);
+
+            if (iIsFlushExternal.load(std::memory_order_acquire) == false)
+            {
+                WaitForAndReset(0.25_si_s);
+            } else
+            {
+                iIsFlushExternal.store(false, std::memory_order_release);
+            }
         }
 
-        Consume(consumers, flushOnceInPeriod);
+        ConsumeAll(consumers, flushOnceInPeriod);
         ConsumeNotEnded(consumers);
         Flush(consumers);
     } catch (const std::exception& e)
@@ -34,7 +62,7 @@ void    GpLogRunnable::Run (std::atomic_flag& aStopRequest) noexcept
     }
 }
 
-void    GpLogRunnable::Consume
+void    GpLogRunnable::ConsumeAll
 (
     GpLogConsumer::C::Vec::SP&  aConsumers,
     GpDoOnceInPeriod&           aFlushOnceInPeriod
@@ -62,7 +90,7 @@ void    GpLogRunnable::ConsumeNotEnded (GpLogConsumer::C::Vec::SP& aConsumers)
 {
     auto notEndedChains = iLogQueue.RemoveNotEnded();
 
-    notEndedChains.Apply
+    notEndedChains.ApplyToAll
     (
         [&](auto& aChain)
         {
@@ -94,4 +122,4 @@ GpLogConsumer::C::Vec::SP   GpLogRunnable::CreateConsumers (void)
     return consumers;
 }
 
-}//namespace GPlatform
+}// namespace GPlatform

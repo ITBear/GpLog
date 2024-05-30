@@ -9,7 +9,7 @@ class GP_LOG_GRAYLOG_API GpLogConsumerGraylogConfigDesc final: public GpLogConsu
 {
 public:
     CLASS_DD(GpLogConsumerGraylogConfigDesc)
-    REFLECT_DECLARE(u8"57b8bc51-ea51-4498-93f4-a71010e9c27c"_uuid)
+    REFLECT_DECLARE("57b8bc51-ea51-4498-93f4-a71010e9c27c"_uuid)
 
 public:
                                 GpLogConsumerGraylogConfigDesc  (void) noexcept = default;
@@ -30,4 +30,4 @@ GpLogConsumerConfigDesc(std::move(aDesc))
 {
 }
 
-}//namespace GPlatform
+}// namespace GPlatform

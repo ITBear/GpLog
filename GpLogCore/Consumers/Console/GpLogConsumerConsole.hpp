@@ -26,4 +26,4 @@ GpLogConsumer(std::move(aFormatter))
 {
 }
 
-}//namespace GPlatform
+}// namespace GPlatform

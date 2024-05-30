@@ -38,4 +38,4 @@ iConfigDesc(MakeSP<GpLogConsumerFileConfigDesc>(aConfigDesc))
 {
 }
 
-}//namespace GPlatform
+}// namespace GPlatform

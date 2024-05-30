@@ -25,4 +25,4 @@ private:
     GpByteSerializer::SP        iFormatter;
 };
 
-}//namespace GPlatform
+}// namespace GPlatform

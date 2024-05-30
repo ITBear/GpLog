@@ -33,4 +33,4 @@ iType(aType)
 {
 }
 
-}//namespace GPlatform
+}// namespace GPlatform

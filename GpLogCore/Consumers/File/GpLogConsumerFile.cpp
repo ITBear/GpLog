@@ -7,8 +7,8 @@ namespace GPlatform {
 
 GpLogConsumerFile::GpLogConsumerFile
 (
-    std::u8string_view      aOutFilePath,
-    std::u8string_view      aOutFilePrefix,
+    std::string_view        aOutFilePath,
+    std::string_view        aOutFilePrefix,
     const size_byte_t       aFileMaxSize,
     const milliseconds_t    aMaxFlushPeriod,
     const size_byte_t       aMaxBufferSize,
@@ -43,7 +43,7 @@ void    GpLogConsumerFile::Consume (GpLogChain::CSP aLogChain)
 
     const milliseconds_t nowSteadyTS = GpDateTimeOps::SSteadyTS_ms();
 
-    if (   (iBufferData.size() > iMaxBufferSize.As<size_t>())
+    if (   (std::size(iBufferData) > iMaxBufferSize.As<size_t>())
         || ((nowSteadyTS - iSteadyLastFlushTS) >= iMaxFlushPeriod))
     {
         iSteadyLastFlushTS = nowSteadyTS;
@@ -73,24 +73,24 @@ void    GpLogConsumerFile::WriteToFile (void)
 
     iOFStream.write
     (
-        reinterpret_cast<const std::ofstream::char_type*>(iBufferData.data()),
-        NumOps::SConvert<std::streamsize>(iBufferData.size())
+        reinterpret_cast<const std::ofstream::char_type*>(std::data(iBufferData)),
+        NumOps::SConvert<std::streamsize>(std::size(iBufferData))
     );
 
     if (iOFStream.fail())
     {
         iOFStream.clear();
-        THROW_GP(u8"Failed to write to file '"_sv + iOFStreamFileName + u8"'"_sv);
+        THROW_GP("Failed to write to file '"_sv + iOFStreamFileName + "'"_sv);
     }
 
-    iBytesWriteToStream += size_byte_t::SMake(iBufferData.size());
+    iBytesWriteToStream += size_byte_t::SMake(std::size(iBufferData));
     iBufferData.clear();
 }
 
 std::ofstream   GpLogConsumerFile::CreateFile
 (
-    std::u8string_view aFilePath,
-    std::u8string_view aFilePrefix
+    std::string_view aFilePath,
+    std::string_view aFilePrefix
 )
 {
     if (iOFStream.is_open())
@@ -115,41 +115,41 @@ std::ofstream   GpLogConsumerFile::CreateFile
     if (oftream.fail())
     {
         iOFStream.clear();
-        THROW_GP(u8"Failed to create file '"_sv + iOFStreamFileName + u8"'"_sv);
+        THROW_GP("Failed to create file '"_sv + iOFStreamFileName + "'"_sv);
     }
 
     oftream.rdbuf()->pubsetbuf
     (
-        reinterpret_cast<std::ofstream::char_type*>(iBufferStream.data()),
-        NumOps::SConvert<std::streamsize>(iBufferStream.size())
+        reinterpret_cast<std::ofstream::char_type*>(std::data(iBufferStream)),
+        NumOps::SConvert<std::streamsize>(std::size(iBufferStream))
     );
 
     return oftream;
 }
 
-std::u8string   GpLogConsumerFile::GenFullFileName
+std::string GpLogConsumerFile::GenFullFileName
 (
-    std::u8string_view  aFilePath,
-    std::u8string_view  aFilePrefix,
+    std::string_view    aFilePath,
+    std::string_view    aFilePrefix,
     const size_t        aPostfix
 )
 {
-    std::u8string dateTimeStr = GpDateTimeOps::SUnixTsToStr(GpDateTimeOps::SUnixTS_s(), GpDateTimeFormat::STD_DATE_TIME_T);
-    std::replace(dateTimeStr.begin(), dateTimeStr.end(), '-', '_');
+    std::string dateTimeStr = GpDateTimeOps::SUnixTsToStr(GpDateTimeOps::SUnixTS_s(), GpDateTimeFormat::STD_DATE_TIME_T);
+    std::replace(std::begin(dateTimeStr), std::end(dateTimeStr), '-', '_');
 
-    std::u8string fileName;
+    std::string fileName;
     fileName.reserve(128);
     fileName
         .append(aFilePrefix)
-        .append(u8"_"_sv)
+        .append("_"_sv)
         .append(dateTimeStr)
-        .append(u8".log."_sv)
+        .append(".log."_sv)
         .append(StrOps::SFromUI64(aPostfix));
 
     std::filesystem::path path(aFilePath);
     path /= fileName;
 
-    return path.u8string();
+    return path.string();
 }
 
-}//namespace GPlatform
+}// namespace GPlatform

@@ -26,8 +26,8 @@ void    GpLogFormatterTextElementMsgStrFn::Serialize
 {
     const GpLogElementMsgStrFn& e = static_cast<const GpLogElementMsgStrFn&>(aMessage);
 
-    const std::u8string s = e.Message();
+    const std::string s = e.Message();
     aWriter.Bytes(s);
 }*/
 
-}//namespace GPlatform
+}// namespace GPlatform

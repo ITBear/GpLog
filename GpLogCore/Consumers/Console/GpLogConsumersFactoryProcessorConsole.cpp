@@ -7,7 +7,7 @@
 namespace GPlatform {
 
 GpLogConsumersFactoryProcessorConsole::GpLogConsumersFactoryProcessorConsole (void):
-GpLogConsumersFactoryProcessor(u8"console")
+GpLogConsumersFactoryProcessor("console")
 {
 }
 
@@ -30,4 +30,4 @@ GpLogConsumerFactory::SP    GpLogConsumersFactoryProcessorConsole::Process
     );
 }
 
-}//namespace GPlatform
+}// namespace GPlatform

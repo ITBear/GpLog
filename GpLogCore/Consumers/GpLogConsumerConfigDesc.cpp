@@ -1,6 +1,7 @@
 #include "GpLogConsumerConfigDesc.hpp"
 
 #include <GpCore2/GpReflection/GpReflectManager.hpp>
+#include <GpCore2/GpReflection/GpReflectPropUtils.hpp>
 
 namespace GPlatform {
 
@@ -10,8 +11,8 @@ GpLogConsumerConfigDesc::~GpLogConsumerConfigDesc (void) noexcept
 {
 }
 
-void    GpLogConsumerConfigDesc::_SReflectCollectProps (GpReflectProp::C::Vec::Val& /*aPropsOut*/)
+void    GpLogConsumerConfigDesc::_SReflectCollectProps (GpReflectProp::SmallVecVal& /*aPropsOut*/)
 {
 }
 
-}//namespace GPlatform
+}// namespace GPlatform

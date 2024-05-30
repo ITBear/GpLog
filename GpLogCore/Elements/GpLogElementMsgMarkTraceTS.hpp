@@ -27,4 +27,4 @@ iMarkTraceTS(std::move(aMarkTraceTS))
 {
 }
 
-}//namespace GPlatform
+}// namespace GPlatform

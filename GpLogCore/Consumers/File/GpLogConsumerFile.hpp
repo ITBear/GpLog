@@ -2,6 +2,7 @@
 
 #include "../GpLogConsumer.hpp"
 
+#include <GpCore2/GpUtils/Types/Units/Other/size_byte_t.hpp>
 #include <fstream>
 
 namespace GPlatform {
@@ -15,11 +16,11 @@ public:
     CLASS_DD(GpLogConsumerFile)
 
 public:
-                                GpLogConsumerFile   (std::u8string_view     aOutFilePath,
-                                                     std::u8string_view     aOutFilePrefix,
-                                                     const size_byte_t      aFileMaxSize,
-                                                     const milliseconds_t   aMaxFlushPeriod,
-                                                     const size_byte_t      aMaxBufferSize,
+                                GpLogConsumerFile   (std::string_view       aOutFilePath,
+                                                     std::string_view       aOutFilePrefix,
+                                                     size_byte_t            aFileMaxSize,
+                                                     milliseconds_t         aMaxFlushPeriod,
+                                                     size_byte_t            aMaxBufferSize,
                                                      GpByteSerializer::SP   aFormatter);
     virtual                     ~GpLogConsumerFile  (void) noexcept override final;
 
@@ -28,15 +29,15 @@ public:
 
 private:
     void                        WriteToFile         (void);
-    std::ofstream               CreateFile          (std::u8string_view aFilePath,
-                                                     std::u8string_view aFilePrefix);
-    std::u8string               GenFullFileName     (std::u8string_view aFilePath,
-                                                     std::u8string_view aFilePrefix,
-                                                     const size_t       aPostfix);
+    std::ofstream               CreateFile          (std::string_view aFilePath,
+                                                     std::string_view aFilePrefix);
+    std::string                 GenFullFileName     (std::string_view   aFilePath,
+                                                     std::string_view   aFilePrefix,
+                                                     size_t             aPostfix);
 
 private:
-    const std::u8string         iOutFilePath;
-    const std::u8string         iOutFilePrefix;
+    const std::string           iOutFilePath;
+    const std::string           iOutFilePrefix;
     const size_byte_t           iFileMaxSize;
     const milliseconds_t        iMaxFlushPeriod;
     const size_byte_t           iMaxBufferSize;
@@ -44,10 +45,10 @@ private:
     GpBytesArray                iBufferData;
     milliseconds_t              iSteadyLastFlushTS = 0.0_si_ms;
 
-    std::u8string               iOFStreamFileName;
+    std::string                 iOFStreamFileName;
     std::ofstream               iOFStream;
     size_byte_t                 iBytesWriteToStream;
     std::array<std::byte, 8192> iBufferStream;
 };
 
-}//namespace GPlatform
+}// namespace GPlatform

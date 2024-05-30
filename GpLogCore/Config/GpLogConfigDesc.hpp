@@ -11,9 +11,9 @@ class GP_LOG_CORE_API GpLogConfigDesc final: public GpReflectObject
 {
 public:
     CLASS_DD(GpLogConfigDesc)
-    REFLECT_DECLARE(u8"f007fab7-abbf-4ced-a230-0d6c18a73bdd"_uuid)
+    REFLECT_DECLARE("f007fab7-abbf-4ced-a230-0d6c18a73bdd"_uuid)
 
-    using CategoryLevelsT   = std::map<std::u8string, std::u8string, std::less<>>;
+    using CategoryLevelsT   = std::map<std::string, std::string, std::less<>>;
     using ConsumersT        = GpLogConsumerConfigDesc::C::MapStr::SP;
 
 public:
@@ -26,7 +26,7 @@ public:
     virtual                 ~GpLogConfigDesc    (void) noexcept override final;
 
 public:
-    GpLogLevel              min_level       = GpLogLevel::INFO;
+    GpLogLevel              min_level       = GpLogLevel::L_DEBUG;
     seconds_t               flush_period    = 3.0_si_s;
     ConsumersT              consumers;
 };
@@ -59,4 +59,4 @@ consumers   (std::move(aConsumers))
 {
 }
 
-}//namespace GPlatform
+}// namespace GPlatform
