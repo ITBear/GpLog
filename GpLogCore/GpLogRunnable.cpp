@@ -26,7 +26,7 @@ void    GpLogRunnable::FlushExternal (void)
 
     while (iIsFlushExternal.load(std::memory_order_acquire) == true)
     {
-        std::this_thread::sleep_for(std::chrono::milliseconds(30));
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 }
 
@@ -60,6 +60,11 @@ void    GpLogRunnable::Run (std::atomic_flag& aStopRequest) noexcept
     {
         GpStringUtils::SCerr("[GpLogRunnable::Run]: unknown exception"_sv);
     }
+}
+
+void    GpLogRunnable::OnNotify (void) noexcept
+{
+    // NOP
 }
 
 void    GpLogRunnable::ConsumeAll

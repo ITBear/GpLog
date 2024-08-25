@@ -1,9 +1,8 @@
 #pragma once
 
-#include "GpLogCore_global.hpp"
-
-#include <GpCore2/GpUtils/DateTime/GpDateTimeOps.hpp>
 #include <GpCore2/Config/IncludeExt/fmt.hpp>
+#include <GpLog/GpLogCore/GpLogCore_global.hpp>
+#include <GpCore2/GpUtils/DateTime/GpDateTimeOps.hpp>
 
 #if defined(GP_USE_TIMERS)
 
@@ -44,20 +43,20 @@ GpLogMarkTS::GpLogMarkTS (void) noexcept
 }
 
 GpLogMarkTS::GpLogMarkTS (const GpLogMarkTS& aTag):
-iUnixTS        (aTag.iUnixTS),
-iHiResTS       (aTag.iHiResTS),
-iSteadyTS      (aTag.iSteadyTS),
-iComment       (aTag.iComment),
-iSourceLocation(aTag.iSourceLocation)
+iUnixTS        {aTag.iUnixTS},
+iHiResTS       {aTag.iHiResTS},
+iSteadyTS      {aTag.iSteadyTS},
+iComment       {aTag.iComment},
+iSourceLocation{aTag.iSourceLocation}
 {
 }
 
 GpLogMarkTS::GpLogMarkTS (GpLogMarkTS&& aTag) noexcept:
-iUnixTS        (std::move(aTag.iUnixTS)),
-iHiResTS       (std::move(aTag.iHiResTS)),
-iSteadyTS      (std::move(aTag.iSteadyTS)),
-iComment       (std::move(aTag.iComment)),
-iSourceLocation(std::move(aTag.iSourceLocation))
+iUnixTS        {std::move(aTag.iUnixTS)},
+iHiResTS       {std::move(aTag.iHiResTS)},
+iSteadyTS      {std::move(aTag.iSteadyTS)},
+iComment       {std::move(aTag.iComment)},
+iSourceLocation{std::move(aTag.iSourceLocation)}
 {
 }
 
@@ -66,11 +65,11 @@ GpLogMarkTS::GpLogMarkTS
     std::string             aComment,
     const SourceLocationT&  aSourceLocation
 ) noexcept:
-iUnixTS        (GpDateTimeOps::SUnixTS_ms()),
-iHiResTS       (GpDateTimeOps::SHighResTS_us()),
-iSteadyTS      (GpDateTimeOps::SSteadyTS_us() - GpDateTimeOps::SSteadyTS_us_AtAppStart()),
-iComment       (std::move(aComment)),
-iSourceLocation(aSourceLocation)
+iUnixTS        {GpDateTimeOps::SUnixTS_ms()},
+iHiResTS       {GpDateTimeOps::SHighResTS_us()},
+iSteadyTS      {GpDateTimeOps::SSteadyTS_us() - GpDateTimeOps::SSteadyTS_us_AtAppStart()},
+iComment       {std::move(aComment)},
+iSourceLocation{aSourceLocation}
 {
 }
 
@@ -78,7 +77,7 @@ iSourceLocation(aSourceLocation)
 
 // --------------------------------------------------------------------
 
-namespace fmt {
+namespace FMT_NAMESPASE {
 
 using namespace GPlatform;
 
@@ -130,6 +129,6 @@ private:
     mutable microseconds_t  iDuration       = 0.0_si_us;
 };
 
-}// namespace fmt
+}// namespace FMT_NAMESPASE
 
 #endif// #if defined(GP_USE_TIMERS)

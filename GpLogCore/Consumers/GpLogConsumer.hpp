@@ -1,7 +1,6 @@
 #pragma once
 
-#include "../GpLogChain.hpp"
-
+#include <GpLog/GpLogCore/GpLogChain.hpp>
 #include <GpCore2/GpUtils/Streams/GpByteSerializer.hpp>
 
 namespace GPlatform {
@@ -29,7 +28,7 @@ private:
 };
 
 GpLogConsumer::GpLogConsumer (GpByteSerializer::SP aFormatter) noexcept:
-iFormatter(std::move(aFormatter))
+iFormatter{std::move(aFormatter)}
 {
 }
 

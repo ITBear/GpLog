@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GpLogCore_global.hpp"
+#include <GpLog/GpLogCore/GpLogCore_global.hpp>
 #include <GpCore2/GpUtils/Other/GpLinkedLibsInfo.hpp>
 
 namespace GPlatform {

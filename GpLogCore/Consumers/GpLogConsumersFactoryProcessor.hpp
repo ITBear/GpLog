@@ -1,7 +1,7 @@
 #pragma once
 
-#include "GpLogConsumerFactory.hpp"
-#include "GpLogConsumerConfigDesc.hpp"
+#include <GpLog/GpLogCore/Consumers/GpLogConsumerFactory.hpp>
+#include <GpLog/GpLogCore/Consumers/GpLogConsumerConfigDesc.hpp>
 
 namespace GPlatform {
 

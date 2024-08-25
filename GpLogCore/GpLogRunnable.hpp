@@ -25,6 +25,9 @@ public:
 
     virtual void                        Run                 (std::atomic_flag& aStopRequest) noexcept override final;
 
+protected:
+    virtual void                        OnNotify            (void) noexcept override final;
+
 private:
     void                                ConsumeAll          (GpLogConsumer::C::Vec::SP& aConsumers,
                                                              GpDoOnceInPeriod&          aFlushOnceInPeriod);

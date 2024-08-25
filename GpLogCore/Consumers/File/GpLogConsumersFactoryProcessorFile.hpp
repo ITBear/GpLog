@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../GpLogConsumersFactoryProcessor.hpp"
+#include <GpLog/GpLogCore/Consumers/GpLogConsumersFactoryProcessor.hpp>
 
 namespace GPlatform {
 

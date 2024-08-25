@@ -1,9 +1,13 @@
-#include "GpLogConsumerConsole.hpp"
-
+#include <GpLog/GpLogCore/Consumers/Console/GpLogConsumerConsole.hpp>
 #include <GpCore2/GpUtils/Streams/GpByteWriterStorageByteArray.hpp>
 #include <iostream>
 
 namespace GPlatform {
+
+GpLogConsumerConsole::GpLogConsumerConsole (GpByteSerializer::SP aFormatter) noexcept:
+GpLogConsumer{std::move(aFormatter)}
+{
+}
 
 GpLogConsumerConsole::~GpLogConsumerConsole (void) noexcept
 {

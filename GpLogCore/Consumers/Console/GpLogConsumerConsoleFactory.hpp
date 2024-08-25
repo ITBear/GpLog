@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../GpLogConsumerFactory.hpp"
-#include "GpLogConsumerConsoleConfigDesc.hpp"
+#include <GpLog/GpLogCore/Consumers/GpLogConsumerFactory.hpp>
+#include <GpLog/GpLogCore/Consumers/Console/GpLogConsumerConsoleConfigDesc.hpp>
 
 namespace GPlatform {
 
@@ -12,8 +12,8 @@ public:
     CLASS_DD(GpLogConsumerConsoleFactory)
 
 public:
-    inline                              GpLogConsumerConsoleFactory     (GpByteSerializer::SP aFormatter) noexcept;
-    inline                              GpLogConsumerConsoleFactory     (GpByteSerializer::SP                   aFormatter,
+                                        GpLogConsumerConsoleFactory     (GpByteSerializer::SP aFormatter) noexcept;
+                                        GpLogConsumerConsoleFactory     (GpByteSerializer::SP                   aFormatter,
                                                                          const GpLogConsumerConsoleConfigDesc&  aConfigDesc);
     virtual                             ~GpLogConsumerConsoleFactory    (void) noexcept override final = default;
 
@@ -22,20 +22,5 @@ public:
 private:
     GpLogConsumerConsoleConfigDesc::SP  iConfigDesc;
 };
-
-GpLogConsumerConsoleFactory::GpLogConsumerConsoleFactory (GpByteSerializer::SP aFormatter) noexcept:
-GpLogConsumerFactory(std::move(aFormatter))
-{
-}
-
-GpLogConsumerConsoleFactory::GpLogConsumerConsoleFactory
-(
-    GpByteSerializer::SP                    aFormatter,
-    const GpLogConsumerConsoleConfigDesc&   aConfigDesc
-):
-GpLogConsumerFactory(std::move(aFormatter)),
-iConfigDesc(MakeSP<GpLogConsumerConsoleConfigDesc>(aConfigDesc))
-{
-}
 
 }// namespace GPlatform

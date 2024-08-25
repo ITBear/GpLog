@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GpLogRunnable.hpp"
+#include <GpLog/GpLogCore/GpLogRunnable.hpp>
 #include <GpCore2/GpUtils/Threads/GpThread.hpp>
 
 namespace GPlatform {
@@ -28,8 +28,8 @@ private:
 };
 
 GpLogExecutor::GpLogExecutor (GpLogQueue& aLogQueue) noexcept:
-iThread  ("Log executor"),
-iLogQueue(aLogQueue)
+iThread  {"Log executor"},
+iLogQueue{aLogQueue}
 {
 }
 

@@ -1,5 +1,4 @@
-#include "GpLogConsumerConsoleConfigDesc.hpp"
-
+#include <GpLog/GpLogCore/Consumers/Console/GpLogConsumerConsoleConfigDesc.hpp>
 #include <GpCore2/GpReflection/GpReflectManager.hpp>
 #include <GpCore2/GpReflection/GpReflectPropUtils.hpp>
 
@@ -12,12 +11,12 @@ GpLogConsumerConsoleConfigDesc::GpLogConsumerConsoleConfigDesc (void) noexcept
 }
 
 GpLogConsumerConsoleConfigDesc::GpLogConsumerConsoleConfigDesc (const GpLogConsumerConsoleConfigDesc& aDesc):
-GpLogConsumerConfigDesc(aDesc)
+GpLogConsumerConfigDesc{aDesc}
 {
 }
 
 GpLogConsumerConsoleConfigDesc::GpLogConsumerConsoleConfigDesc (GpLogConsumerConsoleConfigDesc&& aDesc) noexcept:
-GpLogConsumerConfigDesc(std::move(aDesc))
+GpLogConsumerConfigDesc{std::move(aDesc)}
 {
 }
 

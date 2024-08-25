@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../Elements/GpLogElementMsgStrFn.hpp"
+#include <GpLog/GpLogCore/Elements/GpLogElementMsgStrFn.hpp>
 
 namespace GPlatform {
 

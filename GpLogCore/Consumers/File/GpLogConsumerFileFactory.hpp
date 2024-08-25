@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../GpLogConsumerFactory.hpp"
-#include "GpLogConsumerFileConfigDesc.hpp"
+#include <GpLog/GpLogCore/Consumers/GpLogConsumerFactory.hpp>
+#include <GpLog/GpLogCore/Consumers/File/GpLogConsumerFileConfigDesc.hpp>
 
 namespace GPlatform {
 
@@ -12,8 +12,8 @@ public:
     CLASS_DD(GpLogConsumerFileFactory)
 
 public:
-    inline                          GpLogConsumerFileFactory    (GpByteSerializer::SP aFormatter) noexcept;
-    inline                          GpLogConsumerFileFactory    (GpByteSerializer::SP               aFormatter,
+                                    GpLogConsumerFileFactory    (GpByteSerializer::SP aFormatter) noexcept;
+                                    GpLogConsumerFileFactory    (GpByteSerializer::SP               aFormatter,
                                                                  const GpLogConsumerFileConfigDesc& aConfigDesc);
     virtual                         ~GpLogConsumerFileFactory   (void) noexcept override final;
 
@@ -22,20 +22,5 @@ public:
 private:
     GpLogConsumerFileConfigDesc::SP iConfigDesc;
 };
-
-GpLogConsumerFileFactory::GpLogConsumerFileFactory (GpByteSerializer::SP aFormatter) noexcept:
-GpLogConsumerFactory(std::move(aFormatter))
-{
-}
-
-GpLogConsumerFileFactory::GpLogConsumerFileFactory
-(
-    GpByteSerializer::SP                aFormatter,
-    const GpLogConsumerFileConfigDesc&  aConfigDesc
-):
-GpLogConsumerFactory(std::move(aFormatter)),
-iConfigDesc(MakeSP<GpLogConsumerFileConfigDesc>(aConfigDesc))
-{
-}
 
 }// namespace GPlatform

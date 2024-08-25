@@ -1,7 +1,6 @@
 #pragma once
 
-#include "../../GpLogLevel.hpp"
-
+#include <GpLog/GpLogCore/GpLogLevel.hpp>
 #include <GpCore2/GpUtils/Streams/GpByteSerializer.hpp>
 #include <GpCore2/GpUtils/Types/Units/SI/GpUnitsSI_Time.hpp>
 #include <GpCore2/GpUtils/Types/Units/Other/unix_ts_t.hpp>
@@ -17,20 +16,20 @@ public:
     CLASS_DD(GpLogFormatterText)
 
 public:
-                            GpLogFormatterText  (void) noexcept = default;
-    virtual                 ~GpLogFormatterText (void) noexcept override final;
+                    GpLogFormatterText  (void) noexcept;
+    virtual         ~GpLogFormatterText (void) noexcept override final;
 
-    virtual void            Serialize           (const GpAny&   aObject,
-                                                 GpByteWriter&  aWriter) const override final;
+    virtual void    Serialize           (const GpAny&   aObject,
+                                         GpByteWriter&  aWriter) const override final;
 
 private:
-    void                    WriteLevel          (const GpLogLevel::EnumT    aLevel,
-                                                 GpByteWriter&              aWriter) const;
-    void                    WriteUnixTS         (const unix_ts_ms_t         aUnixTS,
-                                                 GpByteWriter&              aWriter) const;
-    void                    WriteSteadyTS       (const microseconds_t       aSteadyTS,
-                                                 GpByteWriter&              aWriter) const;
-    std::string             GenMessage          (const GpLogElementMsg&     aMessage) const;
+    void            WriteLevel          (const GpLogLevel::EnumT    aLevel,
+                                         GpByteWriter&              aWriter) const;
+    void            WriteUnixTS         (unix_ts_ms_t               aUnixTS,
+                                         GpByteWriter&              aWriter) const;
+    void            WriteSteadyTS       (microseconds_t             aSteadyTS,
+                                         GpByteWriter&              aWriter) const;
+    std::string     GenMessage          (const GpLogElementMsg&     aMessage) const;
 
 private:
     static const std::array<std::string, GpLogLevel::SCount()>  sLevels;

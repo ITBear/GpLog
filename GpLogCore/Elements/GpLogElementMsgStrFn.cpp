@@ -1,4 +1,4 @@
-#include "GpLogElementMsgStrFn.hpp"
+#include <GpLog/GpLogCore/Elements/GpLogElementMsgStrFn.hpp>
 
 namespace GPlatform {
 

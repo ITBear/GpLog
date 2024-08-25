@@ -1,7 +1,7 @@
 #pragma once
 
-#include "GpLogElementMsg.hpp"
-#include "../GpLogMarkTraceTS.hpp"
+#include <GpLog/GpLogCore/Elements/GpLogElementMsg.hpp>
+#include <GpLog/GpLogCore/GpLogMarkTraceTS.hpp>
 
 namespace GPlatform {
 
@@ -22,8 +22,8 @@ private:
 };
 
 GpLogElementMsgMarkTraceTS::GpLogElementMsgMarkTraceTS (GpLogMarkTraceTS&& aMarkTraceTS) noexcept:
-GpLogElementMsg(TypeT::TRACE_TS),
-iMarkTraceTS(std::move(aMarkTraceTS))
+GpLogElementMsg{TypeT::TRACE_TS},
+iMarkTraceTS{std::move(aMarkTraceTS)}
 {
 }
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../GpLogConsumer.hpp"
+#include  <GpLog/GpLogCore/Consumers/GpLogConsumer.hpp>
 
 namespace GPlatform {
 
@@ -11,7 +11,7 @@ public:
     CLASS_DD(GpLogConsumerConsole)
 
 public:
-    inline                  GpLogConsumerConsole    (GpByteSerializer::SP aFormatter) noexcept;
+                            GpLogConsumerConsole    (GpByteSerializer::SP aFormatter) noexcept;
     virtual                 ~GpLogConsumerConsole   (void) noexcept override final;
 
     virtual void            Consume                 (GpLogChain::CSP aLogChain) override final;
@@ -20,10 +20,5 @@ public:
 private:
     GpBytesArray            iTmpBuffer;
 };
-
-GpLogConsumerConsole::GpLogConsumerConsole (GpByteSerializer::SP aFormatter) noexcept:
-GpLogConsumer(std::move(aFormatter))
-{
-}
 
 }// namespace GPlatform

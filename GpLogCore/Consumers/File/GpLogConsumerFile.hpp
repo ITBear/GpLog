@@ -1,7 +1,6 @@
 #pragma once
 
-#include "../GpLogConsumer.hpp"
-
+#include <GpLog/GpLogCore/Consumers/GpLogConsumer.hpp>
 #include <GpCore2/GpUtils/Types/Units/Other/size_byte_t.hpp>
 #include <fstream>
 

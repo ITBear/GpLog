@@ -1,6 +1,6 @@
-#include "GpLogConsumerFile.hpp"
-
+#include <GpLog/GpLogCore/Consumers/File/GpLogConsumerFile.hpp>
 #include <GpCore2/GpUtils/Streams/GpByteWriterStorageByteArray.hpp>
+#include <GpCore2/GpUtils/DateTime/GpDateTimeOps.hpp>
 #include <filesystem>
 
 namespace GPlatform {
@@ -14,12 +14,12 @@ GpLogConsumerFile::GpLogConsumerFile
     const size_byte_t       aMaxBufferSize,
     GpByteSerializer::SP    aFormatter
 ):
-GpLogConsumer(std::move(aFormatter)),
-iOutFilePath(aOutFilePath),
-iOutFilePrefix(aOutFilePrefix),
-iFileMaxSize(aFileMaxSize),
-iMaxFlushPeriod(aMaxFlushPeriod),
-iMaxBufferSize(aMaxBufferSize)
+GpLogConsumer{std::move(aFormatter)},
+iOutFilePath   {aOutFilePath},
+iOutFilePrefix {aOutFilePrefix},
+iFileMaxSize   {aFileMaxSize},
+iMaxFlushPeriod{aMaxFlushPeriod},
+iMaxBufferSize {aMaxBufferSize}
 {
 }
 

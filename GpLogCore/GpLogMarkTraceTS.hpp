@@ -1,10 +1,10 @@
 #pragma once
 
-#include "GpLogCore_global.hpp"
+#include <GpLog/GpLogCore/GpLogCore_global.hpp>
 
 #if defined(GP_USE_TIMERS)
 
-#include "GpLogMarkTS.hpp"
+#include <GpLog/GpLogCore/GpLogMarkTS.hpp>
 
 namespace GPlatform {
 
@@ -35,12 +35,12 @@ GpLogMarkTraceTS::GpLogMarkTraceTS (void) noexcept
 }
 
 GpLogMarkTraceTS::GpLogMarkTraceTS (const GpLogMarkTraceTS& aTrace):
-iMarks(aTrace.iMarks)
+iMarks{aTrace.iMarks}
 {
 }
 
 GpLogMarkTraceTS::GpLogMarkTraceTS (GpLogMarkTraceTS&& aTrace) noexcept:
-iMarks(std::move(aTrace.iMarks))
+iMarks{std::move(aTrace.iMarks)}
 {
 }
 

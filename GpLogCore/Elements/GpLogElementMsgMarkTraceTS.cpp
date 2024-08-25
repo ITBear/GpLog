@@ -1,4 +1,4 @@
-#include "GpLogElementMsgMarkTraceTS.hpp"
+#include <GpLog/GpLogCore/Elements/GpLogElementMsgMarkTraceTS.hpp>
 
 namespace GPlatform {
 

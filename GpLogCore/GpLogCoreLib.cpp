@@ -1,4 +1,4 @@
-#include "GpLogCoreLib.hpp"
+#include <GpLog/GpLogCore/GpLogCoreLib.hpp>
 
 namespace GPlatform {
 

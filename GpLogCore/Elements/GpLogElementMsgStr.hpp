@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GpLogElementMsg.hpp"
+#include <GpLog/GpLogCore/Elements/GpLogElementMsg.hpp>
 
 namespace GPlatform {
 
@@ -11,18 +11,18 @@ public:
     CLASS_DD(GpLogElementMsgStr)
 
 public:
-    inline                  GpLogElementMsgStr  (std::string&& aMessage) noexcept;
-    virtual                 ~GpLogElementMsgStr (void) noexcept override final;
+    inline              GpLogElementMsgStr  (std::string&& aMessage) noexcept;
+    virtual             ~GpLogElementMsgStr (void) noexcept override final;
 
-    std::string_view        Message             (void) const noexcept {return iMessage;}
+    std::string_view    Message             (void) const noexcept {return iMessage;}
 
 private:
-    std::string             iMessage;
+    std::string         iMessage;
 };
 
 GpLogElementMsgStr::GpLogElementMsgStr (std::string&& aMessage) noexcept:
-GpLogElementMsg(TypeT::STR),
-iMessage(std::move(aMessage))
+GpLogElementMsg{TypeT::STR},
+iMessage{std::move(aMessage)}
 {
 }
 

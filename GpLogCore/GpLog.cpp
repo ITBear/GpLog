@@ -1,18 +1,24 @@
-#include "GpLog.hpp"
-#include "Consumers/Console/GpLogConsumerConsoleFactory.hpp"
-#include "Formatters/Text/GpLogFormatterText.hpp"
+#include <GpCore2/Config/IncludeExt/fmt.hpp>
+#include <GpLog/GpLogCore/GpLog.hpp>
+
+#include <GpLog/GpLogCore/Consumers/Console/GpLogConsumerConsoleFactory.hpp>
+#include <GpLog/GpLogCore/Formatters/Text/GpLogFormatterText.hpp>
 
 #include <GpCore2/GpUtils/Types/Strings/GpStringUtils.hpp>
 #include <GpCore2/GpUtils/Exceptions/GpExceptionUtils.hpp>
 #include <GpCore2/GpUtils/Other/GpSystemInfo.hpp>
 #include <GpCore2/GpUtils/Other/GpLinkedLibsInfo.hpp>
-#include <GpCore2/Config/IncludeExt/fmt.hpp>
-
-#include <iostream>
+#include <GpCore2/GpUtils/Threads/GpSleepStrategy.hpp>
 
 namespace GPlatform {
 
-GpLog::SP   GpLog::sInstance;
+GpLog::SP           GpLog::sInstance;
+GpLogLevel::EnumT   GpLog::sLevel = GpLogLevel::L_INFO;
+
+GpLog::GpLog (void) noexcept:
+iLogExecutor{iLogQueue}
+{
+}
 
 GpLog::~GpLog (void) noexcept
 {
@@ -51,6 +57,7 @@ void    GpLog::StartDefault (void)
 void    GpLog::StartFromConfig
 (
     const GpLogConfigDesc&          aConfigDesc,
+    const GpLogLevel::EnumT         aExtLevelValue,
     const GpLogConsumersFactory&    aConsumersFactory
 )
 {
@@ -76,7 +83,7 @@ void    GpLog::StartFromConfig
     Start
     (
         std::move(consumerFactories),
-        aConfigDesc.min_level,
+        std::min(aConfigDesc.level.Value(), aExtLevelValue),
         aConfigDesc.flush_period
     );
 }
@@ -84,11 +91,11 @@ void    GpLog::StartFromConfig
 void    GpLog::Start
 (
     const GpLogConsumerFactory::C::Vec::SP& aConsumerFactories,
-    const GpLogLevel::EnumT                 aMinLevel,
+    const GpLogLevel::EnumT                 aLevel,
     const seconds_t                         aFlushPeriod
 )
 {
-    iMinLevel = aMinLevel;
+    SSetLevel(aLevel);
 
     iLogExecutor.Start
     (
@@ -108,10 +115,21 @@ void    GpLog::Stop (void)
         StartDefault();
 
         // Wait for empty queue
-        while (!iLogQueue.Empty())
+        constexpr std::array<std::pair<size_t, std::chrono::milliseconds>, 2> tryStages =
         {
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
-        }
+            std::pair<size_t, std::chrono::milliseconds>{10000, std::chrono::milliseconds(0)},
+            std::pair<size_t, std::chrono::milliseconds>{100, std::chrono::milliseconds(1)}
+        };
+
+        GpSleepStrategy::SWaitFor
+        (
+            [&]()-> bool
+            {
+                return iLogQueue.Empty();
+            },
+            tryStages,
+            std::chrono::milliseconds(10)
+        );
     }
 
     iLogExecutor.RequestStop();
@@ -121,6 +139,37 @@ void    GpLog::Stop (void)
 void    GpLog::Flush (void)
 {
     iLogExecutor.Flush();
+}
+
+void    GpLog::Logout
+(
+    GpLogElementMsg::CSP    aMessage,
+    const GpLogLevel::EnumT aLevel,
+    const GpLogMode::EnumT  aMode,
+    const GpUUID&           aChainId,
+    const SourceLocationT&  /*aSourceLocation*/
+)
+{
+    if (static_cast<int>(aLevel) < static_cast<int>(SLevel()))
+    {
+        return;
+    }
+
+    GpLogElement logElement
+    {
+        GpDateTimeOps::SUnixTS_ms(),
+        GpDateTimeOps::SSteadyTS_us() - GpDateTimeOps::SSteadyTS_us_AtAppStart(),
+        aLevel,
+        aMode,
+        std::move(aMessage)
+    };
+
+    iLogQueue.AddElement(aChainId, std::move(logElement));
+}
+
+void    GpLog::EndChain (const GpUUID& aChainId)
+{
+    iLogQueue.EndChain(aChainId);
 }
 
 void LOG_SYS_INFO
@@ -754,72 +803,31 @@ void LOG_CRITICAL_ERROR
 
 void LOG_EXCEPTION
 (
-    const std::exception&   aException,
-    const SourceLocationT&  aSourceLocation
-) noexcept
-{
-    try
-    {
-        GpLog::S().Logout
-        (
-            MakeCSP<GpLogElementMsgStr>(GpExceptionUtils::SToString(aException, aSourceLocation)),
-            GpLogLevel::L_ERROR,
-            GpLogMode::CHAIN_END,
-            GpUUID::CE_Zero(),
-            aSourceLocation
-        );
-    } catch (const GpException& e)
-    {
-        GpStringUtils::SCerr("[LOG_EXCEPTION]: "_sv + e.what());
-    } catch (const std::exception& e)
-    {
-        GpStringUtils::SCerr("[LOG_EXCEPTION]: "_sv + e.what());
-    } catch (...)
-    {
-        GpStringUtils::SCerr("[LOG_EXCEPTION]: unknown"_sv);
-    }
-}
-
-void LOG_EXCEPTION
-(
-    const std::exception&   aException,
-    const GpUUID&           aChainId,
-    const SourceLocationT&  aSourceLocation
-) noexcept
-{
-    try
-    {
-        GpLog::S().Logout
-        (
-            MakeCSP<GpLogElementMsgStr>(GpExceptionUtils::SToString(aException, aSourceLocation)),
-            GpLogLevel::L_ERROR,
-            GpLogMode::CHAIN_END,
-            aChainId,
-            aSourceLocation
-        );
-    } catch (const GpException& e)
-    {
-        GpStringUtils::SCerr("[LOG_EXCEPTION]: "_sv + e.what());
-    } catch (const std::exception& e)
-    {
-        GpStringUtils::SCerr("[LOG_EXCEPTION]: "_sv + e.what());
-    } catch (...)
-    {
-        GpStringUtils::SCerr("[LOG_EXCEPTION]: unknown"_sv);
-    }
-}
-
-void LOG_EXCEPTION
-(
+    std::string_view        aPrefix,
     const GpException&      aException,
     const SourceLocationT&  aSourceLocation
 ) noexcept
 {
     try
     {
+        std::string exceptionMsg;
+
+        if (aPrefix.empty())
+        {
+            exceptionMsg = aException.what();
+        } else
+        {
+            exceptionMsg = fmt::format
+            (
+                "{}: {}",
+                aPrefix,
+                aException.what()
+            );
+        }
+
         GpLog::S().Logout
         (
-            MakeCSP<GpLogElementMsgStr>(GpExceptionUtils::SToString(aException)),
+            MakeCSP<GpLogElementMsgStr>(std::move(exceptionMsg)),
             GpLogLevel::L_ERROR,
             GpLogMode::CHAIN_END,
             GpUUID::CE_Zero(),
@@ -839,79 +847,7 @@ void LOG_EXCEPTION
 
 void LOG_EXCEPTION
 (
-    const GpUUID&           aChainId,
-    const SourceLocationT&  aSourceLocation
-) noexcept
-{
-    try
-    {
-        GpLog::S().Logout
-        (
-            MakeCSP<GpLogElementMsgStr>
-            (
-                GpExceptionUtils::SToString
-                (
-                    "Unknown exception"_sv,
-                    aSourceLocation,
-                    GpExceptionUtils::ExceptionType::STD,
-                    std::nullopt
-                ).fullMessage
-            ),
-            GpLogLevel::L_ERROR,
-            GpLogMode::CHAIN_END,
-            aChainId,
-            aSourceLocation
-        );
-    } catch (const GpException& e)
-    {
-        GpStringUtils::SCerr("[LOG_EXCEPTION]: "_sv + e.what());
-    } catch (const std::exception& e)
-    {
-        GpStringUtils::SCerr("[LOG_EXCEPTION]: "_sv + e.what());
-    } catch (...)
-    {
-        GpStringUtils::SCerr("[LOG_EXCEPTION]: unknown"_sv);
-    }
-}
-
-void LOG_EXCEPTION
-(
-    const SourceLocationT&  aSourceLocation
-) noexcept
-{
-    try
-    {
-        GpLog::S().Logout
-        (
-            MakeCSP<GpLogElementMsgStr>
-            (
-                GpExceptionUtils::SToString
-                (
-                    "Unknown exception"_sv,
-                    aSourceLocation,
-                    GpExceptionUtils::ExceptionType::STD,
-                    std::nullopt
-                ).fullMessage
-            ),
-            GpLogLevel::L_ERROR,
-            GpLogMode::CHAIN_END,
-            GpUUID::CE_Zero(),
-            aSourceLocation
-        );
-    } catch (const GpException& e)
-    {
-        GpStringUtils::SCerr("[LOG_EXCEPTION]: "_sv + e.what());
-    } catch (const std::exception& e)
-    {
-        GpStringUtils::SCerr("[LOG_EXCEPTION]: "_sv + e.what());
-    } catch (...)
-    {
-        GpStringUtils::SCerr("[LOG_EXCEPTION]: unknown"_sv);
-    }
-}
-
-void LOG_EXCEPTION
-(
+    std::string_view        aPrefix,
     const GpException&      aException,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation
@@ -919,9 +855,24 @@ void LOG_EXCEPTION
 {
     try
     {
+        std::string exceptionMsg;
+
+        if (aPrefix.empty())
+        {
+            exceptionMsg = aException.what();
+        } else
+        {
+            exceptionMsg = fmt::format
+            (
+                "{}: {}",
+                aPrefix,
+                aException.what()
+            );
+        }
+
         GpLog::S().Logout
         (
-            MakeCSP<GpLogElementMsgStr>(GpExceptionUtils::SToString(aException)),
+            MakeCSP<GpLogElementMsgStr>(std::move(exceptionMsg)),
             GpLogLevel::L_ERROR,
             GpLogMode::CHAIN_END,
             aChainId,

@@ -1,14 +1,16 @@
 #pragma once
 
-#include "GpLogLevel.hpp"
-#include "GpLogMode.hpp"
-#include "GpLogExecutor.hpp"
-#include "Elements/GpLogElementMsg.hpp"
-#include "Elements/GpLogElementMsgStr.hpp"
-#include "Elements/GpLogElementMsgStrFn.hpp"
-#include "Elements/GpLogElementMsgMarkTraceTS.hpp"
-#include "Consumers/GpLogConsumers.hpp"
-#include "Config/GpLogConfigDesc.hpp"
+#include <GpLog/GpLogCore/GpLogLevel.hpp>
+#include <GpLog/GpLogCore/GpLogMode.hpp>
+#include <GpLog/GpLogCore/GpLogExecutor.hpp>
+
+#include <GpLog/GpLogCore/Elements/GpLogElementMsg.hpp>
+#include <GpLog/GpLogCore/Elements/GpLogElementMsgStr.hpp>
+#include <GpLog/GpLogCore/Elements/GpLogElementMsgStrFn.hpp>
+#include <GpLog/GpLogCore/Elements/GpLogElementMsgMarkTraceTS.hpp>
+#include <GpLog/GpLogCore/Config/GpLogConfigDesc.hpp>
+//#include <GpLog/GpLogCore/Consumers/GpLogConsumers.hpp>
+//#include "Consumers/GpLogConsumers.hpp"
 
 namespace GPlatform {
 
@@ -19,73 +21,40 @@ public:
     CLASS_DD(GpLog)
 
 public:
-    inline              GpLog           (void) noexcept;
-    virtual             ~GpLog          (void) noexcept;
+                                GpLog           (void) noexcept;
+    virtual                     ~GpLog          (void) noexcept;
 
-    static void         SInit           (void);
-    static void         SClear          (void);
-    static GpLog&       S               (void) {return sInstance.Vn();}
+    static void                 SInit           (void);
+    static void                 SClear          (void);
+    static GpLog&               S               (void) {return sInstance.Vn();}
+    static GpLogLevel::EnumT    SLevel          (void) noexcept {return sLevel;}
+    static void                 SSetLevel       (GpLogLevel::EnumT aLevel) noexcept {sLevel = aLevel;}
 
-    void                StartDefault    (void);
-    void                StartFromConfig (const GpLogConfigDesc&         aConfigDesc,
-                                         const GpLogConsumersFactory&   aConsumersFactory);
-    void                Start           (const GpLogConsumerFactory::C::Vec::SP&    aConsumerFactories,
-                                         const GpLogLevel::EnumT                    aMinLevel,
-                                         const seconds_t                            aFlushPeriod);
-    void                Stop            (void);
-    void                Flush           (void);
+    void                        StartDefault    (void);
+    void                        StartFromConfig (const GpLogConfigDesc&         aConfigDesc,
+                                                 GpLogLevel::EnumT              aExtLevelValue,
+                                                 const GpLogConsumersFactory&   aConsumersFactory);
+    void                        Start           (const GpLogConsumerFactory::C::Vec::SP&    aConsumerFactories,
+                                                 GpLogLevel::EnumT                          aLevel,
+                                                 seconds_t                                  aFlushPeriod);
+    void                        Stop            (void);
+    void                        Flush           (void);
 
-    inline void         Logout          (GpLogElementMsg::CSP       aMessage,
-                                         const GpLogLevel::EnumT    aLevel,
-                                         const GpLogMode::EnumT     aMode,
-                                         const GpUUID&              aChainId,
-                                         const SourceLocationT&     aSourceLocation);
+    void                        Logout          (GpLogElementMsg::CSP   aMessage,
+                                                 GpLogLevel::EnumT      aLevel,
+                                                 GpLogMode::EnumT       aMode,
+                                                 const GpUUID&          aChainId,
+                                                 const SourceLocationT& aSourceLocation);
 
-    inline void         EndChain        (const GpUUID&  aChainId);
+    void                        EndChain        (const GpUUID& aChainId);
 
 private:
-    GpLogQueue          iLogQueue;
-    GpLogExecutor       iLogExecutor;
-    GpLogLevel::EnumT   iMinLevel   = GpLogLevel::L_INFO;
+    GpLogQueue                  iLogQueue;
+    GpLogExecutor               iLogExecutor;
 
-    static GpLog::SP    sInstance;
+    static GpLogLevel::EnumT    sLevel;
+    static GpLog::SP            sInstance;
 };
-
-GpLog::GpLog (void) noexcept:
-iLogExecutor(iLogQueue)
-{
-}
-
-void    GpLog::Logout
-(
-    GpLogElementMsg::CSP    aMessage,
-    const GpLogLevel::EnumT aLevel,
-    const GpLogMode::EnumT  aMode,
-    const GpUUID&           aChainId,
-    const SourceLocationT&  /*aSourceLocation*/
-)
-{
-    if (int(aLevel) < int(iMinLevel))
-    {
-        return;
-    }
-
-    GpLogElement logElement
-    (
-        GpDateTimeOps::SUnixTS_ms(),
-        GpDateTimeOps::SSteadyTS_us() - GpDateTimeOps::SSteadyTS_us_AtAppStart(),
-        aLevel,
-        aMode,
-        std::move(aMessage)
-    );
-
-    iLogQueue.AddElement(aChainId, std::move(logElement));
-}
-
-void    GpLog::EndChain (const GpUUID& aChainId)
-{
-    iLogQueue.EndChain(aChainId);
-}
 
 //------------------------------------- Sys info -------------------------------------
 GP_LOG_CORE_API void    LOG_SYS_INFO
@@ -232,36 +201,14 @@ GP_LOG_CORE_API void    LOG_CRITICAL_ERROR
 
 GP_LOG_CORE_API void    LOG_EXCEPTION
 (
-    const std::exception&   aException,
-    const SourceLocationT&  aSourceLocation = SourceLocationT::current()
-) noexcept;
-
-GP_LOG_CORE_API void    LOG_EXCEPTION
-(
-    const std::exception&   aException,
-    const GpUUID&           aChainId,
-    const SourceLocationT&  aSourceLocation = SourceLocationT::current()
-) noexcept;
-
-GP_LOG_CORE_API void    LOG_EXCEPTION
-(
+    std::string_view        aPrefix,
     const GpException&      aException,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
 ) noexcept;
 
 GP_LOG_CORE_API void    LOG_EXCEPTION
 (
-    const GpUUID&           aChainId,
-    const SourceLocationT&  aSourceLocation = SourceLocationT::current()
-) noexcept;
-
-GP_LOG_CORE_API void    LOG_EXCEPTION
-(
-    const SourceLocationT&  aSourceLocation = SourceLocationT::current()
-) noexcept;
-
-GP_LOG_CORE_API void    LOG_EXCEPTION
-(
+    std::string_view        aPrefix,
     const GpException&      aException,
     const GpUUID&           aChainId,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()

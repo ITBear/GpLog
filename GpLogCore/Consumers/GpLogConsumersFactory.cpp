@@ -1,6 +1,6 @@
-#include "GpLogConsumersFactory.hpp"
-#include "Console/GpLogConsumersFactoryProcessorConsole.hpp"
-#include "File/GpLogConsumersFactoryProcessorFile.hpp"
+#include <GpLog/GpLogCore/Consumers/GpLogConsumersFactory.hpp>
+#include <GpLog/GpLogCore/Consumers/Console/GpLogConsumersFactoryProcessorConsole.hpp>
+#include <GpLog/GpLogCore/Consumers/File/GpLogConsumersFactoryProcessorFile.hpp>
 
 namespace GPlatform {
 

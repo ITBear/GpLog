@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../GpLogLevel.hpp"
+#include <GpLog/GpLogCore/GpLogLevel.hpp>
 
 namespace GPlatform {
 
@@ -29,7 +29,7 @@ private:
 };
 
 GpLogElementMsg::GpLogElementMsg (const TypeT aType) noexcept:
-iType(aType)
+iType{aType}
 {
 }
 

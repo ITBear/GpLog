@@ -1,9 +1,8 @@
 #pragma once
 
-#include "Elements/GpLogElements.hpp"
-
 #include <GpCore2/GpUtils/SyncPrimitives/GpSpinLock.hpp>
 #include <GpCore2/GpUtils/Types/UIDs/GpUUID.hpp>
+#include <GpLog/GpLogCore/Elements/GpLogElement.hpp>
 #include <mutex>
 
 namespace GPlatform {
@@ -31,7 +30,7 @@ private:
 };
 
 GpLogChain::GpLogChain (const GpUUID& aChainId) noexcept:
-iChainId(aChainId)
+iChainId{aChainId}
 {
 }
 

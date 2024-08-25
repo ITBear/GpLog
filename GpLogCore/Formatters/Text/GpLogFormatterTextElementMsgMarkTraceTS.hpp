@@ -1,8 +1,7 @@
 #pragma once
 
 #include <GpCore2/Config/IncludeExt/fmt.hpp>
-
-#include "../../Elements/GpLogElementMsgMarkTraceTS.hpp"
+#include <GpLog/GpLogCore/Elements/GpLogElementMsgMarkTraceTS.hpp>
 
 namespace GPlatform {
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../GpLogCore_global.hpp"
+#include <GpLog/GpLogCore/GpLogCore_global.hpp>
 
 #include <GpCore2/GpUtils/Macro/GpMacroClass.hpp>
 #include <GpCore2/GpUtils/Types/Containers/GpContainersT.hpp>
@@ -16,22 +16,12 @@ public:
     REFLECT_DECLARE("ee5f2329-dd46-485c-ace8-0abb6f322b92"_uuid)
 
 public:
-                            GpLogConsumerConfigDesc     (void) noexcept = default;
-    inline explicit         GpLogConsumerConfigDesc     (const GpLogConsumerConfigDesc& aDesc);
-    inline explicit         GpLogConsumerConfigDesc     (GpLogConsumerConfigDesc&& aDesc) noexcept;
-    virtual                 ~GpLogConsumerConfigDesc    (void) noexcept override;
+                GpLogConsumerConfigDesc     (void) noexcept = default;
+                GpLogConsumerConfigDesc     (const GpLogConsumerConfigDesc& aDesc);
+                GpLogConsumerConfigDesc     (GpLogConsumerConfigDesc&& aDesc) noexcept;
+    virtual     ~GpLogConsumerConfigDesc    (void) noexcept override;
 
 public:
 };
-
-GpLogConsumerConfigDesc::GpLogConsumerConfigDesc (const GpLogConsumerConfigDesc& aDesc):
-GpReflectObject(aDesc)
-{
-}
-
-GpLogConsumerConfigDesc::GpLogConsumerConfigDesc (GpLogConsumerConfigDesc&& aDesc) noexcept:
-GpReflectObject(std::move(aDesc))
-{
-}
 
 }// namespace GPlatform

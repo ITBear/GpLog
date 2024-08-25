@@ -1,8 +1,7 @@
 #pragma once
 
-#include "GpLogElementMsg.hpp"
-#include "../GpLogMode.hpp"
-
+#include <GpLog/GpLogCore/Elements/GpLogElementMsg.hpp>
+#include <GpLog/GpLogCore/GpLogMode.hpp>
 #include <GpCore2/GpUtils/Types/Units/SI/GpUnitsSI_Time.hpp>
 #include <GpCore2/GpUtils/Types/Units/Other/unix_ts_t.hpp>
 
@@ -47,20 +46,20 @@ GpLogElement::GpLogElement
     const GpLogMode::EnumT      aMode,
     GpLogElementMsg::CSP        aMessage
 ) noexcept:
-iUnixTS  (aUnixTS),
-iSteadyTS(aSteadyTS),
-iLevel   (aLevel),
-iMode    (aMode),
-iMessage (std::move(aMessage))
+iUnixTS  {aUnixTS},
+iSteadyTS{aSteadyTS},
+iLevel   {aLevel},
+iMode    {aMode},
+iMessage {std::move(aMessage)}
 {
 }
 
 GpLogElement::GpLogElement (GpLogElement&& aElement) noexcept:
-iUnixTS  (std::move(aElement.iUnixTS)),
-iSteadyTS(std::move(aElement.iSteadyTS)),
-iLevel   (std::move(aElement.iLevel)),
-iMode    (std::move(aElement.iMode)),
-iMessage (std::move(aElement.iMessage))
+iUnixTS  {std::move(aElement.iUnixTS)},
+iSteadyTS{std::move(aElement.iSteadyTS)},
+iLevel   {std::move(aElement.iLevel)},
+iMode    {std::move(aElement.iMode)},
+iMessage {std::move(aElement.iMessage)}
 {
 }
 

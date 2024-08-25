@@ -1,8 +1,9 @@
-#include "GpLogFormatterText.hpp"
-#include "../../GpLogChain.hpp"
-#include "../../Elements/GpLogElementMsg.hpp"
-#include "GpLogFormatterTextElementMsgStr.hpp"
-#include "GpLogFormatterTextElementMsgMarkTraceTS.hpp"
+#include <GpLog/GpLogCore/Formatters/Text/GpLogFormatterText.hpp>
+#include <GpLog/GpLogCore/GpLogChain.hpp>
+#include <GpLog/GpLogCore/Elements/GpLogElementMsg.hpp>
+#include <GpLog/GpLogCore/Formatters/Text/GpLogFormatterTextElementMsgStr.hpp>
+#include <GpLog/GpLogCore/Formatters/Text/GpLogFormatterTextElementMsgMarkTraceTS.hpp>
+
 #include <sstream>
 
 namespace GPlatform {
@@ -15,6 +16,10 @@ const std::array<std::string, GpLogLevel::SCount()> GpLogFormatterText::sLevels 
     std::string("\033[1m[E]\033[0m"_sv),
     std::string("\033[1m[!]\033[0m"_sv)
 };
+
+GpLogFormatterText::GpLogFormatterText (void) noexcept
+{
+}
 
 GpLogFormatterText::~GpLogFormatterText (void) noexcept
 {
@@ -57,8 +62,9 @@ void    GpLogFormatterText::Serialize
         } else
         {
             aWriter
-                .Bytes(": ===========================================================================\n"_sv)
-                .Bytes(msg);
+                .Bytes(":\n[VVV=========================================================================VVV]:\n"_sv)
+                .Bytes(msg)
+                .Bytes("\n[^^^=========================================================================^^^]"_sv);
         }
     }
 
@@ -87,7 +93,6 @@ void    GpLogFormatterText::WriteUnixTS
     GpByteWriter&       aWriter
 ) const
 {
-//  ?
     const std::string str = GpDateTimeOps::SUnixTsToStr(aUnixTS, GpDateTimeFormat::STD_DATE_TIME);
 
     aWriter
@@ -111,7 +116,7 @@ void    GpLogFormatterText::WriteSteadyTS
 
 std::string GpLogFormatterText::GenMessage (const GpLogElementMsg& aMessage) const
 {
-    const auto t = aMessage.Type();
+    const GpLogElementMsg::TypeT t = aMessage.Type();
 
     switch (t)
     {

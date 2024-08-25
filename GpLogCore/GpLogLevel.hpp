@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GpLogCore_global.hpp"
+#include <GpLog/GpLogCore/GpLogCore_global.hpp>
 #include <GpCore2/GpUtils/Types/Enums/GpEnum.hpp>
 #include <GpCore2/GpUtils/Types/Strings/GpStringOps.hpp>
 

@@ -1,7 +1,6 @@
 #pragma once
 
-#include "../GpLogConsumerConfigDesc.hpp"
-
+#include <GpLog/GpLogCore/Consumers/GpLogConsumerConfigDesc.hpp>
 #include <GpCore2/GpUtils/Types/Units/SI/GpUnitsSI_Time.hpp>
 #include <GpCore2/GpUtils/Types/Units/Other/size_byte_t.hpp>
 

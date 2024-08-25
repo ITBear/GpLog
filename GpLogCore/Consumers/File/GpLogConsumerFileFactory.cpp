@@ -1,8 +1,23 @@
-#include "GpLogConsumerFileFactory.hpp"
-#include "GpLogConsumerFile.hpp"
-#include "../../Formatters/Text/GpLogFormatterText.hpp"
+#include <GpLog/GpLogCore/Consumers/File/GpLogConsumerFileFactory.hpp>
+#include <GpLog/GpLogCore/Consumers/File/GpLogConsumerFile.hpp>
+#include <GpLog/GpLogCore/Formatters/Text/GpLogFormatterText.hpp>
 
 namespace GPlatform {
+
+GpLogConsumerFileFactory::GpLogConsumerFileFactory (GpByteSerializer::SP aFormatter) noexcept:
+GpLogConsumerFactory{std::move(aFormatter)}
+{
+}
+
+GpLogConsumerFileFactory::GpLogConsumerFileFactory
+(
+    GpByteSerializer::SP                aFormatter,
+    const GpLogConsumerFileConfigDesc&  aConfigDesc
+):
+GpLogConsumerFactory{std::move(aFormatter)},
+iConfigDesc{MakeSP<GpLogConsumerFileConfigDesc>(aConfigDesc)}
+{
+}
 
 GpLogConsumerFileFactory::~GpLogConsumerFileFactory (void) noexcept
 {
