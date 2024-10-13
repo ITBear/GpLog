@@ -117,8 +117,8 @@ void    GpLog::Stop (void)
         // Wait for empty queue
         constexpr std::array<std::pair<size_t, std::chrono::milliseconds>, 2> tryStages =
         {
-            std::pair<size_t, std::chrono::milliseconds>{10000, std::chrono::milliseconds(0)},
-            std::pair<size_t, std::chrono::milliseconds>{100, std::chrono::milliseconds(1)}
+            std::pair<size_t, std::chrono::milliseconds>{size_t{10000}, std::chrono::milliseconds(0)},
+            std::pair<size_t, std::chrono::milliseconds>{size_t{100}, std::chrono::milliseconds(1)}
         };
 
         GpSleepStrategy::SWaitFor
@@ -200,7 +200,7 @@ void LOG_SYS_INFO
         (
             fmt::format
             (
-                "\n[{:03}]: {:>22}, v{}",
+                "\n[{:03}]: {:>22}: v{}",
                 id++,
                 name,
                 version

@@ -2,6 +2,6 @@
 
 namespace GPlatform {
 
-GP_IMPLEMENT_LIB(GpLogCoreLib)
+GP_IMPLEMENT_LIB_REGISTRATOR(GpLogCoreLib)
 
 }// namespace GPlatform

@@ -1,11 +1,10 @@
 #pragma once
 
-#include "GpLogGraylog_global.hpp"
-
+#include <GpLog/GpLogGraylog/GpLogGraylog_global.hpp>
 #include <GpCore2/GpUtils/Other/GpLinkedLibsInfo.hpp>
 
 namespace GPlatform {
 
-GP_DECLARE_LIB(GP_LOG_GRAYLOG_API, GpLogGraylogLib)
+GP_DECLARE_LIB_REGISTRATOR(GpLogGraylogLib)
 
 }// namespace GPlatform

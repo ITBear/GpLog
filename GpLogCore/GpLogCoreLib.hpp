@@ -5,6 +5,6 @@
 
 namespace GPlatform {
 
-GP_DECLARE_LIB(GP_LOG_CORE_API, GpLogCoreLib)
+GP_DECLARE_LIB_REGISTRATOR(GpLogCoreLib)
 
 }// namespace GPlatform
