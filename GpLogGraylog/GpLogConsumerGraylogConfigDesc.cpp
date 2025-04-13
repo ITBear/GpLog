@@ -1,5 +1,4 @@
-#include "GpLogConsumerGraylogConfigDesc.hpp"
-
+#include <GpLog/GpLogGraylog/GpLogConsumerGraylogConfigDesc.hpp>
 #include <GpCore2/GpReflection/GpReflectManager.hpp>
 #include <GpCore2/GpReflection/GpReflectPropUtils.hpp>
 

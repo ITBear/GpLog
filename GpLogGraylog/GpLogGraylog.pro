@@ -17,9 +17,9 @@ equals(var_link, "static") {
 
 # ----------- Libraries -----------
 equals(var_os, "windows") {
-	LIBS += -lGpLogCore$$TARGET_POSTFIX
-	LIBS += -lGpReflection$$TARGET_POSTFIX
-	LIBS += -lGpUtils$$TARGET_POSTFIX
+	LIBS += -lGpLogCore$$TARGET_POSTFIX$$_VER_MAJ
+	LIBS += -lGpReflection$$TARGET_POSTFIX$$_VER_MAJ
+	LIBS += -lGpUtils$$TARGET_POSTFIX$$_VER_MAJ
 }
 
 equals(var_os, "linux") {

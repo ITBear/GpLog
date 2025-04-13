@@ -24,9 +24,9 @@ void    GpLogConsumersFactory::AddDefaultProcessorFile (void)
 
 void    GpLogConsumersFactory::AddProcessor (GpLogConsumersFactoryProcessor::SP aProcessor)
 {
-    iProcessors.SetOrUpdate
+    iProcessors.Set
     (
-        std::string(aProcessor.V().Name()),
+        aProcessor.V().Name(),
         std::move(aProcessor)
     );
 }
@@ -38,9 +38,9 @@ GpLogConsumerFactory::SP    GpLogConsumersFactory::FactoryFromCfg
     GpByteSerializer::SP            aFormatter
 ) const
 {
-    auto processorOpt = iProcessors.GetOpt(aName);
+    auto processorOpt = iProcessors.FindOpt(aName);
 
-    THROW_COND_GP
+    VERIFY
     (
         processorOpt.has_value(),
         [aName]()

@@ -9,7 +9,7 @@ GpLogRunnable::GpLogRunnable
     const seconds_t                         aFlushPeriod,
     GpLogQueue&                             aLogQueue
 ):
-GpRunnable(),
+GpRunnable{},
 iConsumerFactories{std::move(aConsumerFactories)},
 iFlushPeriod      {aFlushPeriod},
 iLogQueue         {aLogQueue}
@@ -95,7 +95,7 @@ void    GpLogRunnable::ConsumeNotEnded (GpLogConsumer::C::Vec::SP& aConsumers)
 {
     auto notEndedChains = iLogQueue.RemoveNotEnded();
 
-    notEndedChains.ApplyToAll
+    notEndedChains.Apply
     (
         [&](auto& aChain)
         {

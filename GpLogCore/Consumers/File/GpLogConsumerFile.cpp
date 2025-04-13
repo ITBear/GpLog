@@ -80,7 +80,7 @@ void    GpLogConsumerFile::WriteToFile (void)
     if (iOFStream.fail())
     {
         iOFStream.clear();
-        THROW_GP("Failed to write to file '"_sv + iOFStreamFileName + "'"_sv);
+        THROW("Failed to write to file '"_sv + iOFStreamFileName + "'"_sv);
     }
 
     iBytesWriteToStream += size_byte_t::SMake(std::size(iBufferData));
@@ -115,7 +115,7 @@ std::ofstream   GpLogConsumerFile::CreateFile
     if (oftream.fail())
     {
         iOFStream.clear();
-        THROW_GP("Failed to create file '"_sv + iOFStreamFileName + "'"_sv);
+        THROW("Failed to create file '"_sv + iOFStreamFileName + "'"_sv);
     }
 
     oftream.rdbuf()->pubsetbuf

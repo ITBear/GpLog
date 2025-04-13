@@ -1,7 +1,7 @@
 #pragma once
 
-#include "GpLogConsumerGraylogConfigDesc.hpp"
-#include "../GpLogCore/Consumers/GpLogConsumersFactory.hpp"
+#include <GpLog/GpLogGraylog/GpLogConsumerGraylogConfigDesc.hpp>
+#include <GpLog/GpLogCore/Consumers/GpLogConsumersFactory.hpp>
 
 namespace GPlatform {
 

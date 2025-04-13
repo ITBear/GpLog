@@ -1,11 +1,10 @@
-#include "GpLogConsumerGraylog.hpp"
-
+#include <GpLog/GpLogGraylog/GpLogConsumerGraylog.hpp>
 #include <iostream>
 
 namespace GPlatform {
 
 GpLogConsumerGraylog::GpLogConsumerGraylog (GpByteSerializer::SP aFormatter) noexcept:
-GpLogConsumer(std::move(aFormatter))
+GpLogConsumer{std::move(aFormatter)}
 {
 }
 
@@ -16,8 +15,8 @@ GpLogConsumerGraylog::~GpLogConsumerGraylog (void) noexcept
 void    GpLogConsumerGraylog::Consume (GpLogChain::CSP /*aLogChain*/)
 {
     //TODO: implement
-    THROW_GP_NOT_IMPLEMENTED();
-/*
+    THROW_NOT_IMPLEMENTED();
+    /*
     const GpLogChain& logChain = aLogChain.V();
 
     iTmpBuffer.resize(4096);

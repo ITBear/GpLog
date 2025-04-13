@@ -1,5 +1,5 @@
-#include "GpLogConsumerGraylogFactory.hpp"
-#include "GpLogConsumerGraylog.hpp"
+#include <GpLog/GpLogGraylog/GpLogConsumerGraylogFactory.hpp>
+#include <GpLog/GpLogGraylog/GpLogConsumerGraylog.hpp>
 
 namespace GPlatform {
 

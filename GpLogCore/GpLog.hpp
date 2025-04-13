@@ -9,8 +9,6 @@
 #include <GpLog/GpLogCore/Elements/GpLogElementMsgStrFn.hpp>
 #include <GpLog/GpLogCore/Elements/GpLogElementMsgMarkTraceTS.hpp>
 #include <GpLog/GpLogCore/Config/GpLogConfigDesc.hpp>
-//#include <GpLog/GpLogCore/Consumers/GpLogConsumers.hpp>
-//#include "Consumers/GpLogConsumers.hpp"
 
 namespace GPlatform {
 

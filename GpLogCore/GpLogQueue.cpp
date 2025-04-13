@@ -5,7 +5,7 @@ namespace GPlatform {
 
 bool    GpLogQueue::Empty (void) const noexcept
 {
-    GpUniqueLock<GpSpinLock> uniuqeLock(iChainsEndedSpinLock);
+    GpUniqueLock<GpSpinLock> uniuqeLock{iChainsEndedSpinLock};
 
     return     (iChainsEnded.empty())
             && (iChainsById.Empty());
@@ -25,7 +25,7 @@ void    GpLogQueue::AddElement
 
         if (aChainId.IsNotZero())
         {
-            auto chainOpt = iChainsById.EraseOpt(aChainId);
+            auto chainOpt = iChainsById.Extract(aChainId);
 
             if (chainOpt.has_value())
             {
@@ -58,7 +58,7 @@ void    GpLogQueue::EndChain (const GpUUID& aChainId)
         return;
     }
 
-    auto chainOpt = iChainsById.EraseOpt(aChainId);
+    auto chainOpt = iChainsById.Extract(aChainId);
 
     if (chainOpt.has_value())
     {
@@ -68,7 +68,7 @@ void    GpLogQueue::EndChain (const GpUUID& aChainId)
 
 std::optional<GpLogChain::SP>   GpLogQueue::PopFromEnd (void)
 {
-    GpUniqueLock<GpSpinLock> uniuqeLock(iChainsEndedSpinLock);
+    GpUniqueLock<GpSpinLock> uniuqeLock{iChainsEndedSpinLock};
 
     if (iChainsEnded.empty())
     {
@@ -83,14 +83,14 @@ std::optional<GpLogChain::SP>   GpLogQueue::PopFromEnd (void)
 
 void    GpLogQueue::PushToEnd (GpLogChain::SP&& aChain)
 {
-    GpUniqueLock<GpSpinLock> uniuqeLock(iChainsEndedSpinLock);
+    GpUniqueLock<GpSpinLock> uniuqeLock{iChainsEndedSpinLock};
 
     iChainsEnded.push(std::move(aChain));
 }
 
 GpLogChain::SP  GpLogQueue::FindOrRegisterChain (const GpUUID& aChainId)
 {
-    return iChainsById.GetOrGenerateNew
+    auto[chain, status] = iChainsById.FindOrGenerate
     (
         aChainId,
         [aChainId]()
@@ -98,6 +98,8 @@ GpLogChain::SP  GpLogQueue::FindOrRegisterChain (const GpUUID& aChainId)
             return MakeSP<GpLogChain>(aChainId);
         }
     );
+
+    return chain;
 }
 
 }// namespace GPlatform

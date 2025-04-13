@@ -1,7 +1,8 @@
 #pragma once
 
 #include <GpLog/GpLogCore/GpLogChain.hpp>
-#include <GpCore2/GpUtils/Types/Containers/GpDictionary.hpp>
+#include <GpCore2/GpUtils/Types/Containers/GpSharedMap.hpp>
+#include <GpCore2/Config/IncludeExt/unordered_dense.hpp>
 
 namespace GPlatform {
 
@@ -11,7 +12,7 @@ public:
     CLASS_REMOVE_CTRS_MOVE_COPY(GpLogQueue)
     CLASS_DD(GpLogQueue)
 
-    using ChainsByIdT   = GpDictionary<std::map<GpUUID, GpLogChain::SP>>;
+    using ChainsByIdT   = GpSharedMap<ankerl::unordered_dense::map<GpUUID, GpLogChain::SP>>;
     using ChainsEndedT  = GpLogChain::C::Queue::SP;
 
 public:
@@ -22,7 +23,7 @@ public:
     void                    AddElement          (const GpUUID&  aChainId,
                                                  GpLogElement&& aLogElement);
     void                    EndChain            (const GpUUID&  aChainId);
-    GpLogChain::C::Opt::SP  PopFromEnd          (void);
+    GpLogChain::C::Opts::SP PopFromEnd          (void);
     ChainsByIdT             RemoveNotEnded      (void) noexcept {return iChainsById.ExtractAll();}
 
 private:
@@ -31,6 +32,7 @@ private:
 
 private:
     ChainsByIdT             iChainsById;
+
     mutable GpSpinLock      iChainsEndedSpinLock;
     ChainsEndedT            iChainsEnded        GUARDED_BY(iChainsEndedSpinLock);
 };

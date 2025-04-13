@@ -4,7 +4,7 @@
 #include <GpLog/GpLogCore/Consumers/GpLogConsumerConfigDesc.hpp>
 #include <GpLog/GpLogCore/Consumers/GpLogConsumersFactoryProcessor.hpp>
 
-#include <GpCore2/GpUtils/Types/Containers/GpDictionary.hpp>
+#include <GpCore2/GpUtils/Types/Containers/GpSharedMap.hpp>
 
 namespace GPlatform {
 
@@ -14,7 +14,7 @@ public:
     CLASS_REMOVE_CTRS_MOVE_COPY(GpLogConsumersFactory)
     CLASS_DD(GpLogConsumersFactory)
 
-    using ProcessorsT = GpDictionary<boost::container::small_flat_map<std::string, GpLogConsumersFactoryProcessor::SP, 8, std::less<>>>;
+    using ProcessorsT = GpSharedMap<boost::container::small_flat_map<std::string, GpLogConsumersFactoryProcessor::SP, 16, std::less<>>>;
 
 public:
                                 GpLogConsumersFactory       (void) noexcept;

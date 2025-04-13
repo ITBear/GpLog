@@ -21,7 +21,7 @@ void    GpLogExecutor::Start
     const seconds_t                         aFlushPeriod
 ) noexcept
 {
-    //Create executor
+    // Create executor
     iRunnable = MakeSP<GpLogRunnable>
     (
         aConsumerFactories,
@@ -29,7 +29,7 @@ void    GpLogExecutor::Start
         iLogQueue
     );
 
-    //Run
+    // Run
     iThread.Run(iRunnable);
 }
 

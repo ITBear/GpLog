@@ -10,11 +10,11 @@ namespace GPlatform {
 
 const std::array<std::string, GpLogLevel::SCount()> GpLogFormatterText::sLevels =
 {
-    std::string("\033[1m[D]\033[0m"_sv),
-    std::string("\033[1m[I]\033[0m"_sv),
-    std::string("\033[1m[W]\033[0m"_sv),
-    std::string("\033[1m[E]\033[0m"_sv),
-    std::string("\033[1m[!]\033[0m"_sv)
+    std::string{"\033[1m[D]\033[0m"},
+    std::string{"\033[1m[I]\033[0m"},
+    std::string{"\033[1m[W]\033[0m"},
+    std::string{"\033[1m[E]\033[0m"},
+    std::string{"\033[1m[!]\033[0m"}
 };
 
 GpLogFormatterText::GpLogFormatterText (void) noexcept
@@ -62,9 +62,9 @@ void    GpLogFormatterText::Serialize
         } else
         {
             aWriter
-                .Bytes(":\n[VVV=========================================================================VVV]:\n"_sv)
+                .Bytes(":[VVV=========================================VVV]:\n"_sv)
                 .Bytes(msg)
-                .Bytes("\n[^^^=========================================================================^^^]"_sv);
+                .Bytes("\n[^^^======================================================================================^^^]"_sv);
         }
     }
 
@@ -130,7 +130,7 @@ std::string GpLogFormatterText::GenMessage (const GpLogElementMsg& aMessage) con
         } break;
         default:
         {
-            THROW_GP("Unknown log element with type id "_sv + int(t));
+            THROW("Unknown log element with type id "_sv + int(t));
         }
     }
 }
