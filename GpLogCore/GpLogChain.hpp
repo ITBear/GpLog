@@ -24,9 +24,9 @@ public:
     const ElementsT&    Elements        (void) const {return iElements;}
 
 private:
-    mutable GpSpinLock  iLock;
-    const GpUUID        iChainId;
-    ElementsT           iElements;
+    mutable GpSpinLock<>    iLock;
+    const GpUUID            iChainId;
+    ElementsT               iElements;
 };
 
 GpLogChain::GpLogChain (const GpUUID& aChainId) noexcept:

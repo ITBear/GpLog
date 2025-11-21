@@ -15,24 +15,24 @@ public:
     CLASS_DD(GpLogConsumerFile)
 
 public:
-                                GpLogConsumerFile   (std::string_view       aOutFilePath,
-                                                     std::string_view       aOutFilePrefix,
-                                                     size_byte_t            aFileMaxSize,
-                                                     milliseconds_t         aMaxFlushPeriod,
-                                                     size_byte_t            aMaxBufferSize,
-                                                     GpByteSerializer::SP   aFormatter);
-    virtual                     ~GpLogConsumerFile  (void) noexcept override final;
+                    GpLogConsumerFile   (std::string_view       aOutFilePath,
+                                         std::string_view       aOutFilePrefix,
+                                         size_byte_t            aFileMaxSize,
+                                         milliseconds_t         aMaxFlushPeriod,
+                                         size_byte_t            aMaxBufferSize,
+                                         GpByteSerializer::SP   aFormatter);
+    virtual         ~GpLogConsumerFile  (void) noexcept override final;
 
-    virtual void                Consume             (GpLogChain::CSP aLogChain) override final;
-    virtual void                OnFlush             (void) noexcept override final;
+    virtual void    Consume             (GpLogChain::CSP aLogChain) override final;
+    virtual void    OnFlush             (void) noexcept override final;
 
 private:
-    void                        WriteToFile         (void);
-    std::ofstream               CreateFile          (std::string_view aFilePath,
-                                                     std::string_view aFilePrefix);
-    std::string                 GenFullFileName     (std::string_view   aFilePath,
-                                                     std::string_view   aFilePrefix,
-                                                     size_t             aPostfix);
+    void            WriteToFile         (void);
+    std::ofstream   CreateFile          (std::string_view aFilePath,
+                                         std::string_view aFilePrefix);
+    std::string     GenFullFileName     (std::string_view   aFilePath,
+                                         std::string_view   aFilePrefix,
+                                         size_t             aPostfix);
 
 private:
     const std::string           iOutFilePath;
@@ -41,7 +41,7 @@ private:
     const milliseconds_t        iMaxFlushPeriod;
     const size_byte_t           iMaxBufferSize;
 
-    GpBytesArray                iBufferData;
+    GpByteArray                 iBufferData;
     milliseconds_t              iSteadyLastFlushTS = 0.0_si_ms;
 
     std::string                 iOFStreamFileName;

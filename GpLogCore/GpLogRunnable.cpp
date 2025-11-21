@@ -1,5 +1,5 @@
 #include <GpLog/GpLogCore/GpLogRunnable.hpp>
-#include <GpCore2/GpUtils/Types/Strings/GpStringUtils.hpp>
+#include <GpCore2/GpUtils/Types/Strings/GpOutUtils.hpp>
 
 namespace GPlatform {
 
@@ -30,23 +30,25 @@ void    GpLogRunnable::FlushExternal (void)
     }
 }
 
-void    GpLogRunnable::Run (std::atomic_flag& aStopRequest) noexcept
+void    GpLogRunnable::Run (GpConditionVarFlag& aStopFlag) noexcept
 {
     try
     {
         GpLogConsumer::C::Vec::SP consumers = CreateConsumers();
         GpDoOnceInPeriod flushOnceInPeriod(iFlushPeriod, GpDoOnceInPeriod::Mode::AT_FIRST_CALL);
 
-        while (!aStopRequest.test())
+        bool stopFlagValue = aStopFlag.Test();
+        while (!stopFlagValue)
         {
             ConsumeAll(consumers, flushOnceInPeriod);
 
             if (iIsFlushExternal.load(std::memory_order_acquire) == false)
             {
-                WaitForAndReset(0.25_si_s);
+                stopFlagValue = aStopFlag.WaitFor(250.0_si_ms);
             } else
             {
                 iIsFlushExternal.store(false, std::memory_order_release);
+                stopFlagValue = aStopFlag.Test();
             }
         }
 
@@ -55,16 +57,11 @@ void    GpLogRunnable::Run (std::atomic_flag& aStopRequest) noexcept
         Flush(consumers);
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[GpLogRunnable::Run]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[GpLogRunnable::Run]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[GpLogRunnable::Run]: unknown exception"_sv);
+        GpOutUtils::S().StdErr("[GpLogRunnable::Run]: unknown exception"_sv);
     }
-}
-
-void    GpLogRunnable::OnNotify (void) noexcept
-{
-    // NOP
 }
 
 void    GpLogRunnable::ConsumeAll

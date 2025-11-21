@@ -1,11 +1,11 @@
 #include <GpLog/GpLogCore/GpLogQueue.hpp>
-#include <GpCore2/GpUtils/SyncPrimitives/GpMutex.hpp>
+#include <GpCore2/GpUtils/SyncPrimitives/GpSyncPrimitives.hpp>
 
 namespace GPlatform {
 
 bool    GpLogQueue::Empty (void) const noexcept
 {
-    GpUniqueLock<GpSpinLock> uniuqeLock{iChainsEndedSpinLock};
+    GpUniqueLock uniuqeLock{iChainsEndedSpinLock};
 
     return     (iChainsEnded.empty())
             && (iChainsById.Empty());
@@ -68,7 +68,7 @@ void    GpLogQueue::EndChain (const GpUUID& aChainId)
 
 std::optional<GpLogChain::SP>   GpLogQueue::PopFromEnd (void)
 {
-    GpUniqueLock<GpSpinLock> uniuqeLock{iChainsEndedSpinLock};
+    GpUniqueLock uniuqeLock{iChainsEndedSpinLock};
 
     if (iChainsEnded.empty())
     {
@@ -83,7 +83,7 @@ std::optional<GpLogChain::SP>   GpLogQueue::PopFromEnd (void)
 
 void    GpLogQueue::PushToEnd (GpLogChain::SP&& aChain)
 {
-    GpUniqueLock<GpSpinLock> uniuqeLock{iChainsEndedSpinLock};
+    GpUniqueLock uniuqeLock{iChainsEndedSpinLock};
 
     iChainsEnded.push(std::move(aChain));
 }

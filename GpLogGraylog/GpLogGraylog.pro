@@ -28,6 +28,12 @@ equals(var_os, "linux") {
 	LIBS += -lGpUtils$$TARGET_POSTFIX
 }
 
+equals(var_os, "macos") {
+	LIBS += -lGpLogCore$$TARGET_POSTFIX
+	LIBS += -lGpReflection$$TARGET_POSTFIX
+	LIBS += -lGpUtils$$TARGET_POSTFIX
+}
+
 # ----------- Sources and headers -----------
 SOURCES += \
     GpLogConsumerGraylog.cpp \

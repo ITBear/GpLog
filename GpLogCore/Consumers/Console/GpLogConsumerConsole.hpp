@@ -11,14 +11,14 @@ public:
     CLASS_DD(GpLogConsumerConsole)
 
 public:
-                            GpLogConsumerConsole    (GpByteSerializer::SP aFormatter) noexcept;
-    virtual                 ~GpLogConsumerConsole   (void) noexcept override final;
+                    GpLogConsumerConsole    (GpByteSerializer::SP aFormatter) noexcept;
+    virtual         ~GpLogConsumerConsole   (void) noexcept override final;
 
-    virtual void            Consume                 (GpLogChain::CSP aLogChain) override final;
-    virtual void            OnFlush                 (void) noexcept override final;
+    virtual void    Consume                 (GpLogChain::CSP aLogChain) override final;
+    virtual void    OnFlush                 (void) noexcept override final;
 
 private:
-    GpBytesArray            iTmpBuffer;
+    GpByteArray     iTmpBuffer;
 };
 
 }// namespace GPlatform

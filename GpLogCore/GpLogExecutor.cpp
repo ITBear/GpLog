@@ -2,16 +2,21 @@
 
 namespace GPlatform {
 
+GpLogExecutor::GpLogExecutor (GpLogQueue& aLogQueue) noexcept:
+iThread  {iThreadStopFlag, "Log executor"},
+iLogQueue{aLogQueue}
+{
+}
+
 GpLogExecutor::~GpLogExecutor (void) noexcept
 {
-    iRunnable.Clear();
 }
 
 void    GpLogExecutor::Flush (void)
 {
-    if (iRunnable.IsNotNULL())
+    if (iRunnable != nullptr)
     {
-        iRunnable.Vn().FlushExternal();
+        iRunnable->FlushExternal();
     }
 }
 
@@ -22,15 +27,17 @@ void    GpLogExecutor::Start
 ) noexcept
 {
     // Create executor
-    iRunnable = MakeSP<GpLogRunnable>
+    GpLogRunnable::UP logRunnableUP = std::make_unique<GpLogRunnable>
     (
         aConsumerFactories,
         aFlushPeriod,
         iLogQueue
     );
 
+    iRunnable = logRunnableUP.get();
+
     // Run
-    iThread.Run(iRunnable);
+    iThread.Run(std::move(logRunnableUP));
 }
 
 }// namespace GPlatform

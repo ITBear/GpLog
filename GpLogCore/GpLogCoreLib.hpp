@@ -1,10 +1,6 @@
 #pragma once
 
 #include <GpLog/GpLogCore/GpLogCore_global.hpp>
-#include <GpCore2/GpUtils/Other/GpLinkedLibsInfo.hpp>
+#include <GpCore2/GpUtils/Other/GpStaticInitializer.hpp>
 
-namespace GPlatform {
-
-GP_DECLARE_LIB_REGISTRATOR(GpLogCoreLib)
-
-}// namespace GPlatform
+GP_STATIC_INITIALIZER(GP_LOG_CORE_API, GpLogCore)

@@ -1,7 +1,10 @@
 #include <GpLog/GpLogCore/GpLogCoreLib.hpp>
+#include <GpCore2/GpUtils/Other/GpLinkedLibsInfo.hpp>
 
-namespace GPlatform {
+GP_STATIC_INITIALIZER_IMPL(GpLogCore)
+GP_LIB_REGISTRATOR(GpLogCoreLib)
 
-GP_IMPLEMENT_LIB_REGISTRATOR(GpLogCoreLib)
-
-}// namespace GPlatform
+void    GpLogCore_StaticInitializer::OnInitialize (void)
+{
+    GpLogCoreLib::SRegisterSelf();
+}

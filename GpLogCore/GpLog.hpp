@@ -59,7 +59,7 @@ GP_LOG_CORE_API void    LOG_SYS_INFO
 (
     std::string_view        aMessage,
     const SourceLocationT&  aSourceLocation = SourceLocationT::current()
-) noexcept;
+);
 
 //------------------------------------- Text -------------------------------------
 GP_LOG_CORE_API void    LOG_END_CHAIN

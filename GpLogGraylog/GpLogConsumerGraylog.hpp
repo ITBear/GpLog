@@ -12,14 +12,14 @@ public:
     CLASS_DD(GpLogConsumerGraylog)
 
 public:
-                            GpLogConsumerGraylog    (GpByteSerializer::SP aFormatter) noexcept;
-    virtual                 ~GpLogConsumerGraylog   (void) noexcept override final;
+                    GpLogConsumerGraylog    (GpByteSerializer::SP aFormatter) noexcept;
+    virtual         ~GpLogConsumerGraylog   (void) noexcept override final;
 
-    virtual void            Consume                 (GpLogChain::CSP aLogChain) override final;
-    virtual void            OnFlush                 (void) noexcept override final;
+    virtual void    Consume                 (GpLogChain::CSP aLogChain) override final;
+    virtual void    OnFlush                 (void) noexcept override final;
 
 private:
-    GpBytesArray            iTmpBuffer;
+    GpByteArray     iTmpBuffer;
 };
 
 }// namespace GPlatform

@@ -4,8 +4,6 @@
 #include <GpLog/GpLogCore/Formatters/Text/GpLogFormatterTextElementMsgStr.hpp>
 #include <GpLog/GpLogCore/Formatters/Text/GpLogFormatterTextElementMsgMarkTraceTS.hpp>
 
-#include <sstream>
-
 namespace GPlatform {
 
 const std::array<std::string, GpLogLevel::SCount()> GpLogFormatterText::sLevels =
@@ -43,7 +41,7 @@ void    GpLogFormatterText::Serialize
         aWriter
             .Bytes("\n==vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv [ Chain begin: "_sv)
             .Bytes(chainIdStr)
-            .Bytes(" ] vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv=="_sv);
+            .Bytes(" ] vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv==---------------------------------"_sv);
     }
 
     for (const GpLogElement& element: chainElements)
@@ -71,9 +69,9 @@ void    GpLogFormatterText::Serialize
     if (chainNotEmpty)
     {
         aWriter
-            .Bytes("\n==^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ [ Chain end:   "_sv)
+            .Bytes("\n==^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ [ Chain end: "_sv)
             .Bytes(chainIdStr)
-            .Bytes(" ] ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^=="_sv);
+            .Bytes(" ] ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^==---------------------------------"_sv);
     }
 }
 

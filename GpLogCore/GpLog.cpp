@@ -4,7 +4,7 @@
 #include <GpLog/GpLogCore/Consumers/Console/GpLogConsumerConsoleFactory.hpp>
 #include <GpLog/GpLogCore/Formatters/Text/GpLogFormatterText.hpp>
 
-#include <GpCore2/GpUtils/Types/Strings/GpStringUtils.hpp>
+#include <GpCore2/GpUtils/Types/Strings/GpOutUtils.hpp>
 #include <GpCore2/GpUtils/Exceptions/GpExceptionUtils.hpp>
 #include <GpCore2/GpUtils/Other/GpSystemInfo.hpp>
 #include <GpCore2/GpUtils/Other/GpLinkedLibsInfo.hpp>
@@ -27,6 +27,18 @@ GpLog::~GpLog (void) noexcept
 void    GpLog::SInit (void)
 {
     GpLog::sInstance = MakeSP<GpLog>();
+
+    GpOutUtils::S().SetOutFns
+    (
+        [](std::string_view aStr)
+        {
+            LOG_INFO(aStr);
+        },
+        [](std::string_view aStr)
+        {
+            LOG_ERROR(aStr);
+        }
+    );
 }
 
 void    GpLog::SClear (void)
@@ -50,7 +62,7 @@ void    GpLog::StartDefault (void)
     (
         consumerFactories,
         GpLogLevel::L_DEBUG,
-        1.0_si_s
+        1'000.0_si_ms
     );
 }
 
@@ -176,7 +188,7 @@ void LOG_SYS_INFO
 (
     std::string_view        aMessage,
     const SourceLocationT&  aSourceLocation
-) noexcept
+)
 {
     std::string message = fmt::format
     (
@@ -200,7 +212,7 @@ void LOG_SYS_INFO
         (
             fmt::format
             (
-                "\n[{:03}]: {:>22}: v{}",
+                "\n[{:03}]: {:>25}: v{}",
                 id++,
                 name,
                 version
@@ -221,13 +233,13 @@ void LOG_END_CHAIN
         GpLog::S().EndChain(aChainId);
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_END_CHAIN]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_END_CHAIN]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_END_CHAIN]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_END_CHAIN]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_END_CHAIN]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_END_CHAIN]: unknown"_sv);
     }
 }
 
@@ -249,13 +261,13 @@ void LOG_DEBUG
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_DEBUG]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_DEBUG]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_DEBUG]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_DEBUG]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_DEBUG]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_DEBUG]: unknown"_sv);
     }
 }
 
@@ -278,13 +290,13 @@ void LOG_DEBUG
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_DEBUG]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_DEBUG]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_DEBUG]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_DEBUG]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_DEBUG]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_DEBUG]: unknown"_sv);
     }
 }
 
@@ -306,13 +318,13 @@ void LOG_DEBUG
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_DEBUG]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_DEBUG]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_DEBUG]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_DEBUG]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_DEBUG]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_DEBUG]: unknown"_sv);
     }
 }
 
@@ -335,13 +347,13 @@ void LOG_DEBUG
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_DEBUG]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_DEBUG]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_DEBUG]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_DEBUG]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_DEBUG]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_DEBUG]: unknown"_sv);
     }
 }
 
@@ -363,13 +375,13 @@ void LOG_INFO
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_INFO]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_INFO]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_INFO]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_INFO]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_INFO]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_INFO]: unknown"_sv);
     }
 }
 
@@ -392,13 +404,13 @@ void LOG_INFO
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_INFO]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_INFO]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_INFO]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_INFO]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_INFO]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_INFO]: unknown"_sv);
     }
 }
 
@@ -420,13 +432,13 @@ void LOG_INFO
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_INFO]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_INFO]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_INFO]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_INFO]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_INFO]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_INFO]: unknown"_sv);
     }
 }
 
@@ -449,13 +461,13 @@ void LOG_INFO
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_INFO]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_INFO]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_INFO]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_INFO]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_INFO]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_INFO]: unknown"_sv);
     }
 }
 
@@ -477,13 +489,13 @@ void LOG_WARNING
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_WARNING]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_WARNING]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_WARNING]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_WARNING]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_WARNING]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_WARNING]: unknown"_sv);
     }
 }
 
@@ -506,13 +518,13 @@ void LOG_WARNING
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_WARNING]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_WARNING]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_WARNING]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_WARNING]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_WARNING]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_WARNING]: unknown"_sv);
     }
 }
 
@@ -534,13 +546,13 @@ void LOG_WARNING
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_WARNING]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_WARNING]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_WARNING]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_WARNING]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_WARNING]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_WARNING]: unknown"_sv);
     }
 }
 
@@ -563,13 +575,13 @@ void LOG_WARNING
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_WARNING]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_WARNING]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_WARNING]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_WARNING]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_WARNING]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_WARNING]: unknown"_sv);
     }
 }
 
@@ -591,13 +603,13 @@ void LOG_ERROR
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_ERROR]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_ERROR]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_ERROR]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_ERROR]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_ERROR]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_ERROR]: unknown"_sv);
     }
 }
 
@@ -620,13 +632,13 @@ void LOG_ERROR
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_ERROR]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_ERROR]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_ERROR]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_ERROR]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_ERROR]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_ERROR]: unknown"_sv);
     }
 }
 
@@ -648,13 +660,13 @@ void LOG_ERROR
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_ERROR]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_ERROR]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_ERROR]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_ERROR]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_ERROR]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_ERROR]: unknown"_sv);
     }
 }
 
@@ -677,13 +689,13 @@ void LOG_ERROR
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_ERROR]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_ERROR]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_ERROR]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_ERROR]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_ERROR]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_ERROR]: unknown"_sv);
     }
 }
 
@@ -705,13 +717,13 @@ void LOG_CRITICAL_ERROR
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_CRITICAL_ERROR]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_CRITICAL_ERROR]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_CRITICAL_ERROR]: unknown"_sv);
     }
 }
 
@@ -734,13 +746,13 @@ void LOG_CRITICAL_ERROR
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_CRITICAL_ERROR]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_CRITICAL_ERROR]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_CRITICAL_ERROR]: unknown"_sv);
     }
 }
 
@@ -762,13 +774,13 @@ void LOG_CRITICAL_ERROR
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_CRITICAL_ERROR]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_CRITICAL_ERROR]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_CRITICAL_ERROR]: unknown"_sv);
     }
 }
 
@@ -791,13 +803,13 @@ void LOG_CRITICAL_ERROR
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_CRITICAL_ERROR]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_CRITICAL_ERROR]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_CRITICAL_ERROR]: unknown"_sv);
     }
 }
 
@@ -835,13 +847,13 @@ void LOG_EXCEPTION
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_EXCEPTION]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_EXCEPTION]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_EXCEPTION]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_EXCEPTION]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_EXCEPTION]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_EXCEPTION]: unknown"_sv);
     }
 }
 
@@ -880,13 +892,13 @@ void LOG_EXCEPTION
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_EXCEPTION]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_EXCEPTION]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_EXCEPTION]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_EXCEPTION]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_EXCEPTION]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_EXCEPTION]: unknown"_sv);
     }
 }
 
@@ -909,13 +921,13 @@ void LOG_DEBUG
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_DEBUG]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_DEBUG]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_DEBUG]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_DEBUG]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_DEBUG]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_DEBUG]: unknown"_sv);
     }
 }
 
@@ -947,13 +959,13 @@ void LOG_DEBUG
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_DEBUG]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_DEBUG]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_DEBUG]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_DEBUG]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_DEBUG]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_DEBUG]: unknown"_sv);
     }
 }
 
@@ -975,13 +987,13 @@ void LOG_INFO
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_INFO]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_INFO]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_INFO]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_INFO]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_INFO]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_INFO]: unknown"_sv);
     }
 }
 
@@ -1004,13 +1016,13 @@ void LOG_INFO
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_INFO]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_INFO]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_INFO]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_INFO]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_INFO]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_INFO]: unknown"_sv);
     }
 }
 
@@ -1032,13 +1044,13 @@ void LOG_WARNING
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_WARNING]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_WARNING]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_WARNING]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_WARNING]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_WARNING]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_WARNING]: unknown"_sv);
     }
 }
 
@@ -1061,13 +1073,13 @@ void LOG_WARNING
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_WARNING]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_WARNING]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_WARNING]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_WARNING]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_WARNING]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_WARNING]: unknown"_sv);
     }
 }
 
@@ -1089,13 +1101,13 @@ void LOG_ERROR
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_ERROR]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_ERROR]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_ERROR]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_ERROR]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_ERROR]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_ERROR]: unknown"_sv);
     }
 }
 
@@ -1118,13 +1130,13 @@ void LOG_ERROR
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_ERROR]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_ERROR]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_ERROR]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_ERROR]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_ERROR]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_ERROR]: unknown"_sv);
     }
 }
 
@@ -1146,13 +1158,13 @@ void LOG_CRITICAL_ERROR
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_CRITICAL_ERROR]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_CRITICAL_ERROR]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_CRITICAL_ERROR]: unknown"_sv);
     }
 }
 
@@ -1175,13 +1187,13 @@ void LOG_CRITICAL_ERROR
         );
     } catch (const GpException& e)
     {
-        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_CRITICAL_ERROR]: "_sv + e.what());
     } catch (const std::exception& e)
     {
-        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: "_sv + e.what());
+        GpOutUtils::S().StdErr("[LOG_CRITICAL_ERROR]: "_sv + e.what());
     } catch (...)
     {
-        GpStringUtils::SCerr("[LOG_CRITICAL_ERROR]: unknown"_sv);
+        GpOutUtils::S().StdErr("[LOG_CRITICAL_ERROR]: unknown"_sv);
     }
 }
 

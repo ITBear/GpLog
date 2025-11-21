@@ -26,7 +26,7 @@ public:
 
 public:
     GpLogLevel          level               = GpLogLevel::L_DEBUG;
-    seconds_t           flush_period        = 3.0_si_s;
+    seconds_t           flush_period        = 3'000.0_si_ms;
     ConsumersT          consumers;
 };
 

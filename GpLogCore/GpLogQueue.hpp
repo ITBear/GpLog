@@ -33,7 +33,7 @@ private:
 private:
     ChainsByIdT             iChainsById;
 
-    mutable GpSpinLock      iChainsEndedSpinLock;
+    mutable GpSpinLock<>    iChainsEndedSpinLock;
     ChainsEndedT            iChainsEnded        GUARDED_BY(iChainsEndedSpinLock);
 };
 

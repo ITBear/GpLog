@@ -16,24 +16,21 @@ public:
     CLASS_DD(GpLogRunnable)
 
 public:
-                                        GpLogRunnable       (const GpLogConsumerFactory::C::Vec::SP aConsumerFactories,
-                                                             const seconds_t                        aFlushPeriod,
-                                                             GpLogQueue&                            aLogQueue);
-    virtual                             ~GpLogRunnable      (void) noexcept override final;
+                                GpLogRunnable   (const GpLogConsumerFactory::C::Vec::SP aConsumerFactories,
+                                                 const seconds_t                        aFlushPeriod,
+                                                 GpLogQueue&                            aLogQueue);
+    virtual                     ~GpLogRunnable  (void) noexcept override final;
 
-    void                                FlushExternal       (void);
+    void                        FlushExternal   (void);
 
-    virtual void                        Run                 (std::atomic_flag& aStopRequest) noexcept override final;
-
-protected:
-    virtual void                        OnNotify            (void) noexcept override final;
+    virtual void                Run             (GpConditionVarFlag& aStopFlag) noexcept override final;
 
 private:
-    void                                ConsumeAll          (GpLogConsumer::C::Vec::SP& aConsumers,
-                                                             GpDoOnceInPeriod&          aFlushOnceInPeriod);
-    void                                ConsumeNotEnded     (GpLogConsumer::C::Vec::SP& aConsumers);
-    void                                Flush               (GpLogConsumer::C::Vec::SP& aConsumers);
-    GpLogConsumer::C::Vec::SP           CreateConsumers     (void);
+    void                        ConsumeAll      (GpLogConsumer::C::Vec::SP& aConsumers,
+                                                 GpDoOnceInPeriod&          aFlushOnceInPeriod);
+    void                        ConsumeNotEnded (GpLogConsumer::C::Vec::SP& aConsumers);
+    void                        Flush           (GpLogConsumer::C::Vec::SP& aConsumers);
+    GpLogConsumer::C::Vec::SP   CreateConsumers (void);
 
 private:
     GpLogConsumerFactory::C::Vec::SP    iConsumerFactories;

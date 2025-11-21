@@ -16,7 +16,7 @@ os_linux {
 	SUBDIRS += \
 		./GpLogCore \
 		./GpLogGraylog
-} else:os_macx {
+} else:os_macos {
 	SUBDIRS += \
 		./GpLogCore \
 		./GpLogGraylog
